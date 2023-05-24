@@ -1,7 +1,6 @@
 package com.tecknobit.telegrammanager.botapi.records.basetypes.chat;
 
-import com.tecknobit.telegrammanager.botapi.records.basetypes.Message;
-import com.tecknobit.telegrammanager.botapi.records.basetypes.chat.location.ChatLocation;
+import com.tecknobit.telegrammanager.botapi.records.basetypes.message.Message;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.parents.ProfileStructure;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramType;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramTypeStructure;
@@ -523,6 +522,19 @@ public class Chat extends ProfileStructure {
      */
     public ChatLocation getLocation() {
         return location;
+    }
+
+    /**
+     * Method to get an instance of this Telegram's type
+     *
+     * @param jItem: item details as {@link JSONObject}
+     * @return instance as {@link Chat}
+     */
+    public static Chat getInstance(JSONObject jItem) {
+        if (jItem == null)
+            return null;
+        else
+            return new Chat(jItem);
     }
 
 }

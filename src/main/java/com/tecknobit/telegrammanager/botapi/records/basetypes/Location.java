@@ -1,4 +1,4 @@
-package com.tecknobit.telegrammanager.botapi.records.basetypes.chat.location;
+package com.tecknobit.telegrammanager.botapi.records.basetypes;
 
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramType;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramTypeStructure;
@@ -189,6 +189,19 @@ public class Location extends TelegramType {
      **/
     public double getProximityAlertRadius(int decimals) {
         return roundValue(proximityAlertRadius, decimals);
+    }
+
+    /**
+     * Method to get an instance of this Telegram's type
+     *
+     * @param jItem: item details as {@link JSONObject}
+     * @return instance as {@link Location}
+     */
+    public static Location getInstance(JSONObject jItem) {
+        if (jItem == null)
+            return null;
+        else
+            return new Location(jItem);
     }
 
 }

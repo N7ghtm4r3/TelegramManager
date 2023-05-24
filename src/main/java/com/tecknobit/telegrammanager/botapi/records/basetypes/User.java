@@ -165,4 +165,17 @@ public class User extends ProfileStructure {
         return supportsInlineQueries;
     }
 
+    /**
+     * Method to get an instance of this Telegram's type
+     *
+     * @param jItem: item details as {@link JSONObject}
+     * @return instance as {@link User}
+     */
+    public static User getInstance(JSONObject jItem) {
+        if (jItem == null)
+            return null;
+        else
+            return new User(jItem);
+    }
+
 }
