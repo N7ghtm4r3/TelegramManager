@@ -1,4 +1,4 @@
 package com.tecknobit.telegrammanager.botapi.records.basetypes;
 
-public class Video {
+public class SuccessfulPayment {
 }

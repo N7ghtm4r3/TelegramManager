@@ -1,9 +1,13 @@
 package com.tecknobit.telegrammanager.botapi.records.basetypes;
 
+import com.tecknobit.apimanager.annotations.Returner;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.parents.ProfileStructure;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramType;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramTypeStructure;
+import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * The {@code User} class is useful to format a {@code Telegram}'s user
@@ -163,6 +167,21 @@ public class User extends ProfileStructure {
      */
     public boolean canSupportsInlineQueries() {
         return supportsInlineQueries;
+    }
+
+    /**
+     * Method to return a {@link User} list
+     *
+     * @param jUsers: JSON source from fetch the list
+     * @return users list as {@link ArrayList} of {@link User}
+     */
+    @Returner
+    public static ArrayList<User> returnUsers(JSONArray jUsers) {
+        ArrayList<User> users = new ArrayList<>();
+        if (jUsers != null)
+            for (int j = 0; j < jUsers.length(); j++)
+                users.add(new User(jUsers.getJSONObject(j)));
+        return users;
     }
 
     /**
