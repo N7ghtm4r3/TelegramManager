@@ -1,8 +1,28 @@
 package com.tecknobit.telegrammanager.botapi.records.basetypes.message;
 
-import com.tecknobit.telegrammanager.botapi.records.basetypes.*;
+import com.tecknobit.telegrammanager.botapi.records.basetypes.Contact;
+import com.tecknobit.telegrammanager.botapi.records.basetypes.ItemShared;
+import com.tecknobit.telegrammanager.botapi.records.basetypes.User;
+import com.tecknobit.telegrammanager.botapi.records.basetypes.WriteAccessAllowed;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.chat.Chat;
+import com.tecknobit.telegrammanager.botapi.records.basetypes.chat.MessageAutoDeleteTimerChanged;
+import com.tecknobit.telegrammanager.botapi.records.basetypes.chat.attachments.Dice;
+import com.tecknobit.telegrammanager.botapi.records.basetypes.chat.attachments.Game;
+import com.tecknobit.telegrammanager.botapi.records.basetypes.chat.attachments.Poll;
+import com.tecknobit.telegrammanager.botapi.records.basetypes.chat.attachments.ProximityAlertTriggered;
+import com.tecknobit.telegrammanager.botapi.records.basetypes.forum.*;
+import com.tecknobit.telegrammanager.botapi.records.basetypes.keyboard.InlineKeyboardMarkup;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.media.*;
+import com.tecknobit.telegrammanager.botapi.records.basetypes.media.videochatstates.VideoChatEnded;
+import com.tecknobit.telegrammanager.botapi.records.basetypes.media.videochatstates.VideoChatParticipantsInvited;
+import com.tecknobit.telegrammanager.botapi.records.basetypes.media.videochatstates.VideoChatScheduled;
+import com.tecknobit.telegrammanager.botapi.records.basetypes.media.videochatstates.VideoChatStarted;
+import com.tecknobit.telegrammanager.botapi.records.basetypes.userdata.Location;
+import com.tecknobit.telegrammanager.botapi.records.basetypes.userdata.Venue;
+import com.tecknobit.telegrammanager.botapi.records.basetypes.userdata.passport.PassportData;
+import com.tecknobit.telegrammanager.botapi.records.basetypes.wallet.Invoice;
+import com.tecknobit.telegrammanager.botapi.records.basetypes.wallet.SuccessfulPayment;
+import com.tecknobit.telegrammanager.botapi.records.basetypes.webapp.WebAppData;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramType;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramTypeStructure;
 import org.json.JSONObject;
@@ -315,12 +335,12 @@ public class Message extends TelegramType {
     /**
      * {@code userShared} service message: a user was shared with the bot
      */
-    private final UserShared userShared;
+    private final ItemShared userShared;
 
     /**
      * {@code chatShared} service message: a chat was shared with the bot
      */
-    private final ChatShared chatShared;
+    private final ItemShared chatShared;
 
     /**
      * {@code connectedWebsite} the domain name of the website on which the user has logged in
@@ -519,7 +539,7 @@ public class Message extends TelegramType {
                    ArrayList<PhotoSize> newChatPhoto, boolean deleteChatPhoto, boolean groupChatCreated,
                    boolean supergroupChatCreated, boolean channelChatCreated, MessageAutoDeleteTimerChanged messageAutoDeleteTimerChanged,
                    long migrateToChatId, long migrateFromChatId, Message pinnedMessage, Invoice invoice,
-                   SuccessfulPayment successfulPayment, UserShared userShared, ChatShared chatShared, String connectedWebsite,
+                   SuccessfulPayment successfulPayment, ItemShared userShared, ItemShared chatShared, String connectedWebsite,
                    WriteAccessAllowed writeAccessAllowed, PassportData passportData,
                    ProximityAlertTriggered proximityAlertTriggered, ForumTopicCreated forumTopicCreated,
                    ForumTopicEdited forumTopicEdited, ForumTopicClosed forumTopicClosed,
@@ -663,8 +683,8 @@ public class Message extends TelegramType {
         pinnedMessage = Message.getInstance(hTelegram.getJSONObject("pinned_message"));
         invoice = Invoice.getInstance(hTelegram.getJSONObject("invoice"));
         successfulPayment = SuccessfulPayment.getInstance(hTelegram.getJSONObject("successful_payment"));
-        userShared = UserShared.getInstance(hTelegram.getJSONObject("user_shared"));
-        chatShared = ChatShared.getInstance(hTelegram.getJSONObject("chat_shared"));
+        userShared = ItemShared.getInstance(hTelegram.getJSONObject("user_shared"));
+        chatShared = ItemShared.getInstance(hTelegram.getJSONObject("chat_shared"));
         connectedWebsite = hTelegram.getString("connected_website");
         writeAccessAllowed = WriteAccessAllowed.getInstance(hTelegram.getJSONObject("write_access_allowed"));
         passportData = PassportData.getInstance(hTelegram.getJSONObject("passport_data"));
@@ -1241,9 +1261,9 @@ public class Message extends TelegramType {
      * Method to get {@link #userShared} instance <br>
      * No-any params required
      *
-     * @return {@link #userShared} instance as {@link UserShared}
+     * @return {@link #userShared} instance as {@link ItemShared}
      */
-    public UserShared getUserShared() {
+    public ItemShared getUserShared() {
         return userShared;
     }
 
@@ -1251,9 +1271,9 @@ public class Message extends TelegramType {
      * Method to get {@link #chatShared} instance <br>
      * No-any params required
      *
-     * @return {@link #chatShared} instance as {@link ChatShared}
+     * @return {@link #chatShared} instance as {@link ItemShared}
      */
-    public ChatShared getChatShared() {
+    public ItemShared getChatShared() {
         return chatShared;
     }
 
