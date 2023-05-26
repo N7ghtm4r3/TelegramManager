@@ -1,8 +1,6 @@
 package com.tecknobit.telegrammanager.botapi.records.basetypes.message;
 
-import com.tecknobit.telegrammanager.botapi.records.basetypes.Contact;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.ItemShared;
-import com.tecknobit.telegrammanager.botapi.records.basetypes.User;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.WriteAccessAllowed;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.chat.Chat;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.chat.MessageAutoDeleteTimerChanged;
@@ -17,7 +15,9 @@ import com.tecknobit.telegrammanager.botapi.records.basetypes.media.videochatsta
 import com.tecknobit.telegrammanager.botapi.records.basetypes.media.videochatstates.VideoChatParticipantsInvited;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.media.videochatstates.VideoChatScheduled;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.media.videochatstates.VideoChatStarted;
+import com.tecknobit.telegrammanager.botapi.records.basetypes.userdata.Contact;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.userdata.Location;
+import com.tecknobit.telegrammanager.botapi.records.basetypes.userdata.User;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.userdata.Venue;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.userdata.passport.PassportData;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.wallet.Invoice;

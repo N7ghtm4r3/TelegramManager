@@ -1,6 +1,6 @@
 package com.tecknobit.telegrammanager.botapi.records.basetypes.chat;
 
-import com.tecknobit.telegrammanager.botapi.records.basetypes.User;
+import com.tecknobit.telegrammanager.botapi.records.basetypes.userdata.User;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramType;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramTypeStructure;
 import org.json.JSONObject;

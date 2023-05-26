@@ -1,4 +1,4 @@
-package com.tecknobit.telegrammanager.botapi.records.basetypes;
+package com.tecknobit.telegrammanager.botapi.records.basetypes.userdata;
 
 import com.tecknobit.apimanager.annotations.Returner;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.parents.ProfileStructure;
