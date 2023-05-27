@@ -1,4 +1,4 @@
-package com.tecknobit.telegrammanager.botapi.records.basetypes.keyboard;
+package com.tecknobit.telegrammanager.botapi.records.basetypes.keyboard.inline;
 
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramType;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramTypeStructure;

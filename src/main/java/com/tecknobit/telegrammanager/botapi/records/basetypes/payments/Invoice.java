@@ -1,4 +1,4 @@
-package com.tecknobit.telegrammanager.botapi.records.basetypes.wallet;
+package com.tecknobit.telegrammanager.botapi.records.basetypes.payments;
 
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramType;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramTypeStructure;
@@ -12,9 +12,9 @@ import org.json.JSONObject;
  * Invoice</a>
  * @see TelegramTypeStructure
  * @see TelegramType
- * @see WalletItem
+ * @see PaymentItem
  */
-public class Invoice extends WalletItem {
+public class Invoice extends PaymentItem {
 
     /**
      * {@code title} of the

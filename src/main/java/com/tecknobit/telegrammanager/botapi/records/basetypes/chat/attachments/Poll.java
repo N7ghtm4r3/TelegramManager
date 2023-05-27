@@ -2,6 +2,7 @@ package com.tecknobit.telegrammanager.botapi.records.basetypes.chat.attachments;
 
 import com.tecknobit.apimanager.annotations.Returner;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.message.MessageEntity;
+import com.tecknobit.telegrammanager.botapi.records.basetypes.userdata.User;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramType;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramTypeStructure;
 import org.json.JSONArray;
@@ -392,6 +393,118 @@ public class Poll extends TelegramType {
                 for (int j = 0; j < jPollOptions.length(); j++)
                     pollOptions.add(new PollOption(jPollOptions.getJSONObject(j)));
             return pollOptions;
+        }
+
+        /**
+         * Method to get an instance of this Telegram's type
+         *
+         * @param jItem: item details as {@link JSONObject}
+         * @return instance as {@link PollOption}
+         */
+        public static PollOption getInstance(JSONObject jItem) {
+            if (jItem == null)
+                return null;
+            else
+                return new PollOption(jItem);
+        }
+
+    }
+
+    /**
+     * The {@code PollAnswer} class is useful to format a {@code Telegram}'s poll answer
+     *
+     * @author N7ghtm4r3 - Tecknobit
+     * @apiNote see the official documentation at: <a href="https://core.telegram.org/bots/api#pollanswer">
+     * PollAnswer</a>
+     * @see TelegramTypeStructure
+     * @see TelegramType
+     */
+    public static class PollAnswer extends TelegramType {
+
+        /**
+         * {@code pollId} unique poll identifier
+         */
+        private final long pollId;
+
+        /**
+         * {@code user} the user, who changed the answer to the poll
+         */
+        private final User user;
+
+        /**
+         * {@code optionIds} 0-based identifiers of answer options, chosen by the user. May be empty if the user
+         * retracted their vote
+         */
+        private final ArrayList<Integer> optionIds;
+
+        /**
+         * Constructor to init a {@link PollAnswer} object
+         *
+         * @param pollId:    unique poll identifier
+         * @param user:      the user, who changed the answer to the poll
+         * @param optionIds: 0-based identifiers of answer options, chosen by the user. May be empty if the user retracted
+         *                   their vote
+         */
+        public PollAnswer(long pollId, User user, ArrayList<Integer> optionIds) {
+            super(null);
+            this.pollId = pollId;
+            this.user = user;
+            this.optionIds = optionIds;
+        }
+
+        /**
+         * Constructor to init a {@link PollAnswer} object
+         *
+         * @param jPollAnswer: poll answer details as {@link JSONObject}
+         */
+        public PollAnswer(JSONObject jPollAnswer) {
+            super(jPollAnswer);
+            pollId = hTelegram.getLong("poll_id");
+            user = User.getInstance(hTelegram.getJSONObject("user"));
+            optionIds = hTelegram.fetchVList("option_ids");
+        }
+
+        /**
+         * Method to get {@link #pollId} instance <br>
+         * No-any params required
+         *
+         * @return {@link #pollId} instance as long
+         */
+        public long getPollId() {
+            return pollId;
+        }
+
+        /**
+         * Method to get {@link #user} instance <br>
+         * No-any params required
+         *
+         * @return {@link #user} instance as {@link User}
+         */
+        public User getUser() {
+            return user;
+        }
+
+        /**
+         * Method to get {@link #optionIds} instance <br>
+         * No-any params required
+         *
+         * @return {@link #optionIds} instance as {@link ArrayList} of {@link Integer}
+         */
+        public ArrayList<Integer> getOptionIds() {
+            return optionIds;
+        }
+
+        /**
+         * Method to get an instance of this Telegram's type
+         *
+         * @param jItem: item details as {@link JSONObject}
+         * @return instance as {@link PollAnswer}
+         */
+        public static PollAnswer getInstance(JSONObject jItem) {
+            if (jItem == null)
+                return null;
+            else
+                return new PollAnswer(jItem);
         }
 
     }

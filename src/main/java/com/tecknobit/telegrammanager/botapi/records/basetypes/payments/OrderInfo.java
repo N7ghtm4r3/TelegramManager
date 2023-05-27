@@ -1,4 +1,4 @@
-package com.tecknobit.telegrammanager.botapi.records.basetypes.wallet;
+package com.tecknobit.telegrammanager.botapi.records.basetypes.payments;
 
 import com.tecknobit.telegrammanager.botapi.records.basetypes.userdata.ShippingAddress;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramType;

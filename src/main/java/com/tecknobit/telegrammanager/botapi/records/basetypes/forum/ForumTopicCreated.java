@@ -19,7 +19,7 @@ public class ForumTopicCreated extends ForumTopicEdited {
     /**
      * {@code iconColor} color of the topic icon in RGB format
      */
-    private final int iconColor;
+    protected final int iconColor;
 
     /**
      * Constructor to init a {@link ForumTopicCreated} object
@@ -27,7 +27,7 @@ public class ForumTopicCreated extends ForumTopicEdited {
      * @param name:              color of the topic icon in RGB format
      * @param iconCustomEmojiId: new identifier of the custom emoji shown as the topic icon, if it was edited; an empty
      *                           string if the icon was removed
-     * @param iconColor:         {@code iconColor} of the
+     * @param iconColor:         color of the topic icon in RGB format
      */
     public ForumTopicCreated(String name, String iconCustomEmojiId, int iconColor) {
         super(name, iconCustomEmojiId);

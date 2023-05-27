@@ -1,4 +1,4 @@
-package com.tecknobit.telegrammanager.botapi.records.basetypes.wallet;
+package com.tecknobit.telegrammanager.botapi.records.basetypes.payments;
 
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramType;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramTypeStructure;
@@ -12,9 +12,9 @@ import org.json.JSONObject;
  * SuccessfulPayment</a>
  * @see TelegramTypeStructure
  * @see TelegramType
- * @see WalletItem
+ * @see PaymentItem
  */
-public class SuccessfulPayment extends WalletItem {
+public class SuccessfulPayment extends PaymentItem {
 
     /**
      * {@code invoicePayload} bot specified invoice payload

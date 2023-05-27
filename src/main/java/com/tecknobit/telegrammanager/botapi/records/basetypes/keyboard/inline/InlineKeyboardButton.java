@@ -1,4 +1,4 @@
-package com.tecknobit.telegrammanager.botapi.records.basetypes.keyboard;
+package com.tecknobit.telegrammanager.botapi.records.basetypes.keyboard.inline;
 
 import com.tecknobit.apimanager.annotations.Returner;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.LoginUrl;

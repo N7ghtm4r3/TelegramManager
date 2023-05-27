@@ -1,4 +1,4 @@
-package com.tecknobit.telegrammanager.botapi.records.basetypes.wallet;
+package com.tecknobit.telegrammanager.botapi.records.basetypes.payments;
 
 import com.tecknobit.apimanager.annotations.Structure;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramType;
@@ -6,7 +6,7 @@ import com.tecknobit.telegrammanager.botapi.records.structures.TelegramTypeStruc
 import org.json.JSONObject;
 
 /**
- * The {@code WalletItem} class is useful to format a {@code Telegram}'s wallet item
+ * The {@code PaymentItem} class is useful to format a {@code Telegram}'s payment item
  *
  * @author N7ghtm4r3 - Tecknobit
  * @apiNote see the official documentation at:
@@ -24,7 +24,7 @@ import org.json.JSONObject;
  * @see TelegramType
  */
 @Structure
-public abstract class WalletItem extends TelegramType {
+public abstract class PaymentItem extends TelegramType {
 
     /**
      * {@code currency} three-letter ISO 4217 currency code
@@ -37,23 +37,23 @@ public abstract class WalletItem extends TelegramType {
     protected final int totalAmount;
 
     /**
-     * Constructor to init a {@link WalletItem} object
+     * Constructor to init a {@link PaymentItem} object
      *
      * @param currency:    three-letter ISO 4217 currency code
      * @param totalAmount: total price in the smallest units of the currency (integer, not float/double)
      */
-    public WalletItem(String currency, int totalAmount) {
+    public PaymentItem(String currency, int totalAmount) {
         super(null);
         this.currency = currency;
         this.totalAmount = totalAmount;
     }
 
     /**
-     * Constructor to init a {@link WalletItem} object
+     * Constructor to init a {@link PaymentItem} object
      *
-     * @param jWalletItem: wallet item details as {@link JSONObject}
+     * @param jWalletItem: payment item details as {@link JSONObject}
      */
-    public WalletItem(JSONObject jWalletItem) {
+    public PaymentItem(JSONObject jWalletItem) {
         super(jWalletItem);
         currency = hTelegram.getString("currency");
         totalAmount = hTelegram.getInt("total_amount");
