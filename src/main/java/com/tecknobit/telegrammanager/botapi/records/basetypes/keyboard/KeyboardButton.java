@@ -27,13 +27,13 @@ public class KeyboardButton extends TelegramType {
 
     /**
      * {@code requestUser} if specified, pressing the button will open a list of suitable users. Tapping on any user
-     * will send their identifier to the bot in a “user_shared” service message. Available in private chats only
+     * will send their identifier to the bot in a "user_shared" service message. Available in private chats only
      */
     private final KeyboardButtonRequestUser requestUser;
 
     /**
      * {@code requestChat} if specified, pressing the button will open a list of suitable chats. Tapping on a chat will
-     * send its identifier to the bot in a “chat_shared” service message. Available in private chats only
+     * send its identifier to the bot in a "chat_shared" service message. Available in private chats only
      */
     private final KeyboardButtonRequestChat requestChat;
 
@@ -57,7 +57,7 @@ public class KeyboardButton extends TelegramType {
 
     /**
      * {@code webApp} if specified, the described Web App will be launched when the button is pressed. The Web App will
-     * be able to send a “web_app_data” service message. Available in private chats only
+     * be able to send a "web_app_data" service message. Available in private chats only
      */
     private final WebAppInfo webApp;
 
@@ -67,9 +67,9 @@ public class KeyboardButton extends TelegramType {
      * @param text:            text of the button. If none of the optional fields are used, it will be sent as a message when the
      *                         button is pressed
      * @param requestUser:     if specified, pressing the button will open a list of suitable users. Tapping on any user
-     *                         will send their identifier to the bot in a “user_shared” service message. Available in private chats only
+     *                         will send their identifier to the bot in a "user_shared" service message. Available in private chats only
      * @param requestChat:     if specified, pressing the button will open a list of suitable chats. Tapping on a chat will
-     *                         send its identifier to the bot in a “chat_shared” service message. Available in private chats only
+     *                         send its identifier to the bot in a "chat_shared" service message. Available in private chats only
      * @param requestContact:  if the user's phone number will be sent as a contact when the button is pressed. Available
      *                         in private chats only
      * @param requestLocation: if the user's current location will be sent when the button is pressed. Available in
@@ -77,7 +77,7 @@ public class KeyboardButton extends TelegramType {
      * @param requestPoll:     if specified, the user will be asked to create a poll and send it to the bot when the
      *                         button is pressed. Available in private chats only
      * @param webApp:          if specified, the described Web App will be launched when the button is pressed. The Web App will
-     *                         be able to send a “web_app_data” service message. Available in private chats only
+     *                         be able to send a "web_app_data" service message. Available in private chats only
      */
     public KeyboardButton(String text, KeyboardButtonRequestUser requestUser, KeyboardButtonRequestChat requestChat,
                           boolean requestContact, boolean requestLocation, KeyboardButtonPollType requestPoll,

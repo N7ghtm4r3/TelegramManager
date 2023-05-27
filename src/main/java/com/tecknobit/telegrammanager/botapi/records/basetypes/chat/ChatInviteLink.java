@@ -20,7 +20,7 @@ public class ChatInviteLink extends TelegramType {
 
     /**
      * {@code inviteLink} the invite link. If the link was created by another chat administrator, then the second part of
-     * the link will be replaced with “…”
+     * the link will be replaced with "..."
      */
     private final String inviteLink;
 
@@ -69,7 +69,7 @@ public class ChatInviteLink extends TelegramType {
      * Constructor to init a {@link ChatInviteLink} object
      *
      * @param inviteLink:              the invite link. If the link was created by another chat administrator, then the second part of
-     *                                 the link will be replaced with “…”
+     *                                 the link will be replaced with "..."
      * @param creator:                 of the link
      * @param createsJoinRequest:      if users joining the chat via the link need to be approved by chat administrators
      * @param isPrimary:               if the link is primary
@@ -189,7 +189,7 @@ public class ChatInviteLink extends TelegramType {
      * @return {@link #expireDate} instance as {@link Date}
      */
     public Date getExpireDate() {
-        return new Date(expireDate);
+        return getDateValue(expireDate);
     }
 
     /**

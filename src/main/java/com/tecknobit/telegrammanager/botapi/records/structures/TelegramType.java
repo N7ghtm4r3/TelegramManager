@@ -16,6 +16,8 @@ public abstract class TelegramType extends TelegramTypeStructure {
 
     /**
      * {@code ok} whether the response has been successful
+     *
+     * @apiNote if the object has been instantiated directly without the request will be {@code "false"} as default
      */
     protected final boolean ok;
 

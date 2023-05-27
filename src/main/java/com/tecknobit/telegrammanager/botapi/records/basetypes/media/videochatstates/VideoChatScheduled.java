@@ -59,7 +59,7 @@ public class VideoChatScheduled extends TelegramType {
      * @return {@link #startDate} instance as {@link Date}
      */
     public Date getStartDate() {
-        return new Date(startDate);
+        return getDateValue(startDate);
     }
 
     /**

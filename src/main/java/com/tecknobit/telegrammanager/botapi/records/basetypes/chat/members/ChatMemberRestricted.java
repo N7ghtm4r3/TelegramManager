@@ -337,7 +337,7 @@ public class ChatMemberRestricted extends ChatMember {
      * @return {@link #untilDate} instance as {@link Date}
      */
     public Date getUntilDate() {
-        return new Date(untilDate);
+        return getDateValue(untilDate);
     }
 
     /**

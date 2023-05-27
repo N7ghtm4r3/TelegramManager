@@ -2,10 +2,12 @@ package com.tecknobit.telegrammanager.botapi.records.structures;
 
 import com.tecknobit.apimanager.annotations.Structure;
 import com.tecknobit.apimanager.formatters.JsonHelper;
+import com.tecknobit.apimanager.formatters.TimeFormatter;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * The {@code TelegramTypeStructure} class is useful to format a {@code Telegram}'s type structure
@@ -46,6 +48,20 @@ public abstract class TelegramTypeStructure {
             for (int j = 0; j < jList.length(); j++)
                 strings.add(jList.getString(j));
         return strings;
+    }
+
+    /**
+     * Method to fetch a {@link String}' list
+     *
+     * @param dateTimestamp: timestamp of the date to get
+     * @return date value as {@link Date}
+     */
+    protected Date getDateValue(long dateTimestamp) {
+        dateTimestamp *= 1000;
+        if (dateTimestamp > 0)
+            return TimeFormatter.getDate(dateTimestamp);
+        else
+            return null;
     }
 
     /**

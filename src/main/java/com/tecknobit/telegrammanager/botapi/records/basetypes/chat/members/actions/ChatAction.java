@@ -117,7 +117,7 @@ public abstract class ChatAction extends TelegramType {
      * @return {@link #date} instance as {@link Date}
      */
     public Date getDate() {
-        return new Date(date);
+        return getDateValue(date);
     }
 
     /**

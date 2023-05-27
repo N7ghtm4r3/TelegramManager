@@ -300,7 +300,7 @@ public class Poll extends TelegramType {
      * @return {@link #closeDate} instance as {@link Date}
      */
     public Date getCloseDate() {
-        return new Date(closeDate);
+        return getDateValue(closeDate);
     }
 
     /**

@@ -21,7 +21,7 @@ public class Dice extends TelegramType {
     private final String emoji;
 
     /**
-     * {@code value} of the dice, 1-6 for “🎲”, “🎯” and “🎳” base emoji, 1-5 for “🏀” and “⚽” base emoji, 1-64 for “🎰” base emoji
+     * {@code value} of the dice
      */
     private final int value;
 
@@ -29,7 +29,7 @@ public class Dice extends TelegramType {
      * Constructor to init a {@link Dice} object
      *
      * @param emoji: emoji on which the dice throw animation is based
-     * @param value: value of the dice, 1-6 for “🎲”, “🎯” and “🎳” base emoji, 1-5 for “🏀” and “⚽” base emoji, 1-64 for “🎰” base emoji
+     * @param value: value of the dice
      */
     public Dice(String emoji, int value) {
         super(null);

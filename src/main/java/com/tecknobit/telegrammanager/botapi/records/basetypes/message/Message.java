@@ -765,7 +765,7 @@ public class Message extends TelegramType {
      * @return {@link #date} instance as {@link Date}
      */
     public Date getDate() {
-        return new Date(date);
+        return getDateValue(date);
     }
 
     /**
@@ -845,7 +845,7 @@ public class Message extends TelegramType {
      * @return {@link #forwardDate} instance as {@link Date}
      */
     public Date getForwardDate() {
-        return new Date(forwardDate);
+        return getDateValue(forwardDate);
     }
 
     /**
@@ -905,7 +905,7 @@ public class Message extends TelegramType {
      * @return {@link #editDate} instance as {@link Date}
      */
     public Date getEditDate() {
-        return new Date(editDate);
+        return getDateValue(editDate);
     }
 
     /**
