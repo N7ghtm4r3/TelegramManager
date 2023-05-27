@@ -5,12 +5,13 @@ import com.tecknobit.telegrammanager.botapi.records.basetypes.WriteAccessAllowed
 import com.tecknobit.telegrammanager.botapi.records.basetypes.chat.Chat;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.chat.MessageAutoDeleteTimerChanged;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.chat.attachments.Dice;
-import com.tecknobit.telegrammanager.botapi.records.basetypes.chat.attachments.Game;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.chat.attachments.Poll;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.chat.attachments.ProximityAlertTriggered;
+import com.tecknobit.telegrammanager.botapi.records.basetypes.chat.attachments.games.Game;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.forum.*;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.keyboard.inline.InlineKeyboardMarkup;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.media.*;
+import com.tecknobit.telegrammanager.botapi.records.basetypes.media.stickers.Sticker;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.media.videochatstates.VideoChatEnded;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.media.videochatstates.VideoChatParticipantsInvited;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.media.videochatstates.VideoChatScheduled;

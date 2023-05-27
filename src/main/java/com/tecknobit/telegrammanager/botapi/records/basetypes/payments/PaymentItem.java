@@ -19,6 +19,10 @@ import org.json.JSONObject;
  *          <a href="https://core.telegram.org/bots/api#successfulpayment">
  *              SuccessfulPayment</a>
  *     </li>
+ *     <li>
+ *          <a href="https://core.telegram.org/bots/api#precheckoutquery">
+ *              PreCheckoutQuery</a>
+ *     </li>
  * </ul>
  * @see TelegramTypeStructure
  * @see TelegramType
@@ -51,10 +55,10 @@ public abstract class PaymentItem extends TelegramType {
     /**
      * Constructor to init a {@link PaymentItem} object
      *
-     * @param jWalletItem: payment item details as {@link JSONObject}
+     * @param jPaymentItem: payment item details as {@link JSONObject}
      */
-    public PaymentItem(JSONObject jWalletItem) {
-        super(jWalletItem);
+    public PaymentItem(JSONObject jPaymentItem) {
+        super(jPaymentItem);
         currency = hTelegram.getString("currency");
         totalAmount = hTelegram.getInt("total_amount");
     }

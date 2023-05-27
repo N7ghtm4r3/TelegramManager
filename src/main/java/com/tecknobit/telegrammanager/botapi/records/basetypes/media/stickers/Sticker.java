@@ -1,6 +1,8 @@
-package com.tecknobit.telegrammanager.botapi.records.basetypes.media;
+package com.tecknobit.telegrammanager.botapi.records.basetypes.media.stickers;
 
-import com.tecknobit.telegrammanager.botapi.records.basetypes.MaskPosition;
+import com.tecknobit.telegrammanager.botapi.records.basetypes.media.MediaStructure;
+import com.tecknobit.telegrammanager.botapi.records.basetypes.media.PhotoSize;
+import com.tecknobit.telegrammanager.botapi.records.basetypes.media.TelegramFile;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramType;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramTypeStructure;
 import org.json.JSONObject;

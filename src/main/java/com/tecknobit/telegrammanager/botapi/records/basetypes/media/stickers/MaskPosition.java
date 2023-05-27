@@ -1,4 +1,4 @@
-package com.tecknobit.telegrammanager.botapi.records.basetypes;
+package com.tecknobit.telegrammanager.botapi.records.basetypes.media.stickers;
 
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramType;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramTypeStructure;

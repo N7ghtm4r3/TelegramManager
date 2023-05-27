@@ -2,7 +2,7 @@ package com.tecknobit.telegrammanager.botapi.records.basetypes.keyboard.inline;
 
 import com.tecknobit.apimanager.annotations.Returner;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.LoginUrl;
-import com.tecknobit.telegrammanager.botapi.records.basetypes.chat.attachments.CallbackGame;
+import com.tecknobit.telegrammanager.botapi.records.basetypes.chat.attachments.games.CallbackGame;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.webapp.WebAppInfo;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramType;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramTypeStructure;

@@ -1,4 +1,4 @@
-package com.tecknobit.telegrammanager.botapi.records.basetypes.chat.attachments;
+package com.tecknobit.telegrammanager.botapi.records.basetypes.chat.attachments.games;
 
 import com.tecknobit.telegrammanager.botapi.records.basetypes.media.PhotoSize;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.media.Video;
