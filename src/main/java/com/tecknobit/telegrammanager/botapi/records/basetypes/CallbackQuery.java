@@ -2,6 +2,7 @@ package com.tecknobit.telegrammanager.botapi.records.basetypes;
 
 import com.tecknobit.telegrammanager.botapi.records.basetypes.message.Message;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.userdata.User;
+import com.tecknobit.telegrammanager.botapi.records.structures.QueryStructure;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramType;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramTypeStructure;
 import org.json.JSONObject;
@@ -14,18 +15,9 @@ import org.json.JSONObject;
  * CallbackQuery</a>
  * @see TelegramTypeStructure
  * @see TelegramType
+ * @see QueryStructure
  */
-public class CallbackQuery extends TelegramType {
-
-    /**
-     * {@code id} unique identifier for this query
-     */
-    private final String id;
-
-    /**
-     * {@code from} sender
-     */
-    private final User from;
+public class CallbackQuery extends QueryStructure {
 
     /**
      * {@code message} with the callback button that originated the query. Note that message content and message
@@ -71,9 +63,7 @@ public class CallbackQuery extends TelegramType {
      */
     public CallbackQuery(String id, User from, Message message, String inlineMessageId, String chatInstance, String data,
                          String gameShortName) {
-        super(null);
-        this.id = id;
-        this.from = from;
+        super(id, from);
         this.message = message;
         this.inlineMessageId = inlineMessageId;
         this.chatInstance = chatInstance;
@@ -88,33 +78,11 @@ public class CallbackQuery extends TelegramType {
      */
     public CallbackQuery(JSONObject jCallbackQuery) {
         super(jCallbackQuery);
-        id = hTelegram.getString("id");
-        from = new User(hTelegram.getJSONObject("from"));
         message = Message.getInstance(hTelegram.getJSONObject("message"));
         inlineMessageId = hTelegram.getString("inline_message_id");
         chatInstance = hTelegram.getString("chat_instance");
         data = hTelegram.getString("data");
         gameShortName = hTelegram.getString("game_short_name");
-    }
-
-    /**
-     * Method to get {@link #id} instance <br>
-     * No-any params required
-     *
-     * @return {@link #id} instance as {@link String}
-     */
-    public String getId() {
-        return id;
-    }
-
-    /**
-     * Method to get {@link #from} instance <br>
-     * No-any params required
-     *
-     * @return {@link #from} instance as {@link User}
-     */
-    public User getFrom() {
-        return from;
     }
 
     /**

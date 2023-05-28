@@ -59,6 +59,20 @@ public class Chat extends ProfileStructure {
         }
 
         /**
+         * Method to get an instance of this enum
+         *
+         * @param type: type to fetch
+         * @return instance as {@link ChatType}
+         */
+        public static ChatType getInstance(String type) {
+            try {
+                return ChatType.valueOf(type);
+            } catch (IllegalArgumentException e) {
+                return null;
+            }
+        }
+
+        /**
          * Method to get {@link #type} instance <br>
          * No-any params required
          *

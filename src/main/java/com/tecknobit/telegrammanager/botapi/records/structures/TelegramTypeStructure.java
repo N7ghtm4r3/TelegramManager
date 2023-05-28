@@ -51,6 +51,20 @@ public abstract class TelegramTypeStructure {
     }
 
     /**
+     * Method to fetch a {@link Integer}' list
+     *
+     * @param jList: JSON source from fetch the list
+     * @return integers list as {@link ArrayList} of {@link Integer}
+     */
+    protected ArrayList<Integer> fetchIntegersList(JSONArray jList) {
+        ArrayList<Integer> integers = new ArrayList<>();
+        if (jList != null)
+            for (int j = 0; j < jList.length(); j++)
+                integers.add(jList.getInt(j));
+        return integers;
+    }
+
+    /**
      * Method to fetch a {@link String}' list
      *
      * @param dateTimestamp: timestamp of the date to get
