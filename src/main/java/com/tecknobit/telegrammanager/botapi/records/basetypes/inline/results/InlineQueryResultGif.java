@@ -9,7 +9,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import static com.tecknobit.telegrammanager.botapi.records.basetypes.inline.results.InlineQueryResultGif.ThumbnailMimeType.IMAGE_JPEG;
-import static com.tecknobit.telegrammanager.botapi.records.basetypes.inline.results.parents.InlineQueryResult.InlineQueryResultType.gif;
 
 public class InlineQueryResultGif<T extends InputMessageContentType> extends InlineQueryResultCaptioned<T> {
 
@@ -45,11 +44,11 @@ public class InlineQueryResultGif<T extends InputMessageContentType> extends Inl
 
     private final ThumbnailMimeType thumbnailMimeType;
 
-    public InlineQueryResultGif(String id, T inputMessageContent, InlineKeyboardMarkup replyMarkup, String title,
-                                String caption, ArrayList<MessageEntity> captionEntities, String parseMode, String url,
-                                double width, double height, int duration, String thumbnailUrl,
-                                ThumbnailMimeType thumbnailMimeType) {
-        super(gif, id, inputMessageContent, replyMarkup, title, caption, captionEntities, parseMode);
+    public InlineQueryResultGif(InlineQueryResultType type, String id, T inputMessageContent,
+                                InlineKeyboardMarkup replyMarkup, String title, String caption,
+                                ArrayList<MessageEntity> captionEntities, String parseMode, String url, double width,
+                                double height, int duration, String thumbnailUrl, ThumbnailMimeType thumbnailMimeType) {
+        super(type, id, inputMessageContent, replyMarkup, title, caption, captionEntities, parseMode);
         this.url = url;
         this.width = width;
         this.height = height;

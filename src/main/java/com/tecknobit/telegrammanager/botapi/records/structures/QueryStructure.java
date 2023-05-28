@@ -4,7 +4,24 @@ import com.tecknobit.apimanager.annotations.Structure;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.userdata.User;
 import org.json.JSONObject;
 
-// TODO: 28/05/2023 DOCUMENT
+/**
+ * The {@code QueryStructure} class is useful to format a {@code Telegram}'s query structure
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ * @apiNote see the official documentation at:
+ * <ul>
+ *     <li>
+ *         <a href="https://core.telegram.org/bots/api#callbackquery">
+ *             CallbackQuery</a>
+ *     </li>
+ *     <li>
+ *         <a href="https://core.telegram.org/bots/api#inlinequery">
+ *             InlineQuery</a>
+ *     </li>
+ * </ul>
+ * @see TelegramTypeStructure
+ * @see TelegramType
+ */
 @Structure
 public abstract class QueryStructure extends TelegramType {
 
