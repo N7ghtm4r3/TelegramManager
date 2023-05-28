@@ -1,11 +1,12 @@
 package com.tecknobit.telegrammanager.botapi.records.basetypes.inline.inputmessage;
 
 import com.tecknobit.apimanager.annotations.Structure;
+import com.tecknobit.telegrammanager.botapi.records.basetypes.inline.inputmessage.InputMessageContent.InputMessageContentType;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramType;
 import org.json.JSONObject;
 
 @Structure
-public abstract class InputCoordinatesMessageContent extends TelegramType {
+public abstract class InputCoordinatesMessageContent extends TelegramType implements InputMessageContentType {
 
     protected final double latitude;
 

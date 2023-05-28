@@ -6,9 +6,10 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import static com.tecknobit.telegrammanager.botapi.records.basetypes.inline.inputmessage.InputMessageContent.InputMessageContentType;
 import static com.tecknobit.telegrammanager.botapi.records.basetypes.payments.LabeledPrice.returnLabeledPrices;
 
-public class InputInvoiceMessageContent extends TelegramType {
+public class InputInvoiceMessageContent extends TelegramType implements InputMessageContentType {
 
     private final String title;
 

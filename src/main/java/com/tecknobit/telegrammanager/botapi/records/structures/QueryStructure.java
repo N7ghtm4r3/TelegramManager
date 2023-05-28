@@ -4,6 +4,7 @@ import com.tecknobit.apimanager.annotations.Structure;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.userdata.User;
 import org.json.JSONObject;
 
+// TODO: 28/05/2023 DOCUMENT
 @Structure
 public abstract class QueryStructure extends TelegramType {
 

@@ -3,7 +3,9 @@ package com.tecknobit.telegrammanager.botapi.records.basetypes.inline.inputmessa
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramType;
 import org.json.JSONObject;
 
-public class InputContactMessageContent extends TelegramType {
+import static com.tecknobit.telegrammanager.botapi.records.basetypes.inline.inputmessage.InputMessageContent.InputMessageContentType;
+
+public class InputContactMessageContent extends TelegramType implements InputMessageContentType {
 
     private final String phoneNumber;
 
