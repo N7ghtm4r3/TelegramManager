@@ -2,11 +2,26 @@ package com.tecknobit.telegrammanager.botapi.records.basetypes.inline.inputmessa
 
 import org.json.JSONObject;
 
+/**
+ * The {@code InputMessageContent} class is useful to format manage all the input message contents
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ */
 public class InputMessageContent {
 
+    /**
+     * Constructor to init a {@link InputMessageContent} object <br>
+     * No-any params required
+     */
     private InputMessageContent() {
     }
 
+    /**
+     * Method to instantiate and return the correct {@link InputMessageContent}
+     *
+     * @param jInputMessageContent: source as {@link JSONObject}
+     * @return an instance of {@link InputMessageContent} in the correct format
+     */
     public static <T> T getInputMessageContent(JSONObject jInputMessageContent) {
         if (jInputMessageContent != null) {
             if (jInputMessageContent.has("disable_web_page_preview"))
@@ -23,6 +38,11 @@ public class InputMessageContent {
         return null;
     }
 
+    /**
+     * The {@code InputMessageContentType} interface to mark an {@link InputMessageContent}
+     *
+     * @author N7ghtm4r3 - Tecknobit
+     */
     public interface InputMessageContentType {
     }
 
