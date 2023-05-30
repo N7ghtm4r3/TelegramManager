@@ -1,6 +1,7 @@
 package com.tecknobit.telegrammanager.botapi.records.basetypes.userdata;
 
 import com.tecknobit.apimanager.annotations.Returner;
+import com.tecknobit.telegrammanager.botapi.TelegramBotManager.ReturnFormat;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.parents.ProfileStructure;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramType;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramTypeStructure;
@@ -167,6 +168,22 @@ public class User extends ProfileStructure {
      */
     public boolean canSupportsInlineQueries() {
         return supportsInlineQueries;
+    }
+
+    /**
+     * Method to create a user
+     *
+     * @param userResponse: obtained from Telegram's response
+     * @param format:       return type formatter -> {@link ReturnFormat}
+     * @return user as {@code "format"} defines
+     **/
+    @Returner
+    public static <T> T returnUser(String userResponse, ReturnFormat format) {
+        return switch (format) {
+            case JSON -> (T) new JSONObject(userResponse);
+            case LIBRARY_OBJECT -> (T) new User(new JSONObject(userResponse));
+            default -> (T) userResponse;
+        };
     }
 
     /**

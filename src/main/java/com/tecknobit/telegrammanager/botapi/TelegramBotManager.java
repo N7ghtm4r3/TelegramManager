@@ -1,8 +1,12 @@
 package com.tecknobit.telegrammanager.botapi;
 
+import com.tecknobit.apimanager.annotations.Returner;
 import com.tecknobit.apimanager.annotations.Wrapper;
 import com.tecknobit.apimanager.apis.APIRequest;
 import com.tecknobit.apimanager.apis.APIRequest.RequestMethod;
+import com.tecknobit.apimanager.formatters.JsonHelper;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -14,7 +18,7 @@ import static com.tecknobit.apimanager.apis.APIRequest.RequestMethod.POST;
 import static java.lang.Integer.parseInt;
 
 /**
- * The {@code TelegramBotManager} class is useful to format a {@code Telegram}'s bot manager
+ * The {@code TelegramBotManager} class is useful to create a {@code Telegram}'s bot manager
  *
  * @author N7ghtm4r3 - Tecknobit
  * @apiNote see the official documentation at: <a href="https://core.telegram.org/bots/api">
@@ -183,6 +187,16 @@ public class TelegramBotManager {
     }
 
     /**
+     * Method to fetch the {@code "result"}'s section from a response
+     *
+     * @param response: the response obtained
+     * @return {@code "result"}'s section as {@link JSONArray}
+     */
+    public JSONArray getResultFromList(String response) {
+        return JsonHelper.getJSONArray(new JSONObject(response), "result", new JSONArray());
+    }
+
+    /**
      * Method to get {@link #token} instance <br>
      * No-any params required
      *
@@ -203,6 +217,16 @@ public class TelegramBotManager {
     }
 
     /**
+     * Method to get the error response of the request <br>
+     * Any params required
+     *
+     * @return error response of the request formatted as {@link T}
+     */
+    public <T> T getJSONErrorResponse() {
+        return apiRequest.getJSONErrorResponse();
+    }
+
+    /**
      * Method to print the error response of the request <br>
      * Any params required
      */
@@ -218,6 +242,31 @@ public class TelegramBotManager {
      */
     public int getStatusCode() {
         return apiRequest.getResponseStatusCode();
+    }
+
+    /**
+     * {@code ReturnFormat} is the instance to pass in {@link Returner} methods to format as you want the response by
+     * {@code "Telegram"}
+     *
+     * @apiNote you can choose between:
+     * <ul>
+     * <li>
+     * {@link Returner.ReturnFormat#STRING} -> returns the response formatted as {@link String}
+     * </li>
+     * <li>
+     * {@link Returner.ReturnFormat#JSON} -> returns the response formatted as {@code "JSON"}
+     * </li>
+     * <li>
+     * {@link Returner.ReturnFormat#LIBRARY_OBJECT} -> returns the response formatted as custom object offered by library that uses this list
+     * </li>
+     * </ul>
+     **/
+    public enum ReturnFormat {
+
+        STRING,
+        JSON,
+        LIBRARY_OBJECT
+
     }
 
     /**
