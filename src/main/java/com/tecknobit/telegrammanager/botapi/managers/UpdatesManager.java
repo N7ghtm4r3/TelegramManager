@@ -1,12 +1,10 @@
-package com.tecknobit.telegrammanager.botapi.updates;
+package com.tecknobit.telegrammanager.botapi.managers;
 
 import com.tecknobit.apimanager.annotations.RequestPath;
 import com.tecknobit.apimanager.annotations.Returner;
-import com.tecknobit.apimanager.annotations.WrappedRequest;
 import com.tecknobit.apimanager.annotations.Wrapper;
-import com.tecknobit.telegrammanager.botapi.TelegramBotManager;
-import com.tecknobit.telegrammanager.botapi.updates.records.Update;
-import com.tecknobit.telegrammanager.botapi.updates.records.WebhookInfo;
+import com.tecknobit.telegrammanager.botapi.records.basetypes.Update;
+import com.tecknobit.telegrammanager.botapi.records.basetypes.WebhookInfo;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -15,17 +13,17 @@ import java.util.ArrayList;
 
 import static com.tecknobit.apimanager.apis.APIRequest.RequestMethod.GET;
 import static com.tecknobit.apimanager.apis.APIRequest.RequestMethod.POST;
-import static com.tecknobit.telegrammanager.botapi.TelegramBotManager.ReturnFormat.LIBRARY_OBJECT;
+import static com.tecknobit.telegrammanager.botapi.managers.TelegramBotManager.ReturnFormat.LIBRARY_OBJECT;
 
 /**
- * The {@code TelegramBotUpdatesManager} class is useful to format a {@code Telegram}'s updates manager
+ * The {@code UpdatesManager} class is useful to format a {@code Telegram}'s updates manager
  *
  * @author N7ghtm4r3 - Tecknobit
  * @apiNote see the official documentation at: <a href="https://core.telegram.org/bots/api#getting-updates">
  * Getting updates</a>
  * @see TelegramBotManager
  */
-public class TelegramBotUpdatesManager extends TelegramBotManager {
+public class UpdatesManager extends TelegramBotManager {
 
     /**
      * {@code GET_UPDATES_ENDPOINT} is constant for GET_UPDATES_ENDPOINT's endpoint
@@ -48,51 +46,51 @@ public class TelegramBotUpdatesManager extends TelegramBotManager {
     public static final String GET_WEBHOOK_INFO_ENDPOINT = "getWebhookInfo";
 
     /**
-     * Constructor to init {@link TelegramBotUpdatesManager}
+     * Constructor to init {@link UpdatesManager}
      *
      * @param token               : the bot unique authentication token
      * @param defaultErrorMessage : error message to return if is not request error
      */
-    public TelegramBotUpdatesManager(String token, String defaultErrorMessage) {
+    public UpdatesManager(String token, String defaultErrorMessage) {
         super(token, defaultErrorMessage);
     }
 
     /**
-     * Constructor to init {@link TelegramBotUpdatesManager}
+     * Constructor to init {@link UpdatesManager}
      *
      * @param token          : the bot unique authentication token
      * @param requestTimeout :       timeout for the requests
      */
-    public TelegramBotUpdatesManager(String token, int requestTimeout) {
+    public UpdatesManager(String token, int requestTimeout) {
         super(token, requestTimeout);
     }
 
     /**
-     * Constructor to init {@link TelegramBotUpdatesManager}
+     * Constructor to init {@link UpdatesManager}
      *
      * @param token : the bot unique authentication token
      */
-    public TelegramBotUpdatesManager(String token) {
+    public UpdatesManager(String token) {
         super(token);
     }
 
     /**
-     * Constructor to init {@link TelegramBotUpdatesManager}
+     * Constructor to init {@link UpdatesManager}
      *
      * @param token               : the bot unique authentication token
      * @param defaultErrorMessage : error message to return if is not request error
      * @param requestTimeout      :       timeout for the requests
      */
-    public TelegramBotUpdatesManager(String token, String defaultErrorMessage, int requestTimeout) {
+    public UpdatesManager(String token, String defaultErrorMessage, int requestTimeout) {
         super(token, defaultErrorMessage, requestTimeout);
     }
 
     /**
-     * Constructor to init a {@link TelegramBotUpdatesManager} object <br>
+     * Constructor to init a {@link UpdatesManager} object <br>
      * No-any params required
      *
      * @throws IllegalArgumentException when a parameterized constructor has not been called before this constructor
-     * @apiNote this constructor is useful to instantiate a new {@link TelegramBotUpdatesManager}'s manager without re-insert
+     * @apiNote this constructor is useful to instantiate a new {@link UpdatesManager}'s manager without re-insert
      * the credentials and is useful in those cases if you need to use different manager at the same time:
      * <pre>
      *     {@code
@@ -103,7 +101,7 @@ public class TelegramBotUpdatesManager extends TelegramBotManager {
      *     }
      * </pre>
      */
-    public TelegramBotUpdatesManager() throws Exception {
+    public UpdatesManager() throws Exception {
         super();
     }
 
@@ -444,7 +442,6 @@ public class TelegramBotUpdatesManager extends TelegramBotManager {
      * @apiNote see the official documentation at: <a href="https://core.telegram.org/bots/api#deletewebhook">
      * deleteWebhook</a>
      **/
-    @WrappedRequest
     @RequestPath(method = POST, path = "deleteWebhook")
 
     public boolean deleteWebhook(boolean dropPendingUpdates) {

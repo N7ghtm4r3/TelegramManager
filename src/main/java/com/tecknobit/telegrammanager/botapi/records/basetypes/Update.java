@@ -1,6 +1,5 @@
-package com.tecknobit.telegrammanager.botapi.updates.records;
+package com.tecknobit.telegrammanager.botapi.records.basetypes;
 
-import com.tecknobit.telegrammanager.botapi.records.basetypes.CallbackQuery;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.chat.attachments.Poll;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.chat.attachments.Poll.PollAnswer;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.chat.members.actions.ChatJoinRequest;

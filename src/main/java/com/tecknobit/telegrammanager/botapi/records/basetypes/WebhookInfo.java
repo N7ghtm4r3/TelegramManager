@@ -1,4 +1,4 @@
-package com.tecknobit.telegrammanager.botapi.updates.records;
+package com.tecknobit.telegrammanager.botapi.records.basetypes;
 
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramType;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramTypeStructure;

@@ -1,5 +1,6 @@
 package com.tecknobit.telegrammanager.botapi.records.basetypes.message;
 
+import com.tecknobit.apimanager.annotations.Returner;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.ItemShared;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.WriteAccessAllowed;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.chat.Chat;
@@ -30,6 +31,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Date;
+
+import static com.tecknobit.telegrammanager.botapi.managers.TelegramBotManager.ReturnFormat;
 
 /**
  * The {@code Message} class is useful to format a {@code Telegram}'s message
@@ -1436,6 +1439,22 @@ public class Message extends TelegramType {
      */
     public InlineKeyboardMarkup getReplyMarkup() {
         return replyMarkup;
+    }
+
+    /**
+     * Method to create a message
+     *
+     * @param messageResponse : obtained from Telegram's response
+     * @param format          :       return type formatter -> {@link ReturnFormat}
+     * @return message as {@code "format"} defines
+     **/
+    @Returner
+    public static <T> T returnMessage(String messageResponse, ReturnFormat format) {
+        return switch (format) {
+            case JSON -> (T) new JSONObject(messageResponse);
+            case LIBRARY_OBJECT -> (T) new Message(new JSONObject(messageResponse));
+            default -> (T) messageResponse;
+        };
     }
 
     /**

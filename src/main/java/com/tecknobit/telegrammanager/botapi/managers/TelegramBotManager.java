@@ -1,4 +1,4 @@
-package com.tecknobit.telegrammanager.botapi;
+package com.tecknobit.telegrammanager.botapi.managers;
 
 import com.tecknobit.apimanager.annotations.Returner;
 import com.tecknobit.apimanager.annotations.Wrapper;

@@ -1,7 +1,7 @@
 package com.tecknobit.telegrammanager.botapi.records.basetypes.userdata;
 
 import com.tecknobit.apimanager.annotations.Returner;
-import com.tecknobit.telegrammanager.botapi.TelegramBotManager.ReturnFormat;
+import com.tecknobit.telegrammanager.botapi.managers.TelegramBotManager.ReturnFormat;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.parents.ProfileStructure;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramType;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramTypeStructure;

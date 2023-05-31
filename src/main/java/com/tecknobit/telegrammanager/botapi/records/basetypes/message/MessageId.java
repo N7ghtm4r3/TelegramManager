@@ -1,5 +1,7 @@
 package com.tecknobit.telegrammanager.botapi.records.basetypes.message;
 
+import com.tecknobit.apimanager.annotations.Returner;
+import com.tecknobit.telegrammanager.botapi.managers.TelegramBotManager;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramType;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramTypeStructure;
 import org.json.JSONObject;
@@ -48,6 +50,22 @@ public class MessageId extends TelegramType {
      */
     public long getMessageId() {
         return messageId;
+    }
+
+    /**
+     * Method to create a message id
+     *
+     * @param messageIdResponse : obtained from Telegram's response
+     * @param format            :       return type formatter -> {@link TelegramBotManager.ReturnFormat}
+     * @return message id as {@code "format"} defines
+     **/
+    @Returner
+    public static <T> T returnMessageId(String messageIdResponse, TelegramBotManager.ReturnFormat format) {
+        return switch (format) {
+            case JSON -> (T) new JSONObject(messageIdResponse);
+            case LIBRARY_OBJECT -> (T) new MessageId(new JSONObject(messageIdResponse));
+            default -> (T) messageIdResponse;
+        };
     }
 
     /**
