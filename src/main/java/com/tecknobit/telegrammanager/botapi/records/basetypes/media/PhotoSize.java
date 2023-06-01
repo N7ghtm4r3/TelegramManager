@@ -74,7 +74,7 @@ public class PhotoSize extends MediaStructure {
      * @param decimals: number of digits to round final value
      * @return {@link #width} instance rounded with decimal digits inserted
      * @throws IllegalArgumentException if decimalDigits is negative
-     **/
+     */
     public double getWidth(int decimals) {
         return roundValue(width, decimals);
     }
@@ -95,7 +95,7 @@ public class PhotoSize extends MediaStructure {
      * @param decimals: number of digits to round final value
      * @return {@link #height} instance rounded with decimal digits inserted
      * @throws IllegalArgumentException if decimalDigits is negative
-     **/
+     */
     public double getHeight(int decimals) {
         return roundValue(height, decimals);
     }

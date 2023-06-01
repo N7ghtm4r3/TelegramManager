@@ -192,7 +192,7 @@ public class TelegramBotManager {
      * @param response: the response obtained
      * @return {@code "result"}'s section as {@link JSONArray}
      */
-    public JSONArray getResultFromList(String response) {
+    public static JSONArray getResultFromList(String response) {
         return JsonHelper.getJSONArray(new JSONObject(response), "result", new JSONArray());
     }
 
@@ -260,7 +260,7 @@ public class TelegramBotManager {
      * {@link Returner.ReturnFormat#LIBRARY_OBJECT} -> returns the response formatted as custom object offered by library that uses this list
      * </li>
      * </ul>
-     **/
+     */
     public enum ReturnFormat {
 
         STRING,

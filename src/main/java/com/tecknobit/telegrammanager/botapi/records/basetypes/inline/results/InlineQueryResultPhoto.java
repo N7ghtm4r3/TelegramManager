@@ -125,7 +125,7 @@ public class InlineQueryResultPhoto<T extends InputMessageContentType> extends I
      * @param decimals: number of digits to round final value
      * @return {@link #photoWidth} instance rounded with decimal digits inserted
      * @throws IllegalArgumentException if decimalDigits is negative
-     **/
+     */
     public double getPhotoWidth(int decimals) {
         return roundValue(photoWidth, decimals);
     }
@@ -146,7 +146,7 @@ public class InlineQueryResultPhoto<T extends InputMessageContentType> extends I
      * @param decimals: number of digits to round final value
      * @return {@link #photoHeight} instance rounded with decimal digits inserted
      * @throws IllegalArgumentException if decimalDigits is negative
-     **/
+     */
     public double getPhotoHeight(int decimals) {
         return roundValue(photoHeight, decimals);
     }

@@ -31,9 +31,8 @@ public abstract class TelegramTypeStructure {
      */
     public TelegramTypeStructure(JSONObject jTelegramTypeStructure) {
         if (jTelegramTypeStructure == null)
-            hTelegram = null;
-        else
-            hTelegram = new JsonHelper(jTelegramTypeStructure);
+            jTelegramTypeStructure = new JSONObject();
+        hTelegram = new JsonHelper(jTelegramTypeStructure);
     }
 
     /**

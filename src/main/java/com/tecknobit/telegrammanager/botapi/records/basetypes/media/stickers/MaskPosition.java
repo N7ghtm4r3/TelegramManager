@@ -119,7 +119,7 @@ public class MaskPosition extends TelegramType {
      * @param decimals: number of digits to round final value
      * @return {@link #xShift} instance rounded with decimal digits inserted
      * @throws IllegalArgumentException if decimalDigits is negative
-     **/
+     */
     public double getxShift(int decimals) {
         return xShift;
     }
@@ -140,7 +140,7 @@ public class MaskPosition extends TelegramType {
      * @param decimals: number of digits to round final value
      * @return {@link #xShift} instance rounded with decimal digits inserted
      * @throws IllegalArgumentException if decimalDigits is negative
-     **/
+     */
     public double getyShift(int decimals) {
         return roundValue(yShift, decimals);
     }
@@ -161,7 +161,7 @@ public class MaskPosition extends TelegramType {
      * @param decimals: number of digits to round final value
      * @return {@link #scale} instance rounded with decimal digits inserted
      * @throws IllegalArgumentException if decimalDigits is negative
-     **/
+     */
     public double getScale(int decimals) {
         return roundValue(scale, decimals);
     }

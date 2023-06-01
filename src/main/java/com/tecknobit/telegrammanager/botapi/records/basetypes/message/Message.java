@@ -27,12 +27,14 @@ import com.tecknobit.telegrammanager.botapi.records.basetypes.userdata.passport.
 import com.tecknobit.telegrammanager.botapi.records.basetypes.webapp.WebAppData;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramType;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramTypeStructure;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Date;
 
 import static com.tecknobit.telegrammanager.botapi.managers.TelegramBotManager.ReturnFormat;
+import static com.tecknobit.telegrammanager.botapi.managers.TelegramBotManager.getResultFromList;
 
 /**
  * The {@code Message} class is useful to format a {@code Telegram}'s message
@@ -1447,13 +1449,35 @@ public class Message extends TelegramType {
      * @param messageResponse : obtained from Telegram's response
      * @param format          :       return type formatter -> {@link ReturnFormat}
      * @return message as {@code "format"} defines
-     **/
+     */
     @Returner
     public static <T> T returnMessage(String messageResponse, ReturnFormat format) {
         return switch (format) {
             case JSON -> (T) new JSONObject(messageResponse);
             case LIBRARY_OBJECT -> (T) new Message(new JSONObject(messageResponse));
             default -> (T) messageResponse;
+        };
+    }
+
+    /**
+     * Method to create a messages list
+     *
+     * @param messagesResponse : obtained from Telegram's response
+     * @param format           :       return type formatter -> {@link ReturnFormat}
+     * @return messages list as {@code "format"} defines
+     */
+    @Returner
+    public static <T> T returnMessages(String messagesResponse, ReturnFormat format) {
+        JSONArray result = getResultFromList(messagesResponse);
+        return switch (format) {
+            case JSON -> (T) result;
+            case LIBRARY_OBJECT -> {
+                ArrayList<Message> messages = new ArrayList<>();
+                for (int j = 0; j < result.length(); j++)
+                    messages.add(new Message(result.getJSONObject(j)));
+                yield (T) messages;
+            }
+            default -> (T) result.toString();
         };
     }
 

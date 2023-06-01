@@ -167,7 +167,7 @@ public class InlineQueryResultContact<T extends InputMessageContentType> extends
      * @param decimals: number of digits to round final value
      * @return {@link #thumbnailWidth} instance rounded with decimal digits inserted
      * @throws IllegalArgumentException if decimalDigits is negative
-     **/
+     */
     public double getThumbnailWidth(int decimals) {
         return roundValue(thumbnailWidth, decimals);
     }
@@ -188,7 +188,7 @@ public class InlineQueryResultContact<T extends InputMessageContentType> extends
      * @param decimals: number of digits to round final value
      * @return {@link #thumbnailHeight} instance rounded with decimal digits inserted
      * @throws IllegalArgumentException if decimalDigits is negative
-     **/
+     */
     public double getThumbnailHeight(int decimals) {
         return roundValue(thumbnailHeight, decimals);
     }

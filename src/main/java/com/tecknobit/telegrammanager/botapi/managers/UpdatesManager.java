@@ -27,22 +27,22 @@ public class UpdatesManager extends TelegramBotManager {
 
     /**
      * {@code GET_UPDATES_ENDPOINT} is constant for GET_UPDATES_ENDPOINT's endpoint
-     **/
+     */
     public static final String GET_UPDATES_ENDPOINT = "getUpdates";
 
     /**
      * {@code SET_WEBHOOK_ENDPOINT} is constant for SET_WEBHOOK_ENDPOINT's endpoint
-     **/
+     */
     public static final String SET_WEBHOOK_ENDPOINT = "setWebhook";
 
     /**
      * {@code DELETE_WEBHOOK_ENDPOINT} is constant for DELETE_WEBHOOK_ENDPOINT's endpoint
-     **/
+     */
     public static final String DELETE_WEBHOOK_ENDPOINT = "deleteWebhook";
 
     /**
      * {@code GET_WEBHOOK_INFO_ENDPOINT} is constant for GET_WEBHOOK_INFO_ENDPOINT's endpoint
-     **/
+     */
     public static final String GET_WEBHOOK_INFO_ENDPOINT = "getWebhookInfo";
 
     /**
@@ -124,7 +124,7 @@ public class UpdatesManager extends TelegramBotManager {
      *                     </ul> using a {@code "try and catch statement"} during runtime, see how to do in {@code "README"} file
      * @apiNote see the official documentation at: <a href="https://core.telegram.org/bots/api#getupdates">
      * getUpdates</a>
-     **/
+     */
     @Wrapper
     @RequestPath(method = GET, path = "getUpdates")
     public ArrayList<Update> getUpdates() throws IOException {
@@ -150,7 +150,7 @@ public class UpdatesManager extends TelegramBotManager {
      *                     </ul> using a {@code "try and catch statement"} during runtime, see how to do in {@code "README"} file
      * @apiNote see the official documentation at: <a href="https://core.telegram.org/bots/api#getupdates">
      * getUpdates</a>
-     **/
+     */
     @RequestPath(method = GET, path = "getUpdates")
     public <T> T getUpdates(ReturnFormat format) throws IOException {
         return getUpdates(null, format);
@@ -194,7 +194,7 @@ public class UpdatesManager extends TelegramBotManager {
      *                     </ul> using a {@code "try and catch statement"} during runtime, see how to do in {@code "README"} file
      * @apiNote see the official documentation at: <a href="https://core.telegram.org/bots/api#getupdates">
      * getUpdates</a>
-     **/
+     */
     @Wrapper
     @RequestPath(method = GET, path = "getUpdates")
     public ArrayList<Update> getUpdates(Params parameters) throws IOException {
@@ -240,25 +240,21 @@ public class UpdatesManager extends TelegramBotManager {
      *                     </ul> using a {@code "try and catch statement"} during runtime, see how to do in {@code "README"} file
      * @apiNote see the official documentation at: <a href="https://core.telegram.org/bots/api#getupdates">
      * getUpdates</a>
-     **/
+     */
     @Returner
     @RequestPath(method = GET, path = "getUpdates")
     public <T> T getUpdates(Params parameters, ReturnFormat format) throws IOException {
         JSONArray result = getResultFromList(sendGETRequest(GET_UPDATES_ENDPOINT, parameters));
-        switch (format) {
-            case JSON -> {
-                return (T) result;
-            }
+        return switch (format) {
+            case JSON -> (T) result;
             case LIBRARY_OBJECT -> {
                 ArrayList<Update> updates = new ArrayList<>();
                 for (int j = 0; j < result.length(); j++)
                     updates.add(new Update(result.getJSONObject(j)));
-                return (T) updates;
+                yield (T) updates;
             }
-            default -> {
-                return (T) result.toString();
-            }
-        }
+            default -> (T) result.toString();
+        };
     }
 
     /**
@@ -280,7 +276,7 @@ public class UpdatesManager extends TelegramBotManager {
      *                     </ul> using a {@code "try and catch statement"} during runtime, see how to do in {@code "README"} file
      * @apiNote see the official documentation at: <a href="https://core.telegram.org/bots/api#setwebhook">
      * setWebhook</a>
-     **/
+     */
     @Wrapper
     @RequestPath(method = POST, path = "setWebhook")
     public Update setWebhook(String url) throws IOException {
@@ -307,7 +303,7 @@ public class UpdatesManager extends TelegramBotManager {
      *                     </ul> using a {@code "try and catch statement"} during runtime, see how to do in {@code "README"} file
      * @apiNote see the official documentation at: <a href="https://core.telegram.org/bots/api#setwebhook">
      * setWebhook</a>
-     **/
+     */
     @RequestPath(method = POST, path = "setWebhook")
     public <T> T setWebhook(String url, ReturnFormat format) throws IOException {
         return setWebhook(url, null, format);
@@ -320,7 +316,7 @@ public class UpdatesManager extends TelegramBotManager {
      * @param parameters: additional params of the request, keys accepted are:
      *                    <ul>
      *                          <li>
-     *                               {@code "certificate"} -> pload your public key certificate so that the root
+     *                               {@code "certificate"} -> load your public key certificate so that the root
      *                               certificate in use can be checked - [<a href="https://core.telegram.org/bots/api#inputfile">InputFile</a>]
      *                          </li>
      *                          <li>
@@ -362,7 +358,7 @@ public class UpdatesManager extends TelegramBotManager {
      *                     </ul> using a {@code "try and catch statement"} during runtime, see how to do in {@code "README"} file
      * @apiNote see the official documentation at: <a href="https://core.telegram.org/bots/api#setwebhook">
      * setWebhook</a>
-     **/
+     */
     @Wrapper
     @RequestPath(method = POST, path = "setWebhook")
     public Update setWebhook(String url, Params parameters) throws IOException {
@@ -376,7 +372,7 @@ public class UpdatesManager extends TelegramBotManager {
      * @param parameters: additional params of the request, keys accepted are:
      *                    <ul>
      *                          <li>
-     *                               {@code "certificate"} -> pload your public key certificate so that the root
+     *                               {@code "certificate"} -> load your public key certificate so that the root
      *                               certificate in use can be checked - [<a href="https://core.telegram.org/bots/api#inputfile">InputFile</a>]
      *                          </li>
      *                          <li>
@@ -419,7 +415,7 @@ public class UpdatesManager extends TelegramBotManager {
      *                     </ul> using a {@code "try and catch statement"} during runtime, see how to do in {@code "README"} file
      * @apiNote see the official documentation at: <a href="https://core.telegram.org/bots/api#setwebhook">
      * setWebhook</a>
-     **/
+     */
     @Returner
     @RequestPath(method = POST, path = "setWebhook")
     public <T> T setWebhook(String url, Params parameters, ReturnFormat format) throws IOException {
@@ -441,7 +437,7 @@ public class UpdatesManager extends TelegramBotManager {
      * @return result of the operation -> {@code "true"} is successful, {@code "false"} and error printed with {@link #printErrorResponse()} method if not successful
      * @apiNote see the official documentation at: <a href="https://core.telegram.org/bots/api#deletewebhook">
      * deleteWebhook</a>
-     **/
+     */
     @RequestPath(method = POST, path = "deleteWebhook")
 
     public boolean deleteWebhook(boolean dropPendingUpdates) {
@@ -475,7 +471,7 @@ public class UpdatesManager extends TelegramBotManager {
      *                     </ul> using a {@code "try and catch statement"} during runtime, see how to do in {@code "README"} file
      * @apiNote see the official documentation at: <a href="https://core.telegram.org/bots/api#getwebhookinfo">
      * getWebhookInfo</a>
-     **/
+     */
     @Wrapper
     @RequestPath(method = GET, path = "getWebhookInfo")
     public WebhookInfo getWebhookInfo() throws IOException {
@@ -501,7 +497,7 @@ public class UpdatesManager extends TelegramBotManager {
      *                     </ul> using a {@code "try and catch statement"} during runtime, see how to do in {@code "README"} file
      * @apiNote see the official documentation at: <a href="https://core.telegram.org/bots/api#getwebhookinfo">
      * getWebhookInfo</a>
-     **/
+     */
     @Returner
     @RequestPath(method = GET, path = "getWebhookInfo")
     public <T> T getWebhookInfo(ReturnFormat format) throws IOException {

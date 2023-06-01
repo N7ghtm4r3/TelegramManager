@@ -85,6 +85,68 @@ public class Chat extends ProfileStructure {
     }
 
     /**
+     * {@code ChatActionValue} list of available chat actions
+     */
+    public enum ChatActionValue {
+
+        /**
+         * {@code typing} chat action
+         */
+        typing,
+
+        /**
+         * {@code upload_photo} chat action
+         */
+        upload_photo,
+
+        /**
+         * {@code record_video} chat action
+         */
+        record_video,
+
+        /**
+         * {@code upload_video} chat action
+         */
+        upload_video,
+
+        /**
+         * {@code record_voice} chat action
+         */
+        record_voice,
+
+        /**
+         * {@code upload_voice} chat action
+         */
+        upload_voice,
+
+        /**
+         * {@code upload_document} chat action
+         */
+        upload_document,
+
+        /**
+         * {@code choose_sticker} chat action
+         */
+        choose_sticker,
+
+        /**
+         * {@code find_location} chat action
+         */
+        find_location,
+
+        /**
+         * {@code record_video_note} chat action
+         */
+        record_video_note,
+
+        /**
+         * {@code upload_video_note} chat action
+         */
+        upload_video_note
+
+    }
+
+    /**
      * {@code type} of the chat
      */
     private final ChatType type;

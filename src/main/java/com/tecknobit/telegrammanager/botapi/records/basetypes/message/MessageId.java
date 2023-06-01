@@ -1,10 +1,11 @@
 package com.tecknobit.telegrammanager.botapi.records.basetypes.message;
 
 import com.tecknobit.apimanager.annotations.Returner;
-import com.tecknobit.telegrammanager.botapi.managers.TelegramBotManager;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramType;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramTypeStructure;
 import org.json.JSONObject;
+
+import static com.tecknobit.telegrammanager.botapi.managers.TelegramBotManager.ReturnFormat;
 
 /**
  * The {@code MessageId} class is useful to format a {@code Telegram}'s message id
@@ -56,11 +57,11 @@ public class MessageId extends TelegramType {
      * Method to create a message id
      *
      * @param messageIdResponse : obtained from Telegram's response
-     * @param format            :       return type formatter -> {@link TelegramBotManager.ReturnFormat}
+     * @param format            :       return type formatter -> {@link ReturnFormat}
      * @return message id as {@code "format"} defines
-     **/
+     */
     @Returner
-    public static <T> T returnMessageId(String messageIdResponse, TelegramBotManager.ReturnFormat format) {
+    public static <T> T returnMessageId(String messageIdResponse, ReturnFormat format) {
         return switch (format) {
             case JSON -> (T) new JSONObject(messageIdResponse);
             case LIBRARY_OBJECT -> (T) new MessageId(new JSONObject(messageIdResponse));

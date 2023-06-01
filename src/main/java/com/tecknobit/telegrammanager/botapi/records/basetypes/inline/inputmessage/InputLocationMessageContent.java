@@ -90,7 +90,7 @@ public class InputLocationMessageContent extends InputCoordinatesMessageContent 
      * @param decimals: number of digits to round final value
      * @return {@link #horizontalAccuracy} instance rounded with decimal digits inserted
      * @throws IllegalArgumentException if decimalDigits is negative
-     **/
+     */
     public double getHorizontalAccuracy(int decimals) {
         return roundValue(horizontalAccuracy, decimals);
     }

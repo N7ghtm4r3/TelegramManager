@@ -193,7 +193,7 @@ public class InlineQueryResultVideo<T extends InputMessageContentType> extends I
      * @param decimals: number of digits to round final value
      * @return {@link #videoWidth} instance rounded with decimal digits inserted
      * @throws IllegalArgumentException if decimalDigits is negative
-     **/
+     */
     public double getVideoWidth(int decimals) {
         return roundValue(videoWidth, decimals);
     }
@@ -214,7 +214,7 @@ public class InlineQueryResultVideo<T extends InputMessageContentType> extends I
      * @param decimals: number of digits to round final value
      * @return {@link #videoHeight} instance rounded with decimal digits inserted
      * @throws IllegalArgumentException if decimalDigits is negative
-     **/
+     */
     public double getVideoHeight(int decimals) {
         return roundValue(videoHeight, decimals);
     }

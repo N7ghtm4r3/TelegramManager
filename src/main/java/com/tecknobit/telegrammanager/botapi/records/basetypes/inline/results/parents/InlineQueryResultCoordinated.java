@@ -103,7 +103,7 @@ public abstract class InlineQueryResultCoordinated<T extends InputMessageContent
      * @param decimals: number of digits to round final value
      * @return {@link #latitude} instance rounded with decimal digits inserted
      * @throws IllegalArgumentException if decimalDigits is negative
-     **/
+     */
     public double getLatitude(int decimals) {
         return roundValue(latitude, decimals);
     }
@@ -124,7 +124,7 @@ public abstract class InlineQueryResultCoordinated<T extends InputMessageContent
      * @param decimals: number of digits to round final value
      * @return {@link #longitude} instance rounded with decimal digits inserted
      * @throws IllegalArgumentException if decimalDigits is negative
-     **/
+     */
     public double getLongitude(int decimals) {
         return roundValue(longitude, decimals);
     }

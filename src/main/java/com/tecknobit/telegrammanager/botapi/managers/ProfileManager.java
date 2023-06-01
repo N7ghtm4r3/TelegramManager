@@ -22,17 +22,17 @@ public class ProfileManager extends TelegramBotManager {
 
     /**
      * {@code GET_ME_ENDPOINT} is constant for GET_ME_ENDPOINT's endpoint
-     **/
+     */
     public static final String GET_ME_ENDPOINT = "getMe";
 
     /**
      * {@code LOG_OUT_ENDPOINT} is constant for LOG_OUT_ENDPOINT's endpoint
-     **/
+     */
     public static final String LOG_OUT_ENDPOINT = "logOut";
 
     /**
      * {@code CLOSE_ENDPOINT} is constant for CLOSE_ENDPOINT's endpoint
-     **/
+     */
     public static final String CLOSE_ENDPOINT = "close";
 
     /**
@@ -114,7 +114,7 @@ public class ProfileManager extends TelegramBotManager {
      *                     </ul> using a {@code "try and catch statement"} during runtime, see how to do in {@code "README"} file
      * @apiNote see the official documentation at: <a href="https://core.telegram.org/bots/api#getme">
      * getMe</a>
-     **/
+     */
     @Wrapper
     @RequestPath(method = GET, path = "getMe")
     public User getMe() throws IOException {
@@ -140,7 +140,7 @@ public class ProfileManager extends TelegramBotManager {
      *                     </ul> using a {@code "try and catch statement"} during runtime, see how to do in {@code "README"} file
      * @apiNote see the official documentation at: <a href="https://core.telegram.org/bots/api#getme">
      * getMe</a>
-     **/
+     */
     @RequestPath(method = GET, path = "getMe")
     public <T> T getMe(ReturnFormat format) throws IOException {
         return returnUser(sendGETRequest(GET_ME_ENDPOINT), format);
@@ -156,7 +156,7 @@ public class ProfileManager extends TelegramBotManager {
      * @return result of the operation -> {@code "true"} is successful, {@code "false"} and error printed with {@link #printErrorResponse()} method if not successful
      * @apiNote see the official documentation at: <a href="https://core.telegram.org/bots/api#logout">
      * logOut</a>
-     **/
+     */
     @RequestPath(method = POST, path = "logOut")
     public boolean logOut() {
         try {
@@ -177,7 +177,7 @@ public class ProfileManager extends TelegramBotManager {
      * @return result of the operation -> {@code "true"} is successful, {@code "false"} and error printed with {@link #printErrorResponse()} method if not successful
      * @apiNote see the official documentation at: <a href="https://core.telegram.org/bots/api#close">
      * close</a>
-     **/
+     */
     @RequestPath(method = POST, path = "close")
     public boolean close() {
         try {

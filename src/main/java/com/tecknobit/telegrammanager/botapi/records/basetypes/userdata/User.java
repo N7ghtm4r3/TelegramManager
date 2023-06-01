@@ -176,7 +176,7 @@ public class User extends ProfileStructure {
      * @param userResponse: obtained from Telegram's response
      * @param format:       return type formatter -> {@link ReturnFormat}
      * @return user as {@code "format"} defines
-     **/
+     */
     @Returner
     public static <T> T returnUser(String userResponse, ReturnFormat format) {
         return switch (format) {

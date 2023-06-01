@@ -103,7 +103,7 @@ public class Location extends TelegramType {
      * @param decimals: number of digits to round final value
      * @return {@link #longitude} instance rounded with decimal digits inserted
      * @throws IllegalArgumentException if decimalDigits is negative
-     **/
+     */
     public double getLongitude(int decimals) {
         return roundValue(longitude, decimals);
     }
@@ -124,7 +124,7 @@ public class Location extends TelegramType {
      * @param decimals: number of digits to round final value
      * @return {@link #latitude} instance rounded with decimal digits inserted
      * @throws IllegalArgumentException if decimalDigits is negative
-     **/
+     */
     public double getLatitude(int decimals) {
         return roundValue(latitude, decimals);
     }
@@ -145,7 +145,7 @@ public class Location extends TelegramType {
      * @param decimals: number of digits to round final value
      * @return {@link #horizontalAccuracy} instance rounded with decimal digits inserted
      * @throws IllegalArgumentException if decimalDigits is negative
-     **/
+     */
     public double getHorizontalAccuracy(int decimals) {
         return roundValue(horizontalAccuracy, decimals);
     }
@@ -186,7 +186,7 @@ public class Location extends TelegramType {
      * @param decimals: number of digits to round final value
      * @return {@link #horizontalAccuracy} instance rounded with decimal digits inserted
      * @throws IllegalArgumentException if decimalDigits is negative
-     **/
+     */
     public double getProximityAlertRadius(int decimals) {
         return roundValue(proximityAlertRadius, decimals);
     }
