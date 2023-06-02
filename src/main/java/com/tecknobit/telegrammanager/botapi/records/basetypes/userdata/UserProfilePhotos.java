@@ -26,7 +26,7 @@ public class UserProfilePhotos extends TelegramType {
     /**
      * {@code photos} requested profile pictures (in up to 4 sizes each)
      */
-    private final ArrayList<PhotoSize> photos;
+    private final ArrayList<ArrayList<PhotoSize>> photos;
 
     /**
      * Constructor to init a {@link UserProfilePhotos} object
@@ -34,7 +34,7 @@ public class UserProfilePhotos extends TelegramType {
      * @param totalCount: total number of profile pictures the target user has
      * @param photos:     requested profile pictures (in up to 4 sizes each)
      */
-    public UserProfilePhotos(int totalCount, ArrayList<PhotoSize> photos) {
+    public UserProfilePhotos(int totalCount, ArrayList<ArrayList<PhotoSize>> photos) {
         super(null);
         this.totalCount = totalCount;
         this.photos = photos;
@@ -48,7 +48,8 @@ public class UserProfilePhotos extends TelegramType {
     public UserProfilePhotos(JSONObject jUserProfilePhotos) {
         super(jUserProfilePhotos);
         totalCount = hTelegram.getInt("total_count");
-        photos = PhotoSize.returnPhotoSizes(hTelegram.getJSONArray("photos"));
+        photos = new ArrayList<>();
+        photos.add(PhotoSize.returnPhotoSizes(hTelegram.getJSONArray("photos")));
     }
 
     /**
@@ -65,9 +66,9 @@ public class UserProfilePhotos extends TelegramType {
      * Method to get {@link #photos} instance <br>
      * No-any params required
      *
-     * @return {@link #photos} instance as {@link ArrayList} of {@link PhotoSize}
+     * @return {@link #photos} instance as {@link ArrayList} of {@link ArrayList} of {@link PhotoSize}
      */
-    public ArrayList<PhotoSize> getPhotos() {
+    public ArrayList<ArrayList<PhotoSize>> getPhotos() {
         return photos;
     }
 

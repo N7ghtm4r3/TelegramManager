@@ -68,7 +68,10 @@ public class Chat extends ProfileStructure {
             try {
                 return ChatType.valueOf(type);
             } catch (IllegalArgumentException e) {
-                return null;
+                if (type.equals("private"))
+                    return ChatType.tPrivate;
+                else
+                    return null;
             }
         }
 
@@ -345,7 +348,7 @@ public class Chat extends ProfileStructure {
      */
     public Chat(JSONObject jChat) {
         super(jChat);
-        type = ChatType.valueOf(hTelegram.getString("type"));
+        type = ChatType.getInstance(hTelegram.getString("type"));
         title = hTelegram.getString("title");
         isForum = hTelegram.getBoolean("is_forum");
         photo = ChatPhoto.getInstance(hTelegram.getJSONObject("photo"));

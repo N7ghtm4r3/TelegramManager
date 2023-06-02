@@ -4,7 +4,6 @@ import com.tecknobit.apimanager.annotations.RequestPath;
 import com.tecknobit.apimanager.annotations.WrappedRequest;
 import com.tecknobit.apimanager.annotations.Wrapper;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.ForceReply;
-import com.tecknobit.telegrammanager.botapi.records.basetypes.chat.Chat;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.chat.Chat.ChatActionValue;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.chat.attachments.Poll.PollType;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.inputmedia.InputMedia;
@@ -206,7 +205,7 @@ public class ContentManager extends TelegramBotManager {
     @Wrapper
     @RequestPath(method = POST, path = "sendMessage")
     public <T> Message sendMessage(T chatId, String text) throws IOException {
-        return (Message) sendMessage(chatId, text, LIBRARY_OBJECT);
+        return sendMessage(chatId, text, LIBRARY_OBJECT);
     }
 
     /**
@@ -232,8 +231,8 @@ public class ContentManager extends TelegramBotManager {
      * sendMessage</a>
      */
     @RequestPath(method = POST, path = "sendMessage")
-    public <T> T sendMessage(T chatId, String text, ReturnFormat format) throws IOException {
-        return sendMessage(chatId, text, null, LIBRARY_OBJECT);
+    public <T, L> T sendMessage(L chatId, String text, ReturnFormat format) throws IOException {
+        return sendMessage(chatId, text, null, format);
     }
 
     /**
@@ -299,7 +298,7 @@ public class ContentManager extends TelegramBotManager {
     @Wrapper
     @RequestPath(method = POST, path = "sendMessage")
     public <T> Message sendMessage(T chatId, String text, Params parameters) throws IOException {
-        return (Message) sendMessage(chatId, text, parameters, LIBRARY_OBJECT);
+        return sendMessage(chatId, text, parameters, LIBRARY_OBJECT);
     }
 
     /**
@@ -364,10 +363,8 @@ public class ContentManager extends TelegramBotManager {
      * sendMessage</a>
      */
     @RequestPath(method = POST, path = "sendMessage")
-    public <T> T sendMessage(T chatId, String text, Params parameters, ReturnFormat format) throws IOException {
-        if (parameters == null)
-            parameters = new Params();
-        parameters.addParam("chat_id", getChatId(chatId));
+    public <T, L> T sendMessage(L chatId, String text, Params parameters, ReturnFormat format) throws IOException {
+        parameters = createChatIdPayload(chatId, parameters);
         parameters.addParam("text", text);
         return returnMessage(sendPostRequest(SEND_MESSAGE_ENDPOINT, parameters), format);
     }
@@ -398,7 +395,7 @@ public class ContentManager extends TelegramBotManager {
     @WrappedRequest
     @RequestPath(method = POST, path = "forwardMessage")
     public <T> Message forwardMessage(T chatId, T fromChatId, Message message) throws IOException {
-        return (Message) forwardMessage(chatId, fromChatId, message.getMessageId(), LIBRARY_OBJECT);
+        return forwardMessage(chatId, fromChatId, message.getMessageId(), LIBRARY_OBJECT);
     }
 
     /**
@@ -426,7 +423,7 @@ public class ContentManager extends TelegramBotManager {
      */
     @WrappedRequest
     @RequestPath(method = POST, path = "forwardMessage")
-    public <T> T forwardMessage(T chatId, T fromChatId, Message message, ReturnFormat format) throws IOException {
+    public <T, L> T forwardMessage(L chatId, L fromChatId, Message message, ReturnFormat format) throws IOException {
         return forwardMessage(chatId, fromChatId, message.getMessageId(), format);
     }
 
@@ -455,7 +452,7 @@ public class ContentManager extends TelegramBotManager {
     @Wrapper
     @RequestPath(method = POST, path = "forwardMessage")
     public <T> Message forwardMessage(T chatId, T fromChatId, long messageId) throws IOException {
-        return (Message) forwardMessage(chatId, fromChatId, messageId, LIBRARY_OBJECT);
+        return forwardMessage(chatId, fromChatId, messageId, LIBRARY_OBJECT);
     }
 
     /**
@@ -482,7 +479,7 @@ public class ContentManager extends TelegramBotManager {
      * forwardMessage</a>
      */
     @RequestPath(method = POST, path = "forwardMessage")
-    public <T> T forwardMessage(T chatId, T fromChatId, long messageId, ReturnFormat format) throws IOException {
+    public <T, L> T forwardMessage(L chatId, L fromChatId, long messageId, ReturnFormat format) throws IOException {
         return forwardMessage(chatId, fromChatId, messageId, null, format);
     }
 
@@ -527,7 +524,7 @@ public class ContentManager extends TelegramBotManager {
     @WrappedRequest
     @RequestPath(method = POST, path = "forwardMessage")
     public <T> Message forwardMessage(T chatId, T fromChatId, Message message, Params parameters) throws IOException {
-        return (Message) forwardMessage(chatId, fromChatId, message.getMessageId(), parameters, LIBRARY_OBJECT);
+        return forwardMessage(chatId, fromChatId, message.getMessageId(), parameters, LIBRARY_OBJECT);
     }
 
     /**
@@ -570,8 +567,8 @@ public class ContentManager extends TelegramBotManager {
      */
     @WrappedRequest
     @RequestPath(method = POST, path = "forwardMessage")
-    public <T> T forwardMessage(T chatId, T fromChatId, Message message, Params parameters,
-                                ReturnFormat format) throws IOException {
+    public <T, L> T forwardMessage(L chatId, L fromChatId, Message message, Params parameters,
+                                   ReturnFormat format) throws IOException {
         return forwardMessage(chatId, fromChatId, message.getMessageId(), parameters, format);
     }
 
@@ -615,7 +612,7 @@ public class ContentManager extends TelegramBotManager {
     @Wrapper
     @RequestPath(method = POST, path = "forwardMessage")
     public <T> Message forwardMessage(T chatId, T fromChatId, long messageId, Params parameters) throws IOException {
-        return (Message) forwardMessage(chatId, fromChatId, messageId, parameters, LIBRARY_OBJECT);
+        return forwardMessage(chatId, fromChatId, messageId, parameters, LIBRARY_OBJECT);
     }
 
     /**
@@ -657,8 +654,8 @@ public class ContentManager extends TelegramBotManager {
      * forwardMessage</a>
      */
     @RequestPath(method = POST, path = "forwardMessage")
-    public <T> T forwardMessage(T chatId, T fromChatId, long messageId, Params parameters,
-                                ReturnFormat format) throws IOException {
+    public <T, L> T forwardMessage(L chatId, L fromChatId, long messageId, Params parameters,
+                                   ReturnFormat format) throws IOException {
         return returnMessage(sendPostRequest(FORWARD_MESSAGE_ENDPOINT, createMessagePayload(chatId, fromChatId, messageId,
                 parameters)), format);
     }
@@ -691,7 +688,7 @@ public class ContentManager extends TelegramBotManager {
     @WrappedRequest
     @RequestPath(method = POST, path = "copyMessage")
     public <T> MessageId copyMessage(T chatId, T fromChatId, Message message) throws IOException {
-        return (MessageId) copyMessage(chatId, fromChatId, message.getMessageId(), LIBRARY_OBJECT);
+        return copyMessage(chatId, fromChatId, message.getMessageId(), LIBRARY_OBJECT);
     }
 
     /**
@@ -721,7 +718,7 @@ public class ContentManager extends TelegramBotManager {
      */
     @WrappedRequest
     @RequestPath(method = POST, path = "copyMessage")
-    public <T> T copyMessage(T chatId, T fromChatId, Message message, ReturnFormat format) throws IOException {
+    public <T, L> T copyMessage(L chatId, L fromChatId, Message message, ReturnFormat format) throws IOException {
         return copyMessage(chatId, fromChatId, message.getMessageId(), format);
     }
 
@@ -752,7 +749,7 @@ public class ContentManager extends TelegramBotManager {
     @Wrapper
     @RequestPath(method = POST, path = "copyMessage")
     public <T> MessageId copyMessage(T chatId, T fromChatId, long messageId) throws IOException {
-        return (MessageId) copyMessage(chatId, fromChatId, messageId, LIBRARY_OBJECT);
+        return copyMessage(chatId, fromChatId, messageId, LIBRARY_OBJECT);
     }
 
     /**
@@ -781,7 +778,7 @@ public class ContentManager extends TelegramBotManager {
      * copyMessage</a>
      */
     @RequestPath(method = POST, path = "copyMessage")
-    public <T> T copyMessage(T chatId, T fromChatId, long messageId, ReturnFormat format) throws IOException {
+    public <T, L> T copyMessage(L chatId, L fromChatId, long messageId, ReturnFormat format) throws IOException {
         return copyMessage(chatId, fromChatId, messageId, null, format);
     }
 
@@ -852,7 +849,7 @@ public class ContentManager extends TelegramBotManager {
     @WrappedRequest
     @RequestPath(method = POST, path = "copyMessage")
     public <T> MessageId copyMessage(T chatId, T fromChatId, Message message, Params parameters) throws IOException {
-        return (MessageId) copyMessage(chatId, fromChatId, message.getMessageId(), parameters, LIBRARY_OBJECT);
+        return copyMessage(chatId, fromChatId, message.getMessageId(), parameters, LIBRARY_OBJECT);
     }
 
     /**
@@ -921,8 +918,8 @@ public class ContentManager extends TelegramBotManager {
      */
     @WrappedRequest
     @RequestPath(method = POST, path = "copyMessage")
-    public <T> T copyMessage(T chatId, T fromChatId, Message message, Params parameters,
-                             ReturnFormat format) throws IOException {
+    public <T, L> T copyMessage(L chatId, L fromChatId, Message message, Params parameters,
+                                ReturnFormat format) throws IOException {
         return copyMessage(chatId, fromChatId, message.getMessageId(), parameters, format);
     }
 
@@ -992,7 +989,7 @@ public class ContentManager extends TelegramBotManager {
     @Wrapper
     @RequestPath(method = POST, path = "copyMessage")
     public <T> MessageId copyMessage(T chatId, T fromChatId, long messageId, Params parameters) throws IOException {
-        return (MessageId) copyMessage(chatId, fromChatId, messageId, parameters, LIBRARY_OBJECT);
+        return copyMessage(chatId, fromChatId, messageId, parameters, LIBRARY_OBJECT);
     }
 
     /**
@@ -1060,8 +1057,8 @@ public class ContentManager extends TelegramBotManager {
      * copyMessage</a>
      */
     @RequestPath(method = POST, path = "copyMessage")
-    public <T> T copyMessage(T chatId, T fromChatId, long messageId, Params parameters,
-                             ReturnFormat format) throws IOException {
+    public <T, L> T copyMessage(L chatId, L fromChatId, long messageId, Params parameters,
+                                ReturnFormat format) throws IOException {
         return returnMessageId(sendPostRequest(COPY_MESSAGE_ENDPOINT, createMessagePayload(chatId, fromChatId,
                 messageId, parameters)), format);
     }
@@ -1112,7 +1109,7 @@ public class ContentManager extends TelegramBotManager {
     @Wrapper
     @RequestPath(method = POST, path = "sendPhoto")
     public <T> Message sendPhoto(T chatId, String photo) throws IOException {
-        return (Message) sendPhoto(chatId, photo, LIBRARY_OBJECT);
+        return sendPhoto(chatId, photo, LIBRARY_OBJECT);
     }
 
     /**
@@ -1142,7 +1139,7 @@ public class ContentManager extends TelegramBotManager {
      * sendPhoto</a>
      */
     @RequestPath(method = POST, path = "sendPhoto")
-    public <T> T sendPhoto(T chatId, String photo, ReturnFormat format) throws IOException {
+    public <T, L> T sendPhoto(L chatId, String photo, ReturnFormat format) throws IOException {
         return sendPhoto(chatId, photo, null, format);
     }
 
@@ -1217,7 +1214,7 @@ public class ContentManager extends TelegramBotManager {
     @Wrapper
     @RequestPath(method = POST, path = "sendPhoto")
     public <T> Message sendPhoto(T chatId, String photo, Params parameters) throws IOException {
-        return (Message) sendPhoto(chatId, photo, parameters, LIBRARY_OBJECT);
+        return sendPhoto(chatId, photo, parameters, LIBRARY_OBJECT);
     }
 
     /**
@@ -1290,7 +1287,7 @@ public class ContentManager extends TelegramBotManager {
      * sendPhoto</a>
      */
     @RequestPath(method = POST, path = "sendPhoto")
-    public <T> T sendPhoto(T chatId, String photo, Params parameters, ReturnFormat format) throws IOException {
+    public <T, L> T sendPhoto(L chatId, String photo, Params parameters, ReturnFormat format) throws IOException {
         return returnMessage(uploadMedia(SEND_PHOTO_ENDPOINT, chatId, InputMediaType.photo, photo, parameters),
                 format);
     }
@@ -1324,7 +1321,7 @@ public class ContentManager extends TelegramBotManager {
     @Wrapper
     @RequestPath(method = POST, path = "sendAudio")
     public <T> Message sendAudio(T chatId, String audio) throws IOException {
-        return (Message) sendAudio(chatId, audio, LIBRARY_OBJECT);
+        return sendAudio(chatId, audio, LIBRARY_OBJECT);
     }
 
     /**
@@ -1355,7 +1352,7 @@ public class ContentManager extends TelegramBotManager {
      * sendAudio</a>
      */
     @RequestPath(method = POST, path = "sendAudio")
-    public <T> T sendAudio(T chatId, String audio, ReturnFormat format) throws IOException {
+    public <T, L> T sendAudio(L chatId, String audio, ReturnFormat format) throws IOException {
         return sendAudio(chatId, audio, null, format);
     }
 
@@ -1445,7 +1442,7 @@ public class ContentManager extends TelegramBotManager {
     @Wrapper
     @RequestPath(method = POST, path = "sendAudio")
     public <T> Message sendAudio(T chatId, String audio, Params parameters) throws IOException {
-        return (Message) sendAudio(chatId, audio, parameters, LIBRARY_OBJECT);
+        return sendAudio(chatId, audio, parameters, LIBRARY_OBJECT);
     }
 
     /**
@@ -1533,7 +1530,7 @@ public class ContentManager extends TelegramBotManager {
      * sendAudio</a>
      */
     @RequestPath(method = POST, path = "sendAudio")
-    public <T> T sendAudio(T chatId, String audio, Params parameters, ReturnFormat format) throws IOException {
+    public <T, L> T sendAudio(L chatId, String audio, Params parameters, ReturnFormat format) throws IOException {
         return returnMessage(uploadMedia(SEND_AUDIO_ENDPOINT, chatId, InputMediaType.audio, audio, parameters),
                 format);
     }
@@ -1566,7 +1563,7 @@ public class ContentManager extends TelegramBotManager {
     @Wrapper
     @RequestPath(method = POST, path = "sendDocument")
     public <T> Message sendDocument(T chatId, String document) throws IOException {
-        return (Message) sendDocument(chatId, document, LIBRARY_OBJECT);
+        return sendDocument(chatId, document, LIBRARY_OBJECT);
     }
 
     /**
@@ -1596,7 +1593,7 @@ public class ContentManager extends TelegramBotManager {
      * sendDocument</a>
      */
     @RequestPath(method = POST, path = "sendDocument")
-    public <T> T sendDocument(T chatId, String document, ReturnFormat format) throws IOException {
+    public <T, L> T sendDocument(L chatId, String document, ReturnFormat format) throws IOException {
         return sendDocument(chatId, document, null, format);
     }
 
@@ -1680,7 +1677,7 @@ public class ContentManager extends TelegramBotManager {
     @Wrapper
     @RequestPath(method = POST, path = "sendDocument")
     public <T> Message sendDocument(T chatId, String document, Params parameters) throws IOException {
-        return (Message) sendDocument(chatId, document, parameters, LIBRARY_OBJECT);
+        return sendDocument(chatId, document, parameters, LIBRARY_OBJECT);
     }
 
     /**
@@ -1762,7 +1759,7 @@ public class ContentManager extends TelegramBotManager {
      * sendDocument</a>
      */
     @RequestPath(method = POST, path = "sendDocument")
-    public <T> T sendDocument(T chatId, String document, Params parameters, ReturnFormat format) throws IOException {
+    public <T, L> T sendDocument(L chatId, String document, Params parameters, ReturnFormat format) throws IOException {
         return returnMessage(uploadMedia(SEND_DOCUMENT_ENDPOINT, chatId, InputMediaType.document, document,
                 parameters), format);
     }
@@ -1795,7 +1792,7 @@ public class ContentManager extends TelegramBotManager {
     @Wrapper
     @RequestPath(method = POST, path = "sendVideo")
     public <T> Message sendVideo(T chatId, String video) throws IOException {
-        return (Message) sendVideo(chatId, video, LIBRARY_OBJECT);
+        return sendVideo(chatId, video, LIBRARY_OBJECT);
     }
 
     /**
@@ -1825,7 +1822,7 @@ public class ContentManager extends TelegramBotManager {
      * sendVideo</a>
      */
     @RequestPath(method = POST, path = "sendVideo")
-    public <T> T sendVideo(T chatId, String video, ReturnFormat format) throws IOException {
+    public <T, L> T sendVideo(L chatId, String video, ReturnFormat format) throws IOException {
         return sendVideo(chatId, video, null, format);
     }
 
@@ -1926,7 +1923,7 @@ public class ContentManager extends TelegramBotManager {
     @Wrapper
     @RequestPath(method = POST, path = "sendVideo")
     public <T> Message sendVideo(T chatId, String video, Params parameters) throws IOException {
-        return (Message) sendVideo(chatId, video, parameters, LIBRARY_OBJECT);
+        return sendVideo(chatId, video, parameters, LIBRARY_OBJECT);
     }
 
     /**
@@ -2025,7 +2022,7 @@ public class ContentManager extends TelegramBotManager {
      * sendVideo</a>
      */
     @RequestPath(method = POST, path = "sendVideo")
-    public <T> T sendVideo(T chatId, String video, Params parameters, ReturnFormat format) throws IOException {
+    public <T, L> T sendVideo(L chatId, String video, Params parameters, ReturnFormat format) throws IOException {
         return returnMessage(uploadMedia(SEND_VIDEO_ENDPOINT, chatId, InputMediaType.video, video,
                 parameters), format);
     }
@@ -2058,7 +2055,7 @@ public class ContentManager extends TelegramBotManager {
     @Wrapper
     @RequestPath(method = POST, path = "sendAnimation")
     public <T> Message sendAnimation(T chatId, String animation) throws IOException {
-        return (Message) sendAnimation(chatId, animation, LIBRARY_OBJECT);
+        return sendAnimation(chatId, animation, LIBRARY_OBJECT);
     }
 
     /**
@@ -2088,7 +2085,7 @@ public class ContentManager extends TelegramBotManager {
      * sendAnimation</a>
      */
     @RequestPath(method = POST, path = "sendAnimation")
-    public <T> T sendAnimation(T chatId, String animation, ReturnFormat format) throws IOException {
+    public <T, L> T sendAnimation(L chatId, String animation, ReturnFormat format) throws IOException {
         return sendAnimation(chatId, animation, null, format);
     }
 
@@ -2181,7 +2178,7 @@ public class ContentManager extends TelegramBotManager {
     @Wrapper
     @RequestPath(method = POST, path = "sendAnimation")
     public <T> Message sendAnimation(T chatId, String animation, Params parameters) throws IOException {
-        return (Message) sendAnimation(chatId, animation, parameters, LIBRARY_OBJECT);
+        return sendAnimation(chatId, animation, parameters, LIBRARY_OBJECT);
     }
 
     /**
@@ -2272,7 +2269,7 @@ public class ContentManager extends TelegramBotManager {
      * sendAnimation</a>
      */
     @RequestPath(method = POST, path = "sendAnimation")
-    public <T> T sendAnimation(T chatId, String animation, Params parameters, ReturnFormat format) throws IOException {
+    public <T, L> T sendAnimation(L chatId, String animation, Params parameters, ReturnFormat format) throws IOException {
         return returnMessage(uploadMedia(SEND_ANIMATION_ENDPOINT, chatId, InputMediaType.animation, animation,
                 parameters), format);
     }
@@ -2307,7 +2304,7 @@ public class ContentManager extends TelegramBotManager {
     @Wrapper
     @RequestPath(method = POST, path = "sendVoice")
     public <T> Message sendVoice(T chatId, String voice) throws IOException {
-        return (Message) sendVoice(chatId, voice, LIBRARY_OBJECT);
+        return sendVoice(chatId, voice, LIBRARY_OBJECT);
     }
 
     /**
@@ -2339,7 +2336,7 @@ public class ContentManager extends TelegramBotManager {
      * sendVoice</a>
      */
     @RequestPath(method = POST, path = "sendVoice")
-    public <T> T sendVoice(T chatId, String voice, ReturnFormat format) throws IOException {
+    public <T, L> T sendVoice(L chatId, String voice, ReturnFormat format) throws IOException {
         return sendVoice(chatId, voice, null, format);
     }
 
@@ -2415,7 +2412,7 @@ public class ContentManager extends TelegramBotManager {
     @Wrapper
     @RequestPath(method = POST, path = "sendVoice")
     public <T> Message sendVoice(T chatId, String voice, Params parameters) throws IOException {
-        return (Message) sendVoice(chatId, voice, parameters, LIBRARY_OBJECT);
+        return sendVoice(chatId, voice, parameters, LIBRARY_OBJECT);
     }
 
     /**
@@ -2489,7 +2486,7 @@ public class ContentManager extends TelegramBotManager {
      * sendVoice</a>
      */
     @RequestPath(method = POST, path = "sendVoice")
-    public <T> T sendVoice(T chatId, String voice, Params parameters, ReturnFormat format) throws IOException {
+    public <T, L> T sendVoice(L chatId, String voice, Params parameters, ReturnFormat format) throws IOException {
         return returnMessage(uploadMedia(SEND_VOICE_ENDPOINT, chatId, "voice", voice,
                 parameters), format);
     }
@@ -2521,7 +2518,7 @@ public class ContentManager extends TelegramBotManager {
     @Wrapper
     @RequestPath(method = POST, path = "sendVideoNote")
     public <T> Message sendVideoNote(T chatId, String videoNote) throws IOException {
-        return (Message) sendVideoNote(chatId, videoNote, LIBRARY_OBJECT);
+        return sendVideoNote(chatId, videoNote, LIBRARY_OBJECT);
     }
 
     /**
@@ -2550,7 +2547,7 @@ public class ContentManager extends TelegramBotManager {
      * @implNote sending video notes by a URL is currently unsupported
      */
     @RequestPath(method = POST, path = "sendVideoNote")
-    public <T> T sendVideoNote(T chatId, String videoNote, ReturnFormat format) throws IOException {
+    public <T, L> T sendVideoNote(L chatId, String videoNote, ReturnFormat format) throws IOException {
         return sendVideoNote(chatId, videoNote, null, format);
     }
 
@@ -2636,7 +2633,7 @@ public class ContentManager extends TelegramBotManager {
     @Wrapper
     @RequestPath(method = POST, path = "sendVideoNote")
     public <T> Message sendVideoNote(T chatId, String videoNote, Params parameters) throws IOException {
-        return (Message) sendVideoNote(chatId, videoNote, parameters, LIBRARY_OBJECT);
+        return sendVideoNote(chatId, videoNote, parameters, LIBRARY_OBJECT);
     }
 
     /**
@@ -2720,7 +2717,7 @@ public class ContentManager extends TelegramBotManager {
      * @implNote sending video notes by a URL is currently unsupported
      */
     @RequestPath(method = POST, path = "sendVideoNote")
-    public <T> T sendVideoNote(T chatId, String videoNote, Params parameters, ReturnFormat format) throws IOException {
+    public <T, L> T sendVideoNote(L chatId, String videoNote, Params parameters, ReturnFormat format) throws IOException {
         return returnMessage(uploadMedia(SEND_VIDEO_NOTE_ENDPOINT, chatId, "video_note", videoNote,
                 parameters), format);
     }
@@ -2750,7 +2747,7 @@ public class ContentManager extends TelegramBotManager {
     @Wrapper
     @RequestPath(method = POST, path = "sendMediaGroup")
     public <T> ArrayList<Message> sendMediaGroup(T chatId, InputMedia... media) throws IOException {
-        return (ArrayList<Message>) sendMediaGroup(chatId, LIBRARY_OBJECT, media);
+        return sendMediaGroup(chatId, LIBRARY_OBJECT, media);
     }
 
     /**
@@ -2777,7 +2774,7 @@ public class ContentManager extends TelegramBotManager {
      * sendMediaGroup</a>
      */
     @RequestPath(method = POST, path = "sendMediaGroup")
-    public <T> T sendMediaGroup(T chatId, ReturnFormat format, InputMedia... media) throws IOException {
+    public <T, L> T sendMediaGroup(L chatId, ReturnFormat format, InputMedia... media) throws IOException {
         return sendMediaGroup(chatId, null, format, media);
     }
 
@@ -2829,7 +2826,7 @@ public class ContentManager extends TelegramBotManager {
     @Wrapper
     @RequestPath(method = POST, path = "sendMediaGroup")
     public <T> ArrayList<Message> sendMediaGroup(T chatId, Params parameters, InputMedia... media) throws IOException {
-        return (ArrayList<Message>) sendMediaGroup(chatId, parameters, LIBRARY_OBJECT, media);
+        return sendMediaGroup(chatId, parameters, LIBRARY_OBJECT, media);
     }
 
     /**
@@ -2879,27 +2876,9 @@ public class ContentManager extends TelegramBotManager {
      * sendMediaGroup</a>
      */
     @RequestPath(method = POST, path = "sendMediaGroup")
-    public <T> T sendMediaGroup(T chatId, Params parameters, ReturnFormat format, InputMedia... media) throws IOException {
+    public <T, L> T sendMediaGroup(L chatId, Params parameters, ReturnFormat format, InputMedia... media) throws IOException {
         return returnMessages(uploadMedia(SEND_MEDIA_GROUP_ENDPOINT, chatId, "media", new JSONArray(media),
                 parameters), format);
-    }
-
-    /**
-     * Method to execute and get response of an upload media request
-     *
-     * @param methodName: the method where make the request
-     * @param chatId:     unique identifier for the target chat or username of the target channel
-     * @param mediaType:  type of the media to send
-     * @param mediaValue: the media to send
-     * @param payload:    payload of the request
-     * @return response of request formatted in JSON as {@link String}
-     */
-    private <T> String uploadMedia(String methodName, T chatId, T mediaType, T mediaValue, Params payload) throws IOException {
-        payload = createChatIdPayload(chatId, payload);
-        payload.addParam(mediaType.toString(), mediaValue);
-        apiRequest.sendAPIRequest(BASE_BOT_ENDPOINT + token + "/" + methodName + payload.createQueryString(),
-                POST, "Content-Type", "multipart/form-data");
-        return apiRequest.getResponse();
     }
 
     /**
@@ -2927,7 +2906,7 @@ public class ContentManager extends TelegramBotManager {
     @Wrapper
     @RequestPath(method = POST, path = "sendLocation")
     public <T> Message sendLocation(T chatId, double latitude, double longitude) throws IOException {
-        return (Message) sendLocation(chatId, latitude, longitude, LIBRARY_OBJECT);
+        return sendLocation(chatId, latitude, longitude, LIBRARY_OBJECT);
     }
 
     /**
@@ -2954,7 +2933,7 @@ public class ContentManager extends TelegramBotManager {
      * sendLocation</a>
      */
     @RequestPath(method = POST, path = "sendLocation")
-    public <T> T sendLocation(T chatId, double latitude, double longitude, ReturnFormat format) throws IOException {
+    public <T, L> T sendLocation(L chatId, double latitude, double longitude, ReturnFormat format) throws IOException {
         return sendLocation(chatId, latitude, longitude, null, format);
     }
 
@@ -3027,7 +3006,7 @@ public class ContentManager extends TelegramBotManager {
     @Wrapper
     @RequestPath(method = POST, path = "sendLocation")
     public <T> Message sendLocation(T chatId, double latitude, double longitude, Params parameters) throws IOException {
-        return (Message) sendLocation(chatId, latitude, longitude, parameters, LIBRARY_OBJECT);
+        return sendLocation(chatId, latitude, longitude, parameters, LIBRARY_OBJECT);
     }
 
     /**
@@ -3098,8 +3077,8 @@ public class ContentManager extends TelegramBotManager {
      * sendLocation</a>
      */
     @RequestPath(method = POST, path = "sendLocation")
-    public <T> T sendLocation(T chatId, double latitude, double longitude, Params parameters,
-                              ReturnFormat format) throws IOException {
+    public <T, L> T sendLocation(L chatId, double latitude, double longitude, Params parameters,
+                                 ReturnFormat format) throws IOException {
         return returnMessage(sendPostRequest(SEND_LOCATION_ENDPOINT, createCoordinatesPayload(chatId, latitude,
                 longitude, parameters)), format);
     }
@@ -3132,7 +3111,7 @@ public class ContentManager extends TelegramBotManager {
     @RequestPath(method = POST, path = "sendVenue")
     public <T> Message sendVenue(T chatId, double latitude, double longitude, String title,
                                  String address) throws IOException {
-        return (Message) sendVenue(chatId, latitude, longitude, title, address, LIBRARY_OBJECT);
+        return sendVenue(chatId, latitude, longitude, title, address, LIBRARY_OBJECT);
     }
 
     /**
@@ -3161,8 +3140,8 @@ public class ContentManager extends TelegramBotManager {
      * sendVenue</a>
      */
     @RequestPath(method = POST, path = "sendVenue")
-    public <T> T sendVenue(T chatId, double latitude, double longitude, String title, String address,
-                           ReturnFormat format) throws IOException {
+    public <T, L> T sendVenue(L chatId, double latitude, double longitude, String title, String address,
+                              ReturnFormat format) throws IOException {
         return sendVenue(chatId, latitude, longitude, title, address, null, format);
     }
 
@@ -3233,7 +3212,7 @@ public class ContentManager extends TelegramBotManager {
     @RequestPath(method = POST, path = "sendVenue")
     public <T> Message sendVenue(T chatId, double latitude, double longitude, String title, String address,
                                  Params parameters) throws IOException {
-        return (Message) sendVenue(chatId, latitude, longitude, title, address, parameters, LIBRARY_OBJECT);
+        return sendVenue(chatId, latitude, longitude, title, address, parameters, LIBRARY_OBJECT);
     }
 
     /**
@@ -3301,8 +3280,8 @@ public class ContentManager extends TelegramBotManager {
      * sendVenue</a>
      */
     @RequestPath(method = POST, path = "sendVenue")
-    public <T> T sendVenue(T chatId, double latitude, double longitude, String title, String address, Params parameters,
-                           ReturnFormat format) throws IOException {
+    public <T, L> T sendVenue(L chatId, double latitude, double longitude, String title, String address, Params parameters,
+                              ReturnFormat format) throws IOException {
         parameters = createCoordinatesPayload(chatId, latitude, longitude, parameters);
         parameters.addParam("title", title);
         parameters.addParam("address", address);
@@ -3350,7 +3329,7 @@ public class ContentManager extends TelegramBotManager {
     @Wrapper
     @RequestPath(method = POST, path = "sendContact")
     public <T> Message sendContact(T chatId, String phoneNumber, String firstName) throws IOException {
-        return (Message) sendContact(chatId, phoneNumber, firstName, LIBRARY_OBJECT);
+        return sendContact(chatId, phoneNumber, firstName, LIBRARY_OBJECT);
     }
 
     /**
@@ -3377,7 +3356,7 @@ public class ContentManager extends TelegramBotManager {
      * sendContact</a>
      */
     @RequestPath(method = POST, path = "sendContact")
-    public <T> T sendContact(T chatId, String phoneNumber, String firstName, ReturnFormat format) throws IOException {
+    public <T, L> T sendContact(L chatId, String phoneNumber, String firstName, ReturnFormat format) throws IOException {
         return sendContact(chatId, phoneNumber, firstName, null, format);
     }
 
@@ -3440,7 +3419,7 @@ public class ContentManager extends TelegramBotManager {
     @Wrapper
     @RequestPath(method = POST, path = "sendContact")
     public <T> Message sendContact(T chatId, String phoneNumber, String firstName, Params parameters) throws IOException {
-        return (Message) sendContact(chatId, phoneNumber, firstName, parameters, LIBRARY_OBJECT);
+        return sendContact(chatId, phoneNumber, firstName, parameters, LIBRARY_OBJECT);
     }
 
     /**
@@ -3501,8 +3480,8 @@ public class ContentManager extends TelegramBotManager {
      * sendContact</a>
      */
     @RequestPath(method = POST, path = "sendContact")
-    public <T> T sendContact(T chatId, String phoneNumber, String firstName, Params parameters,
-                             ReturnFormat format) throws IOException {
+    public <T, L> T sendContact(L chatId, String phoneNumber, String firstName, Params parameters,
+                                ReturnFormat format) throws IOException {
         parameters = createChatIdPayload(chatId, parameters);
         parameters.addParam("phone_number", phoneNumber);
         parameters.addParam("first_name", firstName);
@@ -3534,7 +3513,7 @@ public class ContentManager extends TelegramBotManager {
     @Wrapper
     @RequestPath(method = POST, path = "sendPoll")
     public <T> Message sendPoll(T chatId, String question, String... options) throws IOException {
-        return (Message) sendPoll(chatId, question, LIBRARY_OBJECT, options);
+        return sendPoll(chatId, question, LIBRARY_OBJECT, options);
     }
 
     /**
@@ -3561,7 +3540,7 @@ public class ContentManager extends TelegramBotManager {
      * sendPoll</a>
      */
     @RequestPath(method = POST, path = "sendPoll")
-    public <T> T sendPoll(T chatId, String question, ReturnFormat format, String... options) throws IOException {
+    public <T, L> T sendPoll(L chatId, String question, ReturnFormat format, String... options) throws IOException {
         return sendPoll(chatId, question, null, format, options);
     }
 
@@ -3658,7 +3637,7 @@ public class ContentManager extends TelegramBotManager {
     @Wrapper
     @RequestPath(method = POST, path = "sendPoll")
     public <T> Message sendPoll(T chatId, String question, Params parameters, String... options) throws IOException {
-        return (Message) sendPoll(chatId, question, parameters, LIBRARY_OBJECT, options);
+        return sendPoll(chatId, question, parameters, LIBRARY_OBJECT, options);
     }
 
     /**
@@ -3753,8 +3732,8 @@ public class ContentManager extends TelegramBotManager {
      * sendPoll</a>
      */
     @RequestPath(method = POST, path = "sendPoll")
-    public <T> T sendPoll(T chatId, String question, Params parameters, ReturnFormat format,
-                          String... options) throws IOException {
+    public <T, L> T sendPoll(L chatId, String question, Params parameters, ReturnFormat format,
+                             String... options) throws IOException {
         parameters = createChatIdPayload(chatId, parameters);
         parameters.addParam("question", question);
         parameters.addParam("options", new JSONArray(options));
@@ -3784,7 +3763,7 @@ public class ContentManager extends TelegramBotManager {
     @Wrapper
     @RequestPath(method = POST, path = "sendDice")
     public <T> Message sendDice(T chatId) throws IOException {
-        return (Message) sendDice(chatId, LIBRARY_OBJECT);
+        return sendDice(chatId, LIBRARY_OBJECT);
     }
 
     /**
@@ -3809,7 +3788,7 @@ public class ContentManager extends TelegramBotManager {
      * sendDice</a>
      */
     @RequestPath(method = POST, path = "sendDice")
-    public <T> T sendDice(T chatId, ReturnFormat format) throws IOException {
+    public <T, L> T sendDice(L chatId, ReturnFormat format) throws IOException {
         return sendDice(chatId, null, format);
     }
 
@@ -3866,7 +3845,7 @@ public class ContentManager extends TelegramBotManager {
     @Wrapper
     @RequestPath(method = POST, path = "sendDice")
     public <T> Message sendDice(T chatId, Params parameters) throws IOException {
-        return (Message) sendDice(chatId, parameters, LIBRARY_OBJECT);
+        return sendDice(chatId, parameters, LIBRARY_OBJECT);
     }
 
     /**
@@ -3921,9 +3900,8 @@ public class ContentManager extends TelegramBotManager {
      * sendDice</a>
      */
     @RequestPath(method = POST, path = "sendDice")
-    public <T> T sendDice(T chatId, Params parameters, ReturnFormat format) throws IOException {
-        parameters = createChatIdPayload(chatId, parameters);
-        return returnMessage(sendPostRequest(SEND_DICE_ENDPOINT, parameters), format);
+    public <T, L> T sendDice(L chatId, Params parameters, ReturnFormat format) throws IOException {
+        return returnMessage(sendPostRequest(SEND_DICE_ENDPOINT, createChatIdPayload(chatId, parameters)), format);
     }
 
     /**
@@ -3932,7 +3910,19 @@ public class ContentManager extends TelegramBotManager {
      *
      * @param chatId: unique identifier for the target chat or username of the target channel
      * @param action: type of action to broadcast
-     * @return result of the operation -> {@code "true"} is successful, {@code "false"} and error printed with {@link #printErrorResponse()} method if not successful
+     * @return result of the operation -> {@code "true"} is successful, {@code "false"} if not successful
+     * @throws IOException when request has been go wrong -> you can use these methods to get more details about error:
+     *                     <ul>
+     *                         <li>
+     *                             {@link #getErrorResponse()}
+     *                         </li>
+     *                         <li>
+     *                             {@link #getJSONErrorResponse()}
+     *                         </li>
+     *                         <li>
+     *                             {@link #printErrorResponse()}
+     *                         </li>
+     *                     </ul> using a {@code "try and catch statement"} during runtime, see how to do in {@code "README"} file
      * @apiNote see the official documentation at: <a href="https://core.telegram.org/bots/api#sendChatAction">
      * sendChatAction</a>
      */
@@ -3948,7 +3938,19 @@ public class ContentManager extends TelegramBotManager {
      * @param chatId:          unique identifier for the target chat or username of the target channel
      * @param action:          type of action to broadcast
      * @param messageThreadId: unique identifier for the target message thread; supergroups only
-     * @return result of the operation -> {@code "true"} is successful, {@code "false"} and error printed with {@link #printErrorResponse()} method if not successful
+     * @return result of the operation -> {@code "true"} is successful, {@code "false"} if not successful
+     * @throws IOException when request has been go wrong -> you can use these methods to get more details about error:
+     *                     <ul>
+     *                         <li>
+     *                             {@link #getErrorResponse()}
+     *                         </li>
+     *                         <li>
+     *                             {@link #getJSONErrorResponse()}
+     *                         </li>
+     *                         <li>
+     *                             {@link #printErrorResponse()}
+     *                         </li>
+     *                     </ul> using a {@code "try and catch statement"} during runtime, see how to do in {@code "README"} file
      * @apiNote see the official documentation at: <a href="https://core.telegram.org/bots/api#sendChatAction">
      * sendChatAction</a>
      */
@@ -3958,33 +3960,7 @@ public class ContentManager extends TelegramBotManager {
         if (messageThreadId != -1)
             parameters.addParam("message_thread_id", messageThreadId);
         parameters.addParam("action", action);
-        return Boolean.parseBoolean(sendPostRequest(SEND_CHAT_ACTION_ENDPOINT, parameters));
-    }
-
-    /**
-     * Method to create a chat identifier payload
-     *
-     * @param chatId:     unique identifier for the target chat or username of the target channel
-     * @param parameters: other request parameters
-     * @return payload as {@link Params}
-     */
-    private <T> Params createChatIdPayload(T chatId, Params parameters) {
-        if (parameters == null)
-            parameters = new Params();
-        parameters.addParam("chat_id", getChatId(chatId));
-        return parameters;
-    }
-
-    /**
-     * Method to fetch from the generic type parameter the chat identifier
-     *
-     * @param chatId: generic type parameter from fetch the chat identifier
-     * @return chat identifier as {@link T}
-     */
-    private <T> T getChatId(T chatId) {
-        if (chatId instanceof Chat)
-            return (T) ("" + ((Chat) chatId).getId());
-        return chatId;
+        return getBooleanResponse(sendPostRequest(SEND_CHAT_ACTION_ENDPOINT, parameters));
     }
 
 }

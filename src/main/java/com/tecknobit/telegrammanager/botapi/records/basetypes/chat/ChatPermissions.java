@@ -4,6 +4,9 @@ import com.tecknobit.telegrammanager.botapi.records.structures.TelegramType;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramTypeStructure;
 import org.json.JSONObject;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+
 /**
  * The {@code ChatPermissions} class is useful to format a {@code Telegram}'s chat permissions
  *
@@ -18,74 +21,85 @@ public class ChatPermissions extends TelegramType {
     /**
      * {@code canSendMessages} if the user is allowed to send text messages, contacts, invoices, locations and venues
      */
-    private final boolean canSendMessages;
+    private boolean canSendMessages;
 
     /**
      * {@code canSendAudios} if the user is allowed to send audios
      */
-    private final boolean canSendAudios;
+    private boolean canSendAudios;
 
     /**
      * {@code canSendDocuments} if the user is allowed to send documents
      */
-    private final boolean canSendDocuments;
+    private boolean canSendDocuments;
 
     /**
      * {@code canSendPhotos} if the user is allowed to send photos
      */
-    private final boolean canSendPhotos;
+    private boolean canSendPhotos;
 
     /**
      * {@code canSendVideos} if the user is allowed to send videos
      */
-    private final boolean canSendVideos;
+    private boolean canSendVideos;
 
     /**
      * {@code canSendVideoNotes} if the user is allowed to send video notes
      */
-    private final boolean canSendVideoNotes;
+    private boolean canSendVideoNotes;
 
     /**
      * {@code canSendVoiceNotes} if the user is allowed to send voice notes
      */
-    private final boolean canSendVoiceNotes;
+    private boolean canSendVoiceNotes;
 
     /**
      * {@code canSendPolls} if the user is allowed to send polls
      */
-    private final boolean canSendPolls;
+    private boolean canSendPolls;
 
     /**
      * {@code canSendOtherMessages} if the user is allowed to send animations, games, stickers and use inline bots
      */
-    private final boolean canSendOtherMessages;
+    private boolean canSendOtherMessages;
 
     /**
      * {@code canAddWebpagePreviews} if the user is allowed to add web page previews to their messages
      */
-    private final boolean canAddWebpagePreviews;
+    private boolean canAddWebpagePreviews;
 
     /**
      * {@code canChangeInfo} if the user is allowed to change the chat title, photo and other settings. Ignored in public
      * supergroups
      */
-    private final boolean canChangeInfo;
+    private boolean canChangeInfo;
 
     /**
      * {@code canInviteUsers} if the user is allowed to invite new users to the chat
      */
-    private final boolean canInviteUsers;
+    private boolean canInviteUsers;
 
     /**
      * {@code canPinMessages} if the user is allowed to pin messages. Ignored in public supergroups
      */
-    private final boolean canPinMessages;
+    private boolean canPinMessages;
 
     /**
      * {@code canManageTopics} if the user is allowed to create forum topics. If omitted defaults to the value of
      * {@link #canPinMessages}
      */
-    private final boolean canManageTopics;
+    private boolean canManageTopics;
+
+    /**
+     * Constructor to init a {@link ChatPermissions} object <br>
+     * No-any params required
+     *
+     * @apiNote this constructor is useful when you need to pass this class as parameter for the requests, all the flags
+     * as default are set to {@code "false"}, to enable them you need to call the specific setter methods
+     */
+    public ChatPermissions() {
+        super(null);
+    }
 
     /**
      * Constructor to init a {@link ChatPermissions} object
@@ -162,6 +176,15 @@ public class ChatPermissions extends TelegramType {
     }
 
     /**
+     * Method to set {@link #canSendMessages} instance <br>
+     *
+     * @param canSendMessages: if the user is allowed to send text messages, contacts, invoices, locations and venues
+     */
+    public void setCanSendMessages(boolean canSendMessages) {
+        this.canSendMessages = canSendMessages;
+    }
+
+    /**
      * Method to get {@link #canSendAudios} instance <br>
      * No-any params required
      *
@@ -169,6 +192,15 @@ public class ChatPermissions extends TelegramType {
      */
     public boolean canSendAudios() {
         return canSendAudios;
+    }
+
+    /**
+     * Method to set {@link #canSendAudios} instance <br>
+     *
+     * @param canSendAudios: if the user is allowed to send audios
+     */
+    public void setCanSendAudios(boolean canSendAudios) {
+        this.canSendAudios = canSendAudios;
     }
 
     /**
@@ -182,6 +214,15 @@ public class ChatPermissions extends TelegramType {
     }
 
     /**
+     * Method to set {@link #canSendDocuments} instance <br>
+     *
+     * @param canSendDocuments: if the user is allowed to send documents
+     */
+    public void setCanSendDocuments(boolean canSendDocuments) {
+        this.canSendDocuments = canSendDocuments;
+    }
+
+    /**
      * Method to get {@link #canSendPhotos} instance <br>
      * No-any params required
      *
@@ -189,6 +230,15 @@ public class ChatPermissions extends TelegramType {
      */
     public boolean canSendPhotos() {
         return canSendPhotos;
+    }
+
+    /**
+     * Method to set {@link #canSendPhotos} instance <br>
+     *
+     * @param canSendPhotos: if the user is allowed to send photos
+     */
+    public void setCanSendPhotos(boolean canSendPhotos) {
+        this.canSendPhotos = canSendPhotos;
     }
 
     /**
@@ -202,6 +252,15 @@ public class ChatPermissions extends TelegramType {
     }
 
     /**
+     * Method to set {@link #canSendVideos} instance <br>
+     *
+     * @param canSendVideos: if the user is allowed to send videos
+     */
+    public void setCanSendVideos(boolean canSendVideos) {
+        this.canSendVideos = canSendVideos;
+    }
+
+    /**
      * Method to get {@link #canSendVideoNotes} instance <br>
      * No-any params required
      *
@@ -209,6 +268,15 @@ public class ChatPermissions extends TelegramType {
      */
     public boolean canSendVideoNotes() {
         return canSendVideoNotes;
+    }
+
+    /**
+     * Method to set {@link #canSendVideoNotes} instance <br>
+     *
+     * @param canSendVideoNotes: if the user is allowed to send video notes
+     */
+    public void setCanSendVideoNotes(boolean canSendVideoNotes) {
+        this.canSendVideoNotes = canSendVideoNotes;
     }
 
     /**
@@ -222,6 +290,15 @@ public class ChatPermissions extends TelegramType {
     }
 
     /**
+     * Method to set {@link #canSendVoiceNotes} instance <br>
+     *
+     * @param canSendVoiceNotes: if the user is allowed to send voice notes
+     */
+    public void setCanSendVoiceNotes(boolean canSendVoiceNotes) {
+        this.canSendVoiceNotes = canSendVoiceNotes;
+    }
+
+    /**
      * Method to get {@link #canSendPolls} instance <br>
      * No-any params required
      *
@@ -229,6 +306,15 @@ public class ChatPermissions extends TelegramType {
      */
     public boolean canSendPolls() {
         return canSendPolls;
+    }
+
+    /**
+     * Method to set {@link #canSendPolls} instance <br>
+     *
+     * @param canSendPolls: if the user is allowed to send polls
+     */
+    public void setCanSendPolls(boolean canSendPolls) {
+        this.canSendPolls = canSendPolls;
     }
 
     /**
@@ -242,6 +328,15 @@ public class ChatPermissions extends TelegramType {
     }
 
     /**
+     * Method to set {@link #canSendOtherMessages} instance <br>
+     *
+     * @param canSendOtherMessages: if the user is allowed to send animations, games, stickers and use inline bots
+     */
+    public void setCanSendOtherMessages(boolean canSendOtherMessages) {
+        this.canSendOtherMessages = canSendOtherMessages;
+    }
+
+    /**
      * Method to get {@link #canAddWebpagePreviews} instance <br>
      * No-any params required
      *
@@ -249,6 +344,15 @@ public class ChatPermissions extends TelegramType {
      */
     public boolean canAddWebpagePreviews() {
         return canAddWebpagePreviews;
+    }
+
+    /**
+     * Method to set {@link #canAddWebpagePreviews} instance <br>
+     *
+     * @param canAddWebpagePreviews: if the user is allowed to add web page previews to their messages
+     */
+    public void setCanAddWebpagePreviews(boolean canAddWebpagePreviews) {
+        this.canAddWebpagePreviews = canAddWebpagePreviews;
     }
 
     /**
@@ -262,6 +366,16 @@ public class ChatPermissions extends TelegramType {
     }
 
     /**
+     * Method to set {@link #canChangeInfo} instance <br>
+     *
+     * @param canChangeInfo: if the user is allowed to change the chat title, photo and other settings. Ignored in public
+     *                       supergroups
+     */
+    public void setCanChangeInfo(boolean canChangeInfo) {
+        this.canChangeInfo = canChangeInfo;
+    }
+
+    /**
      * Method to get {@link #canInviteUsers} instance <br>
      * No-any params required
      *
@@ -269,6 +383,15 @@ public class ChatPermissions extends TelegramType {
      */
     public boolean canInviteUsers() {
         return canInviteUsers;
+    }
+
+    /**
+     * Method to set {@link #canInviteUsers} instance <br>
+     *
+     * @param canInviteUsers: if the user is allowed to invite new users to the chat
+     */
+    public void setCanInviteUsers(boolean canInviteUsers) {
+        this.canInviteUsers = canInviteUsers;
     }
 
     /**
@@ -282,6 +405,15 @@ public class ChatPermissions extends TelegramType {
     }
 
     /**
+     * Method to set {@link #canPinMessages} instance <br>
+     *
+     * @param canPinMessages: if the user is allowed to pin messages. Ignored in public supergroups
+     */
+    public void setCanPinMessages(boolean canPinMessages) {
+        this.canPinMessages = canPinMessages;
+    }
+
+    /**
      * Method to get {@link #canManageTopics} instance <br>
      * No-any params required
      *
@@ -289,6 +421,16 @@ public class ChatPermissions extends TelegramType {
      */
     public boolean canManageTopics() {
         return canManageTopics;
+    }
+
+    /**
+     * Method to set {@link #canManageTopics} instance <br>
+     *
+     * @param canManageTopics: if the user is allowed to create forum topics. If omitted defaults to the value of
+     *                         {@link #canPinMessages}
+     */
+    public void setCanManageTopics(boolean canManageTopics) {
+        this.canManageTopics = canManageTopics;
     }
 
     /**
@@ -302,6 +444,30 @@ public class ChatPermissions extends TelegramType {
             return null;
         else
             return new ChatPermissions(jItem);
+    }
+
+    /**
+     * Returns a string representation of the object <br>
+     * No-any params required
+     *
+     * @return a string representation of the object as {@link String}
+     */
+    @Override
+    public String toString() {
+        JSONObject permissions = new JSONObject(this);
+        Method[] methods = this.getClass().getDeclaredMethods();
+        for (Method method : methods) {
+            String methodName = method.getName();
+            if (methodName.startsWith("can")) {
+                try {
+                    Field field = ChatPermissions.class.getDeclaredField(methodName);
+                    field.setAccessible(true);
+                    permissions.put(methodName, field.get(this));
+                } catch (Exception ignored) {
+                }
+            }
+        }
+        return permissions.toString();
     }
 
 }

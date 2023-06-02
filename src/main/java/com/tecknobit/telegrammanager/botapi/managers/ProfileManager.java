@@ -143,7 +143,7 @@ public class ProfileManager extends TelegramBotManager {
      */
     @RequestPath(method = GET, path = "getMe")
     public <T> T getMe(ReturnFormat format) throws IOException {
-        return returnUser(sendGETRequest(GET_ME_ENDPOINT), format);
+        return returnUser(sendGetRequest(GET_ME_ENDPOINT), format);
     }
 
     /**
@@ -153,40 +153,52 @@ public class ProfileManager extends TelegramBotManager {
      * server for 10 minutes <br>
      * No-any params required
      *
-     * @return result of the operation -> {@code "true"} is successful, {@code "false"} and error printed with {@link #printErrorResponse()} method if not successful
+     * @return result of the operation -> {@code "true"} is successful, {@code "false"} if not successful
+     * @throws IOException when request has been go wrong -> you can use these methods to get more details about error:
+     *                     <ul>
+     *                         <li>
+     *                             {@link #getErrorResponse()}
+     *                         </li>
+     *                         <li>
+     *                             {@link #getJSONErrorResponse()}
+     *                         </li>
+     *                         <li>
+     *                             {@link #printErrorResponse()}
+     *                         </li>
+     *                     </ul> using a {@code "try and catch statement"} during runtime, see how to do in {@code "README"} file
      * @apiNote see the official documentation at: <a href="https://core.telegram.org/bots/api#logout">
      * logOut</a>
      */
     @RequestPath(method = POST, path = "logOut")
-    public boolean logOut() {
-        try {
-            sendPostRequest(LOG_OUT_ENDPOINT);
-            return true;
-        } catch (IOException e) {
-            printErrorResponse();
-            return false;
-        }
+    public boolean logOut() throws IOException {
+        return getBooleanResponse(sendPostRequest(LOG_OUT_ENDPOINT));
     }
 
     /**
-     * Method to cclose the bot instance before moving it from one local server to another. You need to delete the
+     * Method to close the bot instance before moving it from one local server to another. You need to delete the
      * webhook before calling this method to ensure that the bot isn't launched again after server restart. The method
      * will return error 429 in the first 10 minutes after the bot is launched <br>
      * No-any params required
      *
-     * @return result of the operation -> {@code "true"} is successful, {@code "false"} and error printed with {@link #printErrorResponse()} method if not successful
+     * @return result of the operation -> {@code "true"} is successful, {@code "false"} if not successful
+     * @throws IOException when request has been go wrong -> you can use these methods to get more details about error:
+     *                     <ul>
+     *                         <li>
+     *                             {@link #getErrorResponse()}
+     *                         </li>
+     *                         <li>
+     *                             {@link #getJSONErrorResponse()}
+     *                         </li>
+     *                         <li>
+     *                             {@link #printErrorResponse()}
+     *                         </li>
+     *                     </ul> using a {@code "try and catch statement"} during runtime, see how to do in {@code "README"} file
      * @apiNote see the official documentation at: <a href="https://core.telegram.org/bots/api#close">
      * close</a>
      */
     @RequestPath(method = POST, path = "close")
-    public boolean close() {
-        try {
-            sendPostRequest(CLOSE_ENDPOINT);
-            return true;
-        } catch (IOException e) {
-            printErrorResponse();
-            return false;
-        }
+    public boolean close() throws IOException {
+        return getBooleanResponse(sendPostRequest(CLOSE_ENDPOINT));
     }
 
 }

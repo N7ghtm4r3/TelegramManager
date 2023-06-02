@@ -4,6 +4,7 @@ import com.tecknobit.apimanager.annotations.Returner;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramType;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramTypeStructure;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -110,8 +111,15 @@ public class PhotoSize extends MediaStructure {
     public static ArrayList<PhotoSize> returnPhotoSizes(JSONArray jPhotoSizes) {
         ArrayList<PhotoSize> photoSizes = new ArrayList<>();
         if (jPhotoSizes != null)
-            for (int j = 0; j < jPhotoSizes.length(); j++)
-                photoSizes.add(new PhotoSize(jPhotoSizes.getJSONObject(j)));
+            for (int j = 0; j < jPhotoSizes.length(); j++) {
+                try {
+                    photoSizes.add(new PhotoSize(jPhotoSizes.getJSONObject(j)));
+                } catch (JSONException e) {
+                    JSONArray jPhotos = jPhotoSizes.getJSONArray(j);
+                    for (int i = 0; i < jPhotos.length(); i++)
+                        photoSizes.add(new PhotoSize(jPhotos.getJSONObject(i)));
+                }
+            }
         return photoSizes;
     }
 

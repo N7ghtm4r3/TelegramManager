@@ -244,7 +244,7 @@ public class UpdatesManager extends TelegramBotManager {
     @Returner
     @RequestPath(method = GET, path = "getUpdates")
     public <T> T getUpdates(Params parameters, ReturnFormat format) throws IOException {
-        JSONArray result = getResultFromList(sendGETRequest(GET_UPDATES_ENDPOINT, parameters));
+        JSONArray result = getResultFromList(sendGetRequest(GET_UPDATES_ENDPOINT, parameters));
         return switch (format) {
             case JSON -> (T) result;
             case LIBRARY_OBJECT -> {
@@ -434,22 +434,29 @@ public class UpdatesManager extends TelegramBotManager {
      * Method to remove webhook integration if you decide to switch back to {@link #getUpdates}
      *
      * @param dropPendingUpdates: pass True to drop all pending updates
-     * @return result of the operation -> {@code "true"} is successful, {@code "false"} and error printed with {@link #printErrorResponse()} method if not successful
+     * @return result of the operation -> {@code "true"} is successful, {@code "false"} if not successful
+     * @throws IOException when request has been go wrong -> you can use these methods to get more details about error:
+     *                     <ul>
+     *                         <li>
+     *                             {@link #getErrorResponse()}
+     *                         </li>
+     *                         <li>
+     *                             {@link #getJSONErrorResponse()}
+     *                         </li>
+     *                         <li>
+     *                             {@link #printErrorResponse()}
+     *                         </li>
+     *                     </ul> using a {@code "try and catch statement"} during runtime, see how to do in {@code "README"} file
      * @apiNote see the official documentation at: <a href="https://core.telegram.org/bots/api#deletewebhook">
      * deleteWebhook</a>
      */
     @RequestPath(method = POST, path = "deleteWebhook")
 
-    public boolean deleteWebhook(boolean dropPendingUpdates) {
-        try {
-            Params payload = new Params();
-            payload.addParam("drop_pending_updates", dropPendingUpdates);
-            sendPostRequest(DELETE_WEBHOOK_ENDPOINT, payload);
-            return true;
-        } catch (IOException e) {
-            printErrorResponse();
-            return false;
-        }
+    public boolean deleteWebhook(boolean dropPendingUpdates) throws IOException {
+        Params payload = new Params();
+        payload.addParam("drop_pending_updates", dropPendingUpdates);
+        sendPostRequest(DELETE_WEBHOOK_ENDPOINT, payload);
+        return getBooleanResponse(sendPostRequest(DELETE_WEBHOOK_ENDPOINT, payload));
     }
 
     /**
@@ -501,7 +508,7 @@ public class UpdatesManager extends TelegramBotManager {
     @Returner
     @RequestPath(method = GET, path = "getWebhookInfo")
     public <T> T getWebhookInfo(ReturnFormat format) throws IOException {
-        String infoResponse = sendGETRequest(GET_WEBHOOK_INFO_ENDPOINT);
+        String infoResponse = sendGetRequest(GET_WEBHOOK_INFO_ENDPOINT);
         return switch (format) {
             case JSON -> (T) new JSONObject(infoResponse);
             case LIBRARY_OBJECT -> (T) new WebhookInfo(new JSONObject(infoResponse));

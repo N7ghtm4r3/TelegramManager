@@ -5,6 +5,7 @@ import com.tecknobit.apimanager.annotations.Wrapper;
 import com.tecknobit.apimanager.apis.APIRequest;
 import com.tecknobit.apimanager.apis.APIRequest.RequestMethod;
 import com.tecknobit.apimanager.formatters.JsonHelper;
+import com.tecknobit.telegrammanager.botapi.records.basetypes.chat.Chat;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -157,8 +158,8 @@ public class TelegramBotManager {
      * @return response of request formatted in JSON as {@link String}
      */
     @Wrapper
-    public String sendGETRequest(String methodName) throws IOException {
-        return sendGETRequest(methodName, null);
+    public String sendGetRequest(String methodName) throws IOException {
+        return sendGetRequest(methodName, null);
     }
 
     /**
@@ -168,7 +169,7 @@ public class TelegramBotManager {
      * @param query:      query params of the request
      * @return response of request formatted in JSON as {@link String}
      */
-    public String sendGETRequest(String methodName, Params query) throws IOException {
+    public String sendGetRequest(String methodName, Params query) throws IOException {
         if (query == null)
             query = new Params();
         return sendRequest(methodName + query.createQueryString(), GET);
@@ -187,6 +188,29 @@ public class TelegramBotManager {
     }
 
     /**
+     * Method to execute and get response of an upload media request
+     *
+     * @param methodName: the method where make the request
+     * @param chatId:     unique identifier for the target chat or username of the target channel
+     * @param mediaType:  type of the media to send
+     * @param mediaValue: the media to send
+     * @param payload:    payload of the request
+     * @return response of request formatted in JSON as {@link String}
+     */
+    protected <T> String uploadMedia(String methodName, T chatId, T mediaType, T mediaValue,
+                                     Params payload) throws IOException {
+        payload = createChatIdPayload(chatId, payload);
+        payload.addParam(mediaType.toString(), mediaValue);
+        apiRequest.sendAPIRequest(BASE_BOT_ENDPOINT + token + "/" + methodName + payload.createQueryString(),
+                POST, "Content-Type", "multipart/form-data");
+        return apiRequest.getResponse();
+    }
+
+    protected boolean getBooleanResponse(String response) {
+        return JsonHelper.getBoolean(new JSONObject(response), "ok");
+    }
+
+    /**
      * Method to fetch the {@code "result"}'s section from a response
      *
      * @param response: the response obtained
@@ -194,6 +218,33 @@ public class TelegramBotManager {
      */
     public static JSONArray getResultFromList(String response) {
         return JsonHelper.getJSONArray(new JSONObject(response), "result", new JSONArray());
+    }
+
+    /**
+     * Method to create a chat identifier payload
+     *
+     * @param chatId:     unique identifier for the target chat or username of the target channel
+     * @param parameters: other request parameters
+     * @return payload as {@link Params}
+     */
+    protected <T> Params createChatIdPayload(T chatId, Params parameters) {
+        if (parameters == null)
+            parameters = new Params();
+        if (chatId != null)
+            parameters.addParam("chat_id", getChatId(chatId));
+        return parameters;
+    }
+
+    /**
+     * Method to fetch from the generic type parameter the chat identifier
+     *
+     * @param chatId: generic type parameter from fetch the chat identifier
+     * @return chat identifier as {@link T}
+     */
+    protected <T> T getChatId(T chatId) {
+        if (chatId instanceof Chat)
+            return (T) ("" + ((Chat) chatId).getId());
+        return chatId;
     }
 
     /**
