@@ -462,6 +462,15 @@ public class ChatPermissions extends TelegramType {
                 try {
                     Field field = ChatPermissions.class.getDeclaredField(methodName);
                     field.setAccessible(true);
+                    for (int j = 3; j < methodName.length(); j++) {
+                        char letter = methodName.charAt(j);
+                        if (letter >= 'A' && letter <= 'Z')
+                            methodName = methodName.replaceFirst("" + letter, ("_" + letter).toLowerCase());
+                    }
+                    if (methodName.contains("webpage")) {
+                        String[] names = methodName.split("web");
+                        methodName = names[0] + "web_" + names[1];
+                    }
                     permissions.put(methodName, field.get(this));
                 } catch (Exception ignored) {
                 }

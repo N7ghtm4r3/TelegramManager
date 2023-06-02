@@ -373,18 +373,12 @@ public class ChatManager extends TelegramBotManager {
         return getBooleanResponse(sendPostRequest(endpoint, payload));
     }
 
-    public <T> boolean setChatPermissions(T chatId, User user, ChatPermissions chatPermissions,
+    public <T> boolean setChatPermissions(T chatId, ChatPermissions chatPermissions,
                                           boolean useIndependentChatPermissions) throws IOException {
-        return setChatPermissions(chatId, user.getId(), chatPermissions, useIndependentChatPermissions);
-    }
-
-    public <T> boolean setChatPermissions(T chatId, long userId, ChatPermissions chatPermissions,
-                                          boolean useIndependentChatPermissions) throws IOException {
-        Params payload = createUserPayload(chatId, userId, null);
+        Params payload = createChatIdPayload(chatId, null);
         payload.addParam("permissions", chatPermissions);
         payload.addParam("use_independent_chat_permissions", useIndependentChatPermissions);
-        return getBooleanResponse(sendPostRequest(SET_CHAT_PERMISSIONS_ENDPOINT, createUserPayload(chatId, userId,
-                payload)));
+        return getBooleanResponse(sendPostRequest(SET_CHAT_PERMISSIONS_ENDPOINT, payload));
     }
 
     public <T> String exportChatInviteLink(T chatId) throws IOException {
@@ -490,7 +484,6 @@ public class ChatManager extends TelegramBotManager {
                 null)));
     }
 
-    // TODO: 02/06/2023 TO REVIEW
     public <T> boolean setChatPhoto(T chatId, String photo) throws IOException {
         return getBooleanResponse(uploadMedia(SET_CHAT_PHOTO_ENDPOINT, chatId, InputMediaType.photo, photo, null));
     }
@@ -563,32 +556,13 @@ public class ChatManager extends TelegramBotManager {
         };
     }
 
-    /**
-     * Method to create a chat member
-     *
-     * @param chatMemberResponse : obtained from Telegram's response
-     * @param format             :       return type formatter -> {@link ReturnFormat}
-     * @return chat member as {@code "format"} defines
-     */
-    @Returner
-    private <T> T returnChatMember(String chatMemberResponse, ReturnFormat format) {
-        return switch (format) {
-            case JSON -> (T) new JSONObject(chatMemberResponse);
-            case LIBRARY_OBJECT -> (T) new ChatMember(new JSONObject(chatMemberResponse));
-            default -> (T) chatMemberResponse;
-        };
+    public <T> ArrayList<ChatMember> getChatAdministrators(T chatId) throws IOException {
+        return getChatAdministrators(chatId, LIBRARY_OBJECT);
     }
 
-    /**
-     * Method to create a chat members list
-     *
-     * @param chatMembersResponse : obtained from Telegram's response
-     * @param format              :       return type formatter -> {@link ReturnFormat}
-     * @return chat members list as {@code "format"} defines
-     */
-    @Returner
-    private <T> T returnChatMembers(String chatMembersResponse, ReturnFormat format) {
-        JSONArray result = getResultFromList(chatMembersResponse);
+    public <T, L> T getChatAdministrators(L chatId, ReturnFormat format) throws IOException {
+        JSONArray result = getResultFromList(sendGetRequest(GET_CHAT_ADMINISTRATORS_ENDPOINT, createChatIdPayload(chatId,
+                null)));
         return switch (format) {
             case JSON -> (T) result;
             case LIBRARY_OBJECT -> {
@@ -599,6 +573,44 @@ public class ChatManager extends TelegramBotManager {
             }
             default -> (T) result.toString();
         };
+    }
+
+    public <T, L> int getChatMemberCount(T chatId) throws IOException {
+        return Integer.parseInt(getChatMemberCount(chatId, LIBRARY_OBJECT));
+    }
+
+    public <T, L> T getChatMemberCount(L chatId, ReturnFormat format) throws IOException {
+        JSONObject responseMemberCount = new JSONObject(sendGetRequest(GET_CHAT_MEMBER_COUNT_ENDPOINT,
+                createChatIdPayload(chatId, null)));
+        return switch (format) {
+            case JSON -> (T) responseMemberCount;
+            case LIBRARY_OBJECT -> (T) ("" + responseMemberCount.getInt("result"));
+            default -> (T) responseMemberCount.toString();
+        };
+    }
+
+    public <T> ChatMember getChatMember(T chatId, long userId) throws IOException {
+        return getChatMember(chatId, userId, LIBRARY_OBJECT);
+    }
+
+    public <T, L> T getChatMember(L chatId, long userId, ReturnFormat format) throws IOException {
+        String chatMemberResponse = sendGetRequest(GET_CHAT_MEMBER_ENDPOINT, createChatIdPayload(chatId, null));
+        return switch (format) {
+            case JSON -> (T) new JSONObject(chatMemberResponse);
+            case LIBRARY_OBJECT -> (T) new ChatMember(new JSONObject(chatMemberResponse));
+            default -> (T) chatMemberResponse;
+        };
+    }
+
+    public <T> boolean setChatStickerSet(T chatId, String stickerSetName) throws IOException {
+        Params payload = createChatIdPayload(chatId, null);
+        payload.addParam("sticker_set_name", stickerSetName);
+        return getBooleanResponse(sendPostRequest(SET_CHAT_STICKER_SET_ENDPOINT, payload));
+    }
+
+    public <T> boolean deleteChatStickerSet(T chatId) throws IOException {
+        return getBooleanResponse(sendPostRequest(DELETE_CHAT_STICKER_SET_ENDPOINT, createChatIdPayload(chatId,
+                null)));
     }
 
     private <T> Params createUserPayload(T chatId, long userId, Params parameters) {
