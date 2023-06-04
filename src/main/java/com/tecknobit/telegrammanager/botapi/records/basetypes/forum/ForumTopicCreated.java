@@ -17,6 +17,68 @@ import org.json.JSONObject;
 public class ForumTopicCreated extends ForumTopicEdited {
 
     /**
+     * {@code TopicIconColor} list of available topic icon colors
+     */
+    public enum TopicIconColor {
+
+        /**
+         * {@code blue} topic icon color
+         */
+        blue(0x6FB9F0),
+
+        /**
+         * {@code orange} topic icon color
+         */
+        orange(0xFFD67E),
+
+        /**
+         * {@code purple} topic icon color
+         */
+        purple(0xCB86DB),
+
+        /**
+         * {@code green} topic icon color
+         */
+        green(0x8EEE98),
+
+        /**
+         * {@code pink} topic icon color
+         */
+        pink(0xFF93B2),
+
+        /**
+         * {@code red} topic icon color
+         */
+        red(0xFB6F5F);
+
+        /**
+         * {@code color} topic icon color value
+         */
+        private final int color;
+
+        /**
+         * Constructor to init a {@link TopicIconColor} object
+         *
+         * @param color: topic icon color value
+         */
+        TopicIconColor(int color) {
+            this.color = color;
+        }
+
+        /**
+         * Returns a string representation of the object <br>
+         * No-any params required
+         *
+         * @return a string representation of the object as {@link String}
+         */
+        @Override
+        public String toString() {
+            return "" + color;
+        }
+
+    }
+
+    /**
      * {@code iconColor} color of the topic icon in RGB format
      */
     protected final int iconColor;

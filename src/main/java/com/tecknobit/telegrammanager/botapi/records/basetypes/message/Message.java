@@ -33,8 +33,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static com.tecknobit.telegrammanager.botapi.managers.TelegramBotManager.ReturnFormat;
-import static com.tecknobit.telegrammanager.botapi.managers.TelegramBotManager.getResultFromList;
+import static com.tecknobit.telegrammanager.botapi.managers.TelegramManager.ReturnFormat;
+import static com.tecknobit.telegrammanager.botapi.managers.TelegramManager.getResultFromList;
 
 /**
  * The {@code Message} class is useful to format a {@code Telegram}'s message

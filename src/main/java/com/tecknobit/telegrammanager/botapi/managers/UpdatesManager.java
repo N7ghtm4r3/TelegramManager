@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 import static com.tecknobit.apimanager.apis.APIRequest.RequestMethod.GET;
 import static com.tecknobit.apimanager.apis.APIRequest.RequestMethod.POST;
-import static com.tecknobit.telegrammanager.botapi.managers.TelegramBotManager.ReturnFormat.LIBRARY_OBJECT;
+import static com.tecknobit.telegrammanager.botapi.managers.TelegramManager.ReturnFormat.LIBRARY_OBJECT;
 
 /**
  * The {@code UpdatesManager} class is useful to format a {@code Telegram}'s updates manager
@@ -21,9 +21,9 @@ import static com.tecknobit.telegrammanager.botapi.managers.TelegramBotManager.R
  * @author N7ghtm4r3 - Tecknobit
  * @apiNote see the official documentation at: <a href="https://core.telegram.org/bots/api#getting-updates">
  * Getting updates</a>
- * @see TelegramBotManager
+ * @see TelegramManager
  */
-public class UpdatesManager extends TelegramBotManager {
+public class UpdatesManager extends TelegramManager {
 
     /**
      * {@code GET_UPDATES_ENDPOINT} is constant for GET_UPDATES_ENDPOINT's endpoint
@@ -95,9 +95,9 @@ public class UpdatesManager extends TelegramBotManager {
      * <pre>
      *     {@code
      *        //You need to insert all credentials requested
-     *        TelegramBotManager firstManager = new TelegramBotManager("token", "defaultErrorMessage", timeout);
+     *        TelegramManager firstManager = new TelegramManager("token", "defaultErrorMessage", timeout);
      *        //You don't need to insert all credentials to make manager work
-     *        TelegramBotManager secondManager = new TelegramBotManager(); //same credentials used
+     *        TelegramManager secondManager = new TelegramManager(); //same credentials used
      *     }
      * </pre>
      */

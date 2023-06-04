@@ -8,17 +8,18 @@ import java.io.IOException;
 
 import static com.tecknobit.apimanager.apis.APIRequest.RequestMethod.GET;
 import static com.tecknobit.apimanager.apis.APIRequest.RequestMethod.POST;
-import static com.tecknobit.telegrammanager.botapi.managers.TelegramBotManager.ReturnFormat.LIBRARY_OBJECT;
+import static com.tecknobit.telegrammanager.botapi.managers.TelegramManager.ReturnFormat.LIBRARY_OBJECT;
 import static com.tecknobit.telegrammanager.botapi.records.basetypes.userdata.User.returnUser;
 
 /**
- * The {@code TelegramBotManager} class is useful to create a {@code Telegram}'s bot profile manager
+ * The {@code TelegramManager} class is useful to create a {@code Telegram}'s bot profile manager
  *
  * @author N7ghtm4r3 - Tecknobit
  * @apiNote see the official documentation at: <a href="https://core.telegram.org/bots/api#available-methods">
  * Available methods</a>
+ * @see TelegramManager
  */
-public class ProfileManager extends TelegramBotManager {
+public class ProfileManager extends TelegramManager {
 
     /**
      * {@code GET_ME_ENDPOINT} is constant for GET_ME_ENDPOINT's endpoint
@@ -80,14 +81,14 @@ public class ProfileManager extends TelegramBotManager {
      * No-any params required
      *
      * @throws IllegalArgumentException when a parameterized constructor has not been called before this constructor
-     * @apiNote this constructor is useful to instantiate a new {@link TelegramBotManager}'s manager without re-insert
+     * @apiNote this constructor is useful to instantiate a new {@link TelegramManager}'s manager without re-insert
      * the credentials and is useful in those cases if you need to use different manager at the same time:
      * <pre>
      *     {@code
      *        //You need to insert all credentials requested
-     *        TelegramBotManager firstManager = new TelegramBotManager("token", "defaultErrorMessage", timeout);
+     *        TelegramManager firstManager = new TelegramManager("token", "defaultErrorMessage", timeout);
      *        //You don't need to insert all credentials to make manager work
-     *        TelegramBotManager secondManager = new TelegramBotManager(); //same credentials used
+     *        TelegramManager secondManager = new TelegramManager(); //same credentials used
      *     }
      * </pre>
      */

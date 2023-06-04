@@ -5,7 +5,6 @@ import com.tecknobit.apimanager.annotations.Wrapper;
 import com.tecknobit.apimanager.apis.APIRequest;
 import com.tecknobit.apimanager.apis.APIRequest.RequestMethod;
 import com.tecknobit.apimanager.formatters.JsonHelper;
-import com.tecknobit.telegrammanager.botapi.records.basetypes.chat.Chat;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -19,13 +18,16 @@ import static com.tecknobit.apimanager.apis.APIRequest.RequestMethod.POST;
 import static java.lang.Integer.parseInt;
 
 /**
- * The {@code TelegramBotManager} class is useful to create a {@code Telegram}'s bot manager
+ * The {@code TelegramManager} class is useful to create a {@code Telegram}'s bot manager
  *
  * @author N7ghtm4r3 - Tecknobit
  * @apiNote see the official documentation at: <a href="https://core.telegram.org/bots/api">
  * Telegram Bot API</a>
  */
-public class TelegramBotManager {
+public class TelegramManager {
+
+    // TODO: 04/06/2023 WHEN COMPLETED THE LIBRARY CHECK IF NEED TO CREATE THE SINGLE MANAGER FOLDER LIKE "manager" AND
+    //  "records" folder with its object
 
     /**
      * {@code BASE_BOT_ENDPOINT} of the {@code Telegram}'s Bot API service
@@ -33,7 +35,7 @@ public class TelegramBotManager {
     public static final String BASE_BOT_ENDPOINT = "https://api.telegram.org/bot";
 
     /**
-     * {@code properties} is a local instance used to instantiate a new {@link TelegramBotManager}'s manager without
+     * {@code properties} is a local instance used to instantiate a new {@link TelegramManager}'s manager without
      * re-insert credentials
      */
     protected static final Properties properties = new Properties();
@@ -49,64 +51,64 @@ public class TelegramBotManager {
     protected final String token;
 
     /**
-     * Constructor to init {@link TelegramBotManager}
+     * Constructor to init {@link TelegramManager}
      *
      * @param token:               the bot unique authentication token
      * @param defaultErrorMessage: error message to return if is not request error
      */
-    public TelegramBotManager(String token, String defaultErrorMessage) {
+    public TelegramManager(String token, String defaultErrorMessage) {
         this(token, defaultErrorMessage, DEFAULT_REQUEST_TIMEOUT);
     }
 
     /**
-     * Constructor to init {@link TelegramBotManager}
+     * Constructor to init {@link TelegramManager}
      *
      * @param token:          the bot unique authentication token
      * @param requestTimeout: timeout for the requests
      */
-    public TelegramBotManager(String token, int requestTimeout) {
+    public TelegramManager(String token, int requestTimeout) {
         this(token, DEFAULT_ERROR_RESPONSE, requestTimeout);
     }
 
     /**
-     * Constructor to init {@link TelegramBotManager}
+     * Constructor to init {@link TelegramManager}
      *
      * @param token: the bot unique authentication token
      */
-    public TelegramBotManager(String token) {
+    public TelegramManager(String token) {
         this(token, DEFAULT_ERROR_RESPONSE, DEFAULT_REQUEST_TIMEOUT);
     }
 
     /**
-     * Constructor to init {@link TelegramBotManager}
+     * Constructor to init {@link TelegramManager}
      *
      * @param token:               the bot unique authentication token
      * @param defaultErrorMessage: error message to return if is not request error
      * @param requestTimeout:      timeout for the requests
      */
-    public TelegramBotManager(String token, String defaultErrorMessage, int requestTimeout) {
+    public TelegramManager(String token, String defaultErrorMessage, int requestTimeout) {
         this.token = token;
         apiRequest = new APIRequest(defaultErrorMessage, requestTimeout);
         storeProperties(token, defaultErrorMessage, requestTimeout);
     }
 
     /**
-     * Constructor to init {@link TelegramBotManager} object <br>
+     * Constructor to init {@link TelegramManager} object <br>
      * No-any params required
      *
      * @throws IllegalArgumentException when a parameterized constructor has not been called before this constructor
-     * @apiNote this constructor is useful to instantiate a new {@link TelegramBotManager}'s manager without re-insert
+     * @apiNote this constructor is useful to instantiate a new {@link TelegramManager}'s manager without re-insert
      * the credentials and is useful in those cases if you need to use different manager at the same time:
      * <pre>
      *     {@code
      *        //You need to insert all credentials requested
-     *        TelegramBotManager firstManager = new TelegramBotManager("token", "defaultErrorMessage", timeout);
+     *        TelegramManager firstManager = new TelegramManager("token", "defaultErrorMessage", timeout);
      *        //You don't need to insert all credentials to make manager work
-     *        TelegramBotManager secondManager = new TelegramBotManager(); //same credentials used
+     *        TelegramManager secondManager = new TelegramManager(); //same credentials used
      *     }
      * </pre>
      */
-    public TelegramBotManager() throws Exception {
+    public TelegramManager() throws Exception {
         token = properties.getProperty("token");
         if (token == null)
             throw new Exception("You need to call a parameterized constructor first");
@@ -188,24 +190,11 @@ public class TelegramBotManager {
     }
 
     /**
-     * Method to execute and get response of an upload media request
+     * Method to fetch the {@code "ok"}'s section from a response
      *
-     * @param methodName: the method where make the request
-     * @param chatId:     unique identifier for the target chat or username of the target channel
-     * @param mediaType:  type of the media to send
-     * @param mediaValue: the media to send
-     * @param payload:    payload of the request
-     * @return response of request formatted in JSON as {@link String}
+     * @param response: the response obtained
+     * @return response as boolean
      */
-    protected <T> String uploadMedia(String methodName, T chatId, T mediaType, T mediaValue,
-                                     Params payload) throws IOException {
-        payload = createChatIdPayload(chatId, payload);
-        payload.addParam(mediaType.toString(), mediaValue);
-        apiRequest.sendAPIRequest(BASE_BOT_ENDPOINT + token + "/" + methodName + payload.createQueryString(),
-                POST, "Content-Type", "multipart/form-data");
-        return apiRequest.getResponse();
-    }
-
     protected boolean getBooleanResponse(String response) {
         return JsonHelper.getBoolean(new JSONObject(response), "ok");
     }
@@ -218,33 +207,6 @@ public class TelegramBotManager {
      */
     public static JSONArray getResultFromList(String response) {
         return JsonHelper.getJSONArray(new JSONObject(response), "result", new JSONArray());
-    }
-
-    /**
-     * Method to create a chat identifier payload
-     *
-     * @param chatId:     unique identifier for the target chat or username of the target channel
-     * @param parameters: other request parameters
-     * @return payload as {@link Params}
-     */
-    protected <T> Params createChatIdPayload(T chatId, Params parameters) {
-        if (parameters == null)
-            parameters = new Params();
-        if (chatId != null)
-            parameters.addParam("chat_id", getChatId(chatId));
-        return parameters;
-    }
-
-    /**
-     * Method to fetch from the generic type parameter the chat identifier
-     *
-     * @param chatId: generic type parameter from fetch the chat identifier
-     * @return chat identifier as {@link T}
-     */
-    protected <T> T getChatId(T chatId) {
-        if (chatId instanceof Chat)
-            return (T) ("" + ((Chat) chatId).getId());
-        return chatId;
     }
 
     /**

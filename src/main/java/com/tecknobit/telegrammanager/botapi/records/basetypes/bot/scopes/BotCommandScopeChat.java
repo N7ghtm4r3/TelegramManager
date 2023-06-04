@@ -19,7 +19,7 @@ import static com.tecknobit.telegrammanager.botapi.records.basetypes.bot.scopes.
 public class BotCommandScopeChat extends BotCommandScopeDefault {
 
     /**
-     * {@code chatId} unique identifier for the target chat or username of the target supergroup
+     * {@code mChatId} unique identifier for the target chat or username of the target supergroup
      */
     protected final String chatId;
 

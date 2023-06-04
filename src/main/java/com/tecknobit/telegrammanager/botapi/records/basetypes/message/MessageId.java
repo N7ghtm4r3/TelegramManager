@@ -5,7 +5,7 @@ import com.tecknobit.telegrammanager.botapi.records.structures.TelegramType;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramTypeStructure;
 import org.json.JSONObject;
 
-import static com.tecknobit.telegrammanager.botapi.managers.TelegramBotManager.ReturnFormat;
+import static com.tecknobit.telegrammanager.botapi.managers.TelegramManager.ReturnFormat;
 
 /**
  * The {@code MessageId} class is useful to format a {@code Telegram}'s message id
