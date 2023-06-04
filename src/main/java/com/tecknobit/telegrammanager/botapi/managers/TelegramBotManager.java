@@ -91,7 +91,7 @@ public class TelegramBotManager {
     }
 
     /**
-     * Constructor to init a {@link TelegramBotManager} object <br>
+     * Constructor to init {@link TelegramBotManager} object <br>
      * No-any params required
      *
      * @throws IllegalArgumentException when a parameterized constructor has not been called before this constructor
