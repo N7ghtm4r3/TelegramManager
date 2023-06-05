@@ -52,12 +52,13 @@ public class MenuButtonDefault extends TelegramType {
         }
 
         /**
-         * Method to get {@link #type} instance <br>
+         * Returns a string representation of the object <br>
          * No-any params required
          *
-         * @return {@link #type} instance as {@link String}
+         * @return a string representation of the object as {@link String}
          */
-        public String getType() {
+        @Override
+        public String toString() {
             return type;
         }
 

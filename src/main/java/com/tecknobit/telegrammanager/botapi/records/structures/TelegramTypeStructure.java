@@ -6,8 +6,11 @@ import com.tecknobit.apimanager.formatters.TimeFormatter;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 
 /**
  * The {@code TelegramTypeStructure} class is useful to format a {@code Telegram}'s type structure
@@ -25,13 +28,25 @@ public abstract class TelegramTypeStructure {
     protected final JsonHelper hTelegram;
 
     /**
+     * {@code useSnakeNotation} whether use the snake-case annotation
+     *
+     * @apiNote this instance will set on {@code "true"} only when you instantiate any {@link TelegramTypeStructure}
+     * with no-JSON constructor but with the normal parameters' constructor, so with the library's workflow will be ever
+     * set on {@code "false"}
+     */
+    private final boolean useSnakeNotation;
+
+    /**
      * Constructor to init a {@link TelegramTypeStructure} object
      *
      * @param jTelegramTypeStructure: Telegram type structure details as {@link JSONObject}
      */
     public TelegramTypeStructure(JSONObject jTelegramTypeStructure) {
-        if (jTelegramTypeStructure == null)
+        if (jTelegramTypeStructure == null) {
             jTelegramTypeStructure = new JSONObject();
+            useSnakeNotation = true;
+        } else
+            useSnakeNotation = false;
         hTelegram = new JsonHelper(jTelegramTypeStructure);
     }
 
@@ -82,10 +97,41 @@ public abstract class TelegramTypeStructure {
      * No-any params required
      *
      * @return a string representation of the object as {@link String}
+     * @apiNote see the {@link #useSnakeNotation} instance to see how this method works
      */
     @Override
     public String toString() {
-        return new JSONObject(this).toString();
+        JSONObject details = new JSONObject(this);
+        if (useSnakeNotation) {
+            Class<?> cClass = this.getClass();
+            for (Method method : this.getClass().getDeclaredMethods()) {
+                String methodName = method.getName();
+                try {
+                    Field wField = null;
+                    String lowerMethodName = methodName.toLowerCase();
+                    for (Field field : this.getClass().getDeclaredFields())
+                        if (lowerMethodName.contains(field.getName().toLowerCase()))
+                            wField = field;
+                    if (wField != null) {
+                        wField.setAccessible(true);
+                        String fName = wField.getName().replaceAll("([a-z])([A-Z]+)", "$1_$2")
+                                .toLowerCase();
+                        if (fName.contains("webpage")) {
+                            String[] names = fName.split("web");
+                            fName = names[0] + "web_" + names[1];
+                        }
+                        details.put(fName, wField.get(this));
+                        for (Iterator<String> keys = details.keys(); keys.hasNext(); ) {
+                            String cKey = keys.next().toLowerCase();
+                            if (lowerMethodName.contains(cKey) && !fName.equals(cKey))
+                                keys.remove();
+                        }
+                    }
+                } catch (Exception ignored) {
+                }
+            }
+        }
+        return details.toString();
     }
 
 }

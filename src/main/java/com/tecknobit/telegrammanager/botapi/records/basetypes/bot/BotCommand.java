@@ -24,11 +24,13 @@ public class BotCommand extends TelegramType {
     /**
      * Constructor to init a {@link BotCommand} object
      *
-     * @param command: text of the command; 1-32 characters. Can contain only lowercase English letters, digits and underscores
+     * @param command:     text of the command; 1-32 characters. Can contain only lowercase English letters, digits and underscores
+     * @param description: description of the command; 1-256 characters
      */
-    public BotCommand(String command) {
+    public BotCommand(String command, String description) {
         super(null);
         this.command = command;
+        this.description = description;
     }
 
     /**

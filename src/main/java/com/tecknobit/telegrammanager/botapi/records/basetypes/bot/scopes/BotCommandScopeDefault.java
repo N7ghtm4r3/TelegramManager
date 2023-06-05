@@ -72,12 +72,13 @@ public class BotCommandScopeDefault extends TelegramType {
         }
 
         /**
-         * Method to get {@link #scope} instance <br>
+         * Returns a string representation of the object <br>
          * No-any params required
          *
-         * @return {@link #scope} instance as {@link String}
+         * @return a string representation of the object as {@link String}
          */
-        public String getScope() {
+        @Override
+        public String toString() {
             return scope;
         }
 
@@ -114,6 +115,16 @@ public class BotCommandScopeDefault extends TelegramType {
     public BotCommandScopeDefault(JSONObject jBotCommandScopeDefault) {
         super(jBotCommandScopeDefault);
         type = BotCommandScopeType.valueOf(hTelegram.getString("type"));
+    }
+
+    /**
+     * Method to get {@link #type} instance <br>
+     * No-any params required
+     *
+     * @return {@link #type} instance as {@link BotCommandScopeType}
+     */
+    public BotCommandScopeType getType() {
+        return type;
     }
 
     /**

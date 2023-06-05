@@ -29,7 +29,7 @@ public abstract class TelegramType extends TelegramTypeStructure {
     /**
      * {@code description} of the response
      */
-    protected final String description;
+    protected String description;
 
     /**
      * {@code parameters} of the response

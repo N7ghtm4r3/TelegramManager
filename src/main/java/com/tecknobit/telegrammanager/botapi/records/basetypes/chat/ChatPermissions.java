@@ -4,9 +4,6 @@ import com.tecknobit.telegrammanager.botapi.records.structures.TelegramType;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramTypeStructure;
 import org.json.JSONObject;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-
 /**
  * The {@code ChatPermissions} class is useful to format a {@code Telegram}'s chat permissions
  *
@@ -444,39 +441,6 @@ public class ChatPermissions extends TelegramType {
             return null;
         else
             return new ChatPermissions(jItem);
-    }
-
-    /**
-     * Returns a string representation of the object <br>
-     * No-any params required
-     *
-     * @return a string representation of the object as {@link String}
-     */
-    @Override
-    public String toString() {
-        JSONObject permissions = new JSONObject(this);
-        Method[] methods = this.getClass().getDeclaredMethods();
-        for (Method method : methods) {
-            String methodName = method.getName();
-            if (methodName.startsWith("can")) {
-                try {
-                    Field field = ChatPermissions.class.getDeclaredField(methodName);
-                    field.setAccessible(true);
-                    for (int j = 3; j < methodName.length(); j++) {
-                        char letter = methodName.charAt(j);
-                        if (letter >= 'A' && letter <= 'Z')
-                            methodName = methodName.replaceFirst("" + letter, ("_" + letter).toLowerCase());
-                    }
-                    if (methodName.contains("webpage")) {
-                        String[] names = methodName.split("web");
-                        methodName = names[0] + "web_" + names[1];
-                    }
-                    permissions.put(methodName, field.get(this));
-                } catch (Exception ignored) {
-                }
-            }
-        }
-        return permissions.toString();
     }
 
 }
