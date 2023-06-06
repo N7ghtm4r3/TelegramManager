@@ -1,7 +1,7 @@
 package com.tecknobit.telegrammanager.botapi.records.basetypes;
 
+import com.tecknobit.telegrammanager.botapi.managers.profile.records.User;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.message.Message;
-import com.tecknobit.telegrammanager.botapi.records.basetypes.userdata.User;
 import com.tecknobit.telegrammanager.botapi.records.structures.QueryStructure;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramType;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramTypeStructure;

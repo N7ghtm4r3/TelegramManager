@@ -1,7 +1,7 @@
 package com.tecknobit.telegrammanager.botapi.managers.identifiers;
 
 import com.tecknobit.telegrammanager.botapi.managers.TelegramManager;
-import com.tecknobit.telegrammanager.botapi.records.basetypes.chat.Chat;
+import com.tecknobit.telegrammanager.botapi.managers.identifiers.chat.records.Chat;
 
 import java.io.IOException;
 

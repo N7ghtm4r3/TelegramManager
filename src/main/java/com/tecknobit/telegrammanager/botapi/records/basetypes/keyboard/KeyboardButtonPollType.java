@@ -4,7 +4,7 @@ import com.tecknobit.telegrammanager.botapi.records.structures.TelegramType;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramTypeStructure;
 import org.json.JSONObject;
 
-import static com.tecknobit.telegrammanager.botapi.records.basetypes.chat.attachments.Poll.PollType;
+import static com.tecknobit.telegrammanager.botapi.managers.identifiers.chat.records.attachments.Poll.PollType;
 
 /**
  * The {@code KeyboardButtonPollType} class is useful to format a {@code Telegram}'s keyboard button poll type

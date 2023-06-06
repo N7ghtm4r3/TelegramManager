@@ -1,6 +1,6 @@
 package com.tecknobit.telegrammanager.botapi.records.basetypes.keyboard;
 
-import com.tecknobit.telegrammanager.botapi.records.basetypes.chat.members.ChatAdministratorRights;
+import com.tecknobit.telegrammanager.botapi.managers.identifiers.chat.records.members.ChatAdministratorRights;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramType;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramTypeStructure;
 import org.json.JSONObject;

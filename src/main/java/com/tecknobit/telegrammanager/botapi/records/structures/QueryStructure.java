@@ -1,7 +1,7 @@
 package com.tecknobit.telegrammanager.botapi.records.structures;
 
 import com.tecknobit.apimanager.annotations.Structure;
-import com.tecknobit.telegrammanager.botapi.records.basetypes.userdata.User;
+import com.tecknobit.telegrammanager.botapi.managers.profile.records.User;
 import org.json.JSONObject;
 
 /**

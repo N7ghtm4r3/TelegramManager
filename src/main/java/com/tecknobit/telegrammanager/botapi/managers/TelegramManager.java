@@ -5,6 +5,7 @@ import com.tecknobit.apimanager.annotations.Wrapper;
 import com.tecknobit.apimanager.apis.APIRequest;
 import com.tecknobit.apimanager.apis.APIRequest.RequestMethod;
 import com.tecknobit.apimanager.formatters.JsonHelper;
+import com.tecknobit.telegrammanager.botapi.records.basetypes.message.Message;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -15,6 +16,7 @@ import static com.tecknobit.apimanager.apis.APIRequest.DEFAULT_ERROR_RESPONSE;
 import static com.tecknobit.apimanager.apis.APIRequest.DEFAULT_REQUEST_TIMEOUT;
 import static com.tecknobit.apimanager.apis.APIRequest.RequestMethod.GET;
 import static com.tecknobit.apimanager.apis.APIRequest.RequestMethod.POST;
+import static com.tecknobit.telegrammanager.botapi.records.basetypes.message.Message.returnMessage;
 import static java.lang.Integer.parseInt;
 
 /**
@@ -25,9 +27,6 @@ import static java.lang.Integer.parseInt;
  * Telegram Bot API</a>
  */
 public class TelegramManager {
-
-    // TODO: 04/06/2023 WHEN COMPLETED THE LIBRARY CHECK IF NEED TO CREATE THE SINGLE MANAGER FOLDER LIKE "manager" AND
-    //  "records" folder with its object
 
     /**
      * {@code BASE_BOT_ENDPOINT} of the {@code Telegram}'s Bot API service
@@ -187,6 +186,21 @@ public class TelegramManager {
     private String sendRequest(String methodName, RequestMethod method) throws IOException {
         apiRequest.sendAPIRequest(BASE_BOT_ENDPOINT + token + "/" + methodName, method);
         return apiRequest.getResponse();
+    }
+
+    /**
+     * Method to get an edit response
+     *
+     * @param response: the response obtained by Telegram
+     * @param format:   return type formatter -> {@link ReturnFormat}
+     * @return the response as {@link Message} or boolean result as {@link String}
+     */
+    protected <T> T getMessageOrBooleanResponse(String response, ReturnFormat format) {
+        try {
+            return returnMessage(response, format);
+        } catch (Exception e) {
+            return (T) ("" + getBooleanResponse(response));
+        }
     }
 
     /**
