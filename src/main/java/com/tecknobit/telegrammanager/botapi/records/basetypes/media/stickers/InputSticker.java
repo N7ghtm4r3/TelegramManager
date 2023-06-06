@@ -42,6 +42,42 @@ public class InputSticker extends TelegramType {
     /**
      * Constructor to init a {@link InputSticker} object
      *
+     * @param sticker:the added sticker
+     * @param emojiList:  list of 1-20 emoji associated with the sticker
+     * @apiNote this constructor is useful when you need to pass this class as parameter for the requests
+     */
+    public InputSticker(String sticker, ArrayList<String> emojiList) {
+        this(sticker, emojiList, null, null);
+    }
+
+    /**
+     * Constructor to init a {@link InputSticker} object
+     *
+     * @param sticker:the   added sticker
+     * @param emojiList:    list of 1-20 emoji associated with the sticker
+     * @param maskPosition: position where the mask should be placed on faces. For {@link StickerType#mask} stickers only
+     * @apiNote this constructor is useful when you need to pass this class as parameter for the requests
+     */
+    public InputSticker(String sticker, ArrayList<String> emojiList, MaskPosition maskPosition) {
+        this(sticker, emojiList, maskPosition, null);
+    }
+
+    /**
+     * Constructor to init a {@link InputSticker} object
+     *
+     * @param sticker:the added sticker
+     * @param emojiList:  list of 1-20 emoji associated with the sticker
+     * @param keywords:   list of 0-20 search keywords for the sticker with total length of up to 64 characters.
+     *                    For {@link StickerType#regular} and {@link StickerType#custom_emoji} stickers only
+     * @apiNote this constructor is useful when you need to pass this class as parameter for the requests
+     */
+    public InputSticker(String sticker, ArrayList<String> emojiList, ArrayList<String> keywords) {
+        this(sticker, emojiList, null, keywords);
+    }
+
+    /**
+     * Constructor to init a {@link InputSticker} object
+     *
      * @param sticker:the   added sticker
      * @param emojiList:    list of 1-20 emoji associated with the sticker
      * @param maskPosition: position where the mask should be placed on faces. For {@link StickerType#mask} stickers only

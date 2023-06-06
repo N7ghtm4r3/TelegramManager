@@ -1,11 +1,18 @@
 package com.tecknobit.telegrammanager.botapi.records.basetypes.media.stickers;
 
+import com.tecknobit.apimanager.annotations.Returner;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.media.MediaStructure;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.media.PhotoSize;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.media.TelegramFile;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramType;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramTypeStructure;
+import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+
+import static com.tecknobit.telegrammanager.botapi.managers.TelegramManager.ReturnFormat;
+import static com.tecknobit.telegrammanager.botapi.managers.TelegramManager.getResultFromList;
 
 /**
  * The {@code Sticker} class is useful to format a {@code Telegram}'s sticker
@@ -39,6 +46,53 @@ public class Sticker extends PhotoSize {
          * {@code custom_emoji} sticker type
          */
         custom_emoji
+
+    }
+
+    /**
+     * {@code StickerFormat} list of available sticker formats
+     */
+    public enum StickerFormat {
+
+        /**
+         * {@code regular} sticker format
+         */
+        fStatic("static"),
+
+        /**
+         * {@code mask} sticker format
+         */
+        animated("animated"),
+
+        /**
+         * {@code custom_emoji} sticker format
+         */
+        video("video");
+
+        /**
+         * {@code format} value
+         */
+        private final String format;
+
+        /**
+         * Constructor to init a {@link StickerFormat} object
+         *
+         * @param format: format value
+         */
+        StickerFormat(String format) {
+            this.format = format;
+        }
+
+        /**
+         * Returns a string representation of the object <br>
+         * No-any params required
+         *
+         * @return a string representation of the object as {@link String}
+         */
+        @Override
+        public String toString() {
+            return format;
+        }
 
     }
 
@@ -247,6 +301,28 @@ public class Sticker extends PhotoSize {
      */
     public boolean isNeedsRepainting() {
         return needsRepainting;
+    }
+
+    /**
+     * Method to create a stickers list
+     *
+     * @param messageResponse : obtained from Telegram's response
+     * @param format          :       return type formatter -> {@link ReturnFormat}
+     * @return stickers list as {@code "format"} defines
+     */
+    @Returner
+    public static <T> T returnStickersList(String messageResponse, ReturnFormat format) {
+        JSONArray result = getResultFromList(messageResponse);
+        return switch (format) {
+            case JSON -> (T) result;
+            case LIBRARY_OBJECT -> {
+                ArrayList<Sticker> stickers = new ArrayList<>();
+                for (int j = 0; j < result.length(); j++)
+                    stickers.add(new Sticker(result.getJSONObject(j)));
+                yield (T) stickers;
+            }
+            default -> (T) result.toString();
+        };
     }
 
     /**

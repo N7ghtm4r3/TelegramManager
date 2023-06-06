@@ -8,7 +8,6 @@ import com.tecknobit.telegrammanager.botapi.managers.TelegramManager;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.forum.ForumTopic;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.forum.ForumTopicCreated.TopicIconColor;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.media.stickers.Sticker;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -17,6 +16,7 @@ import java.util.ArrayList;
 import static com.tecknobit.apimanager.apis.APIRequest.RequestMethod.GET;
 import static com.tecknobit.apimanager.apis.APIRequest.RequestMethod.POST;
 import static com.tecknobit.telegrammanager.botapi.managers.TelegramManager.ReturnFormat.LIBRARY_OBJECT;
+import static com.tecknobit.telegrammanager.botapi.records.basetypes.media.stickers.Sticker.returnStickersList;
 
 /**
  * The {@code ForumTopicManager} class is useful to create a {@code Telegram}'s bot forum topic manager
@@ -198,17 +198,7 @@ public class ForumTopicManager extends TelegramIdentifierManager {
     @Returner
     @RequestPath(method = GET, path = "getForumTopicIconStickers")
     public <T> T getForumTopicIconStickers(ReturnFormat format) throws IOException {
-        JSONArray result = getResultFromList(sendGetRequest(GET_FORUM_TOPIC_ICON_STICKERS_ENDPOINT));
-        return switch (format) {
-            case JSON -> (T) result;
-            case LIBRARY_OBJECT -> {
-                ArrayList<Sticker> stickers = new ArrayList<>();
-                for (int j = 0; j < result.length(); j++)
-                    stickers.add(new Sticker(result.getJSONObject(j)));
-                yield (T) stickers;
-            }
-            default -> (T) result.toString();
-        };
+        return returnStickersList(sendGetRequest(GET_FORUM_TOPIC_ICON_STICKERS_ENDPOINT), format);
     }
 
     /**

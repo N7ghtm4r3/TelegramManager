@@ -1,5 +1,7 @@
 package com.tecknobit.telegrammanager.botapi.records.basetypes.media;
 
+import com.tecknobit.apimanager.annotations.Returner;
+import com.tecknobit.telegrammanager.botapi.managers.TelegramManager.ReturnFormat;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramType;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramTypeStructure;
 import org.json.JSONObject;
@@ -53,6 +55,22 @@ public class TelegramFile extends MediaStructure {
      */
     public String getFilePath() {
         return filePath;
+    }
+
+    /**
+     * Method to create a file
+     *
+     * @param fileResponse : obtained from Telegram's response
+     * @param format       :       return type formatter -> {@link ReturnFormat}
+     * @return file as {@code "format"} defines
+     */
+    @Returner
+    public static <T> T returnFile(String fileResponse, ReturnFormat format) {
+        return switch (format) {
+            case JSON -> (T) new JSONObject(fileResponse);
+            case LIBRARY_OBJECT -> (T) new TelegramFile(new JSONObject(fileResponse));
+            default -> (T) fileResponse;
+        };
     }
 
     /**

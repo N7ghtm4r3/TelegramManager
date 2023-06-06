@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import static com.tecknobit.apimanager.apis.APIRequest.RequestMethod.GET;
 import static com.tecknobit.apimanager.apis.APIRequest.RequestMethod.POST;
 import static com.tecknobit.telegrammanager.botapi.managers.TelegramManager.ReturnFormat.LIBRARY_OBJECT;
+import static com.tecknobit.telegrammanager.botapi.records.basetypes.media.TelegramFile.returnFile;
 
 /**
  * The {@code ChatManager} class is useful to create a {@code Telegram}'s bot chat manager
@@ -559,17 +560,11 @@ public class ChatManager extends TelegramIdentifierManager {
      * @apiNote see the official documentation at: <a href="https://core.telegram.org/bots/api#getfile">
      * getfile</a>
      */
-    @Returner
     @RequestPath(method = GET, path = "getfile")
     public <T> T getFile(String fileId, ReturnFormat format) throws IOException {
         Params query = new Params();
         query.addParam("file_id", fileId);
-        String fileResponse = sendGetRequest(GET_FILE_ENDPOINT, query);
-        return switch (format) {
-            case JSON -> (T) new JSONObject(fileResponse);
-            case LIBRARY_OBJECT -> (T) new TelegramFile(new JSONObject(fileResponse));
-            default -> (T) fileResponse;
-        };
+        return returnFile(sendGetRequest(GET_FILE_ENDPOINT, query), format);
     }
 
     /**
