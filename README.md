@@ -1,5 +1,8 @@
 # TelegramManager
-                 
+**v1.0.0**
+
+This is a Java Based library useful to work with Telegram's API service.        
+         
 ## Implementation
 
 Add the JitPack repository to your build file
@@ -71,13 +74,13 @@ try{
     contentManager.sendMessage("Hello from TelegramManager");
 }catch(Exception e){
     e.printStackTrace();
- }
+}
 ```
 
 To avoid re-entering credentials for each manager, you can instantiate managers like this with the **ARCS**:
 
 ```java
-// choose the manager (for signed and no-signed managers same procedure), for example: GitHubUsersManager, GitHubRepositoriesManager, etc 
+// choose the manager, for example: StickersManager, PassportManager, etc
 TelegramManager firstManager = new TelegramManager(/* params of the constructor chosen */, "accessToken");
 // and then use it 
 firstManager.makeSomething();
