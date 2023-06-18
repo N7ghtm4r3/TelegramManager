@@ -143,7 +143,13 @@ Thank you for your help!
 [![](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](https://core.telegram.org/api)
 [![](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)](https://www.oracle.com/java/)
 
-[![](https://jitpack.io/v/N7ghtm4r3/TelegramManager.svg)](https://jitpack.io/#N7ghtm4r3/GitHubManager)
+[![](https://jitpack.io/v/N7ghtm4r3/TelegramManager.svg)](https://jitpack.io/#N7ghtm4r3/TelegramManager)
+
+## Business contact
+
+If you need to contact me for a project 
+
+[![](https://img.shields.io/badge/fiverr-1DBF73?style=for-the-badge&logo=fiverr&logoColor=white)](https://www.fiverr.com/manuel_maurizio)
 
 ## Donations 
 
