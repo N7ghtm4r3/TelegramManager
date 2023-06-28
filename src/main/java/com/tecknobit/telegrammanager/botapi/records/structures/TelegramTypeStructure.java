@@ -10,7 +10,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 
 /**
  * The {@code TelegramTypeStructure} class is useful to format a {@code Telegram}'s type structure
@@ -34,7 +33,7 @@ public abstract class TelegramTypeStructure {
      * with no-JSON constructor but with the normal parameters' constructor, so with the library's workflow will be ever
      * set on {@code "false"}
      */
-    private final boolean useSnakeNotation;
+    protected final boolean useSnakeNotation;
 
     /**
      * Constructor to init a {@link TelegramTypeStructure} object
@@ -101,36 +100,37 @@ public abstract class TelegramTypeStructure {
      */
     @Override
     public String toString() {
-        JSONObject details = new JSONObject(this);
+        JSONObject details;
         if (useSnakeNotation) {
+            details = new JSONObject();
             Class<?> cClass = this.getClass();
             for (Method method : this.getClass().getDeclaredMethods()) {
-                String methodName = method.getName();
-                try {
-                    Field wField = null;
-                    String lowerMethodName = methodName.toLowerCase();
-                    for (Field field : this.getClass().getDeclaredFields())
-                        if (lowerMethodName.contains(field.getName().toLowerCase()))
-                            wField = field;
-                    if (wField != null) {
-                        wField.setAccessible(true);
-                        String fName = wField.getName().replaceAll("([a-z])([A-Z]+)", "$1_$2")
-                                .toLowerCase();
-                        if (fName.contains("webpage")) {
-                            String[] names = fName.split("web");
-                            fName = names[0] + "web_" + names[1];
+                if (!method.getAnnotatedReturnType().getType().getTypeName().equals("void")) {
+                    try {
+                        Field wField = null;
+                        String lowerMethodName = method.getName().toLowerCase();
+                        for (Field field : this.getClass().getDeclaredFields())
+                            if (lowerMethodName.contains(field.getName().toLowerCase()))
+                                wField = field;
+                        if (wField != null) {
+                            wField.setAccessible(true);
+                            String fName = wField.getName().replaceAll("([a-z])([A-Z]+)", "$1_$2")
+                                    .toLowerCase();
+                            if (fName.contains("webpage")) {
+                                String[] names = fName.split("web");
+                                fName = names[0] + "web_" + names[1];
+                            }
+                            Object fieldValue = wField.get(this);
+                            if (fieldValue instanceof ArrayList<?>)
+                                fieldValue = new JSONArray(fieldValue.toString());
+                            details.put(fName, fieldValue);
                         }
-                        details.put(fName, wField.get(this));
-                        for (Iterator<String> keys = details.keys(); keys.hasNext(); ) {
-                            String cKey = keys.next().toLowerCase();
-                            if (lowerMethodName.contains(cKey) && !fName.equals(cKey))
-                                keys.remove();
-                        }
+                    } catch (Exception ignored) {
                     }
-                } catch (Exception ignored) {
                 }
             }
-        }
+        } else
+            details = new JSONObject(this);
         return details.toString();
     }
 

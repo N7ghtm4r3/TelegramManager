@@ -1,8 +1,10 @@
 package com.tecknobit.telegrammanager.botapi.records.basetypes.keyboard.inline;
 
 import com.tecknobit.apimanager.annotations.Returner;
+import com.tecknobit.apimanager.annotations.Wrapper;
 import com.tecknobit.telegrammanager.botapi.managers.games.records.CallbackGame;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.LoginUrl;
+import com.tecknobit.telegrammanager.botapi.records.basetypes.keyboard.KeyboardButton;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.webapp.WebAppInfo;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramType;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramTypeStructure;
@@ -10,6 +12,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.concurrent.Executors;
 
 /**
  * The {@code InlineKeyboardButton} class is useful to format a {@code Telegram}'s inline keyboard button
@@ -30,24 +33,24 @@ public class InlineKeyboardButton extends TelegramType {
     /**
      * {@code url} to be opened when the button is pressed
      */
-    private final String url;
+    private String url;
 
     /**
      * {@code callbackData} data to be sent in a callback query to the bot when button is pressed, 1-64 bytes
      */
-    private final String callbackData;
+    private String callbackData;
 
     /**
      * {@code webApp} description of the Web App that will be launched when the user presses the button.
      * The Web App will be able to send an arbitrary message on behalf of the user using the method answerWebAppQuery.
      * Available only in private chats between a user and the bot
      */
-    private final WebAppInfo webApp;
+    private WebAppInfo webApp;
 
     /**
      * {@code loginUrl} an HTTPS URL used to automatically authorize the user
      */
-    private final LoginUrl loginUrl;
+    private LoginUrl loginUrl;
 
     /**
      * {@code switchInlineQuery} if set, pressing the button will prompt the user to select one of their chats, open
@@ -58,7 +61,7 @@ public class InlineKeyboardButton extends TelegramType {
      * private chat with it. Especially useful when combined with switch_pm… actions - in this case the user will be
      * automatically returned to the chat they switched from, skipping the chat selection screen
      */
-    private final String switchInlineQuery;
+    private String switchInlineQuery;
 
     /**
      * {@code switchInlineQueryCurrentChat} if set, pressing the button will insert the bot's username and the specified
@@ -67,63 +70,39 @@ public class InlineKeyboardButton extends TelegramType {
      * @apiNote this offers a quick way for the user to open your bot in inline mode in the same chat - good for
      * selecting something from multiple options
      */
-    private final String switchInlineQueryCurrentChat;
+    private String switchInlineQueryCurrentChat;
 
     /**
      * {@code switchInlineQueryChosenChat} if set, pressing the button will prompt the user to select one of their chats
      * of the specified type, open that chat and insert the bot's username and the specified inline query in the input field
      */
-    private final SwitchInlineQueryChosenChat switchInlineQueryChosenChat;
+    private SwitchInlineQueryChosenChat switchInlineQueryChosenChat;
 
     /**
      * {@code callbackGame} description of the game that will be launched when the user presses the button
      *
      * @apiNote this type of button must always be the first button in the first row
      */
-    private final CallbackGame callbackGame;
+    private CallbackGame callbackGame;
 
     /**
      * {@code pay} specify True, to send a Pay button
      *
      * @apiNote this type of button must always be the first button in the first row and can only be used in invoice messages
      */
-    private final boolean pay;
+    private boolean pay;
 
     /**
-     * Constructor to init a {@link InlineKeyboardButton} object
+     * Constructor to init a {@link KeyboardButton} object
      *
-     * @param text:                         label text on the button
-     * @param url:                          URL to be opened when the button is pressed
-     * @param callbackData:                 data to be sent in a callback query to the bot when button is pressed, 1-64 bytes
-     * @param webApp:                       description of the Web App that will be launched when the user presses the button. The Web App will
-     *                                      be able to send an arbitrary message on behalf of the user using the method answerWebAppQuery. Available only in
-     *                                      private chats between a user and the bot
-     * @param loginUrl:                     an HTTPS URL used to automatically authorize the user
-     * @param switchInlineQuery:            if set, pressing the button will prompt the user to select one of their chats, open that
-     *                                      chat and insert the bot's username and the specified inline query in the input field. May be empty, in which case
-     *                                      just the bot's username will be inserted
-     * @param switchInlineQueryCurrentChat: if set, pressing the button will insert the bot's username and the specified
-     *                                      inline query in the current chat's input field. May be empty, in which case only the bot's username will be inserted
-     * @param switchInlineQueryChosenChat:  if set, pressing the button will prompt the user to select one of their chats
-     *                                      of the specified type, open that chat and insert the bot's username and the specified inline query in the input field
-     * @param callbackGame:                 description of the game that will be launched when the user presses the button
-     * @param pay:                          specify True, to send a Pay button
+     * @param text: label text on the button
+     * @apiNote this constructor is useful to instantiate a new inline keyboard button to pass as request parameter, you can
+     * choose the single parameter (because they are mutually exclusive) to set for the button invoking the specific
+     * setter method
      */
-    public InlineKeyboardButton(String text, String url, String callbackData, WebAppInfo webApp, LoginUrl loginUrl,
-                                String switchInlineQuery, String switchInlineQueryCurrentChat,
-                                SwitchInlineQueryChosenChat switchInlineQueryChosenChat, CallbackGame callbackGame,
-                                boolean pay) {
+    public InlineKeyboardButton(String text) {
         super(null);
         this.text = text;
-        this.url = url;
-        this.callbackData = callbackData;
-        this.webApp = webApp;
-        this.loginUrl = loginUrl;
-        this.switchInlineQuery = switchInlineQuery;
-        this.switchInlineQueryCurrentChat = switchInlineQueryCurrentChat;
-        this.switchInlineQueryChosenChat = switchInlineQueryChosenChat;
-        this.callbackGame = callbackGame;
-        this.pay = pay;
     }
 
     /**
@@ -167,6 +146,15 @@ public class InlineKeyboardButton extends TelegramType {
     }
 
     /**
+     * Method to set {@link #url} instance
+     *
+     * @param url: url to be opened when the button is pressed
+     */
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    /**
      * Method to get {@link #callbackData} instance <br>
      * No-any params required
      *
@@ -174,6 +162,29 @@ public class InlineKeyboardButton extends TelegramType {
      */
     public String getCallbackData() {
         return callbackData;
+    }
+
+    /**
+     * Method to set {@link #callbackData} instance
+     *
+     * @param callbackData: data to be sent in a callback query to the bot when button is pressed, 1-64 bytes
+     */
+    @Wrapper
+    public void setCallbackData(String callbackData) {
+        setCallbackData(callbackData, null);
+    }
+
+    /**
+     * Method to set {@link #callbackData} instance
+     *
+     * @param callbackData:   data to be sent in a callback query to the bot when button is pressed, 1-64 bytes
+     * @param callbackAction: runnable action to execute when the callback data has been requested, you must manage the
+     *                        routine to wait to execute this action
+     */
+    public void setCallbackData(String callbackData, Runnable callbackAction) {
+        this.callbackData = callbackData;
+        if (callbackAction != null)
+            Executors.newSingleThreadExecutor().execute(callbackAction);
     }
 
     /**
@@ -187,6 +198,17 @@ public class InlineKeyboardButton extends TelegramType {
     }
 
     /**
+     * Method to set {@link #webApp} instance
+     *
+     * @param webApp: description of the Web App that will be launched when the user presses the button.
+     *                The Web App will be able to send an arbitrary message on behalf of the user using the method answerWebAppQuery.
+     *                Available only in private chats between a user and the bot
+     */
+    public void setWebApp(WebAppInfo webApp) {
+        this.webApp = webApp;
+    }
+
+    /**
      * Method to get {@link #loginUrl} instance <br>
      * No-any params required
      *
@@ -194,6 +216,15 @@ public class InlineKeyboardButton extends TelegramType {
      */
     public LoginUrl getLoginUrl() {
         return loginUrl;
+    }
+
+    /**
+     * Method to set {@link #loginUrl} instance
+     *
+     * @param loginUrl: an HTTPS URL used to automatically authorize the user
+     */
+    public void setLoginUrl(LoginUrl loginUrl) {
+        this.loginUrl = loginUrl;
     }
 
     /**
@@ -207,6 +238,17 @@ public class InlineKeyboardButton extends TelegramType {
     }
 
     /**
+     * Method to set {@link #switchInlineQuery} instance
+     *
+     * @param switchInlineQuery: if set, pressing the button will prompt the user to select one of their chats, open
+     *                           that chat and insert the bot's username and the specified inline query in the input field.
+     *                           May be empty, in which case just the bot's username will be inserted
+     */
+    public void setSwitchInlineQuery(String switchInlineQuery) {
+        this.switchInlineQuery = switchInlineQuery;
+    }
+
+    /**
      * Method to get {@link #switchInlineQueryCurrentChat} instance <br>
      * No-any params required
      *
@@ -214,6 +256,17 @@ public class InlineKeyboardButton extends TelegramType {
      */
     public String getSwitchInlineQueryCurrentChat() {
         return switchInlineQueryCurrentChat;
+    }
+
+    /**
+     * Method to set {@link #switchInlineQueryCurrentChat} instance
+     *
+     * @param switchInlineQueryCurrentChat: if set, pressing the button will insert the bot's username and the specified
+     *                                      inline query in the current chat's input field. May be empty, in which case only
+     *                                      the bot's username will be inserted
+     */
+    public void setSwitchInlineQueryCurrentChat(String switchInlineQueryCurrentChat) {
+        this.switchInlineQueryCurrentChat = switchInlineQueryCurrentChat;
     }
 
     /**
@@ -227,6 +280,17 @@ public class InlineKeyboardButton extends TelegramType {
     }
 
     /**
+     * Method to set {@link #switchInlineQueryChosenChat} instance
+     *
+     * @param switchInlineQueryChosenChat: if set, pressing the button will prompt the user to select one of their chats
+     *                                     of the specified type, open that chat and insert the bot's username and the specified
+     *                                     inline query in the input field
+     */
+    public void setSwitchInlineQueryChosenChat(SwitchInlineQueryChosenChat switchInlineQueryChosenChat) {
+        this.switchInlineQueryChosenChat = switchInlineQueryChosenChat;
+    }
+
+    /**
      * Method to get {@link #callbackGame} instance <br>
      * No-any params required
      *
@@ -234,6 +298,15 @@ public class InlineKeyboardButton extends TelegramType {
      */
     public CallbackGame getCallbackGame() {
         return callbackGame;
+    }
+
+    /**
+     * Method to set {@link #callbackGame} instance
+     *
+     * @param callbackGame: description of the game that will be launched when the user presses the button
+     */
+    public void setCallbackGame(CallbackGame callbackGame) {
+        this.callbackGame = callbackGame;
     }
 
     /**
@@ -247,6 +320,15 @@ public class InlineKeyboardButton extends TelegramType {
     }
 
     /**
+     * Method to set {@link #pay} instance
+     *
+     * @param pay: specify True, to send a Pay button
+     */
+    public void setPay(boolean pay) {
+        this.pay = pay;
+    }
+
+    /**
      * Method to return a {@link InlineKeyboardButton} list
      *
      * @param jInlineKeyboardButtons : JSON source from fetch the list
@@ -255,9 +337,13 @@ public class InlineKeyboardButton extends TelegramType {
     @Returner
     public static ArrayList<InlineKeyboardButton> returnInlineKeyboardButtons(JSONArray jInlineKeyboardButtons) {
         ArrayList<InlineKeyboardButton> inlineKeyboardButtons = new ArrayList<>();
-        if (jInlineKeyboardButtons != null)
-            for (int j = 0; j < jInlineKeyboardButtons.length(); j++)
-                inlineKeyboardButtons.add(new InlineKeyboardButton(jInlineKeyboardButtons.getJSONObject(j)));
+        if (jInlineKeyboardButtons != null) {
+            for (int j = 0; j < jInlineKeyboardButtons.length(); j++) {
+                JSONArray buttonsRow = jInlineKeyboardButtons.getJSONArray(j);
+                for (int i = 0; i < buttonsRow.length(); i++)
+                    inlineKeyboardButtons.add(new InlineKeyboardButton(buttonsRow.getJSONObject(i)));
+            }
+        }
         return inlineKeyboardButtons;
     }
 
@@ -272,6 +358,21 @@ public class InlineKeyboardButton extends TelegramType {
             return null;
         else
             return new InlineKeyboardButton(jItem);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        String toString = super.toString();
+        if (useSnakeNotation) {
+            JSONObject button = new JSONObject(super.toString());
+            if (!pay)
+                button.remove("pay");
+            return button.toString();
+        } else
+            return toString;
     }
 
 }

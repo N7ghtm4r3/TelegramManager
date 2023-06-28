@@ -1,5 +1,5 @@
 # TelegramManager
-**v1.0.0**
+**v1.0.1**
 
 This is a Java Based library useful to work with Telegram's API service.        
          
@@ -23,7 +23,7 @@ allprojects {
 
 ```gradle
 dependencies {
-    implementation 'com.github.N7ghtm4r3:TelegramManager:1.0.0'
+    implementation 'com.github.N7ghtm4r3:TelegramManager:1.0.1'
 }
 ```
 
@@ -45,7 +45,7 @@ dependencies {
 <dependency>
     <groupId>com.github.N7ghtm4r3</groupId>
     <artifactId>TelegramManager</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 

@@ -1,10 +1,14 @@
 package com.tecknobit.telegrammanager.botapi.records.basetypes.keyboard.inline;
 
+import com.tecknobit.telegrammanager.botapi.records.basetypes.keyboard.KeyboardManager;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramType;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramTypeStructure;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import static com.tecknobit.telegrammanager.botapi.records.basetypes.keyboard.inline.InlineKeyboardButton.returnInlineKeyboardButtons;
 
 /**
  * The {@code InlineKeyboardMarkup} class is useful to format a {@code Telegram}'s inline keyboard markup
@@ -14,18 +18,29 @@ import java.util.ArrayList;
  * InlineKeyboardMarkup</a>
  * @see TelegramTypeStructure
  * @see TelegramType
+ * @see KeyboardManager
  */
-public class InlineKeyboardMarkup extends TelegramType {
+public class InlineKeyboardMarkup extends TelegramType implements KeyboardManager<InlineKeyboardButton> {
 
     /**
-     * {@code inlineKeyboard} array of button rows, each represented by an Array of InlineKeyboardButton objects
+     * {@code inlineKeyboard} array of button rows, each represented by an array of {@link InlineKeyboardButton} objects
      */
     private final ArrayList<ArrayList<InlineKeyboardButton>> inlineKeyboard;
 
     /**
+     * Constructor to init a {@link InlineKeyboardMarkup} object <br>
+     * No-any params required
+     */
+    public InlineKeyboardMarkup() {
+        this(new ArrayList<>());
+    }
+
+    /**
      * Constructor to init a {@link InlineKeyboardMarkup} object
      *
-     * @param inlineKeyboard: array of button rows, each represented by an Array of InlineKeyboardButton objects
+     * @param inlineKeyboard: array of button rows, each represented by an array of {@link InlineKeyboardButton} objects
+     * @apiNote this constructor is useful to instantiate a new input object to pass as request parameter, you can set
+     * the parameter for the input object invoking the specific methods
      */
     public InlineKeyboardMarkup(ArrayList<ArrayList<InlineKeyboardButton>> inlineKeyboard) {
         super(null);
@@ -40,7 +55,7 @@ public class InlineKeyboardMarkup extends TelegramType {
     public InlineKeyboardMarkup(JSONObject jInlineKeyboardMarkup) {
         super(jInlineKeyboardMarkup);
         inlineKeyboard = new ArrayList<>();
-        inlineKeyboard.add(InlineKeyboardButton.returnInlineKeyboardButtons(hTelegram.getJSONArray("inline_keyboard")));
+        inlineKeyboard.add(returnInlineKeyboardButtons(hTelegram.getJSONArray("inline_keyboard")));
     }
 
     /**
@@ -51,6 +66,36 @@ public class InlineKeyboardMarkup extends TelegramType {
      */
     public ArrayList<ArrayList<InlineKeyboardButton>> getInlineKeyboard() {
         return inlineKeyboard;
+    }
+
+    /**
+     * Method to add a row of {@link InlineKeyboardButton} to the current keyboard
+     *
+     * @param rowItems : row items to add
+     */
+    @Override
+    public void addKeyboardRow(InlineKeyboardButton... rowItems) {
+        inlineKeyboard.add(new ArrayList<>(List.of(rowItems)));
+    }
+
+    /**
+     * Method to remove a row of {@link InlineKeyboardButton} from the current keyboard
+     *
+     * @param rowToRemove : row of {@link InlineKeyboardButton} to remove
+     */
+    @Override
+    public void removeKeyboardRow(List<InlineKeyboardButton> rowToRemove) {
+        inlineKeyboard.remove(new ArrayList<>(rowToRemove));
+    }
+
+    /**
+     * Method to remove a row of {@link InlineKeyboardButton} from the current keyboard
+     *
+     * @param indexRowToRemove : index of the row of {@link InlineKeyboardButton} to remove
+     */
+    @Override
+    public void removeKeyboardRow(int indexRowToRemove) {
+        inlineKeyboard.remove(indexRowToRemove);
     }
 
     /**
