@@ -7,6 +7,7 @@ import com.tecknobit.telegrammanager.botapi.records.structures.TelegramTypeStruc
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * The {@code Chat} class is useful to format a {@code Telegram}'s chat
@@ -52,7 +53,7 @@ public class Chat extends ProfileStructure {
         /**
          * Constructor to init a {@link ChatType} object
          *
-         * @param type: type of the chat
+         * @param type: of the chat
          */
         ChatType(String type) {
             this.type = type;
@@ -181,6 +182,12 @@ public class Chat extends ProfileStructure {
     private final String emojiStatusCustomEmojiId;
 
     /**
+     * {@code emojiStatusExpirationDate} expiration date of the emoji status of the other party in a private chat in Unix
+     * time, if any
+     */
+    private final long emojiStatusExpirationDate;
+
+    /**
      * {@code bio} of the other party in a private chat
      */
     private final String bio;
@@ -273,43 +280,44 @@ public class Chat extends ProfileStructure {
     /**
      * Constructor to init a {@link Chat} object
      *
-     * @param id:                                 unique identifier for this chat
-     * @param firstName:                          first name of the other party in a private chat
-     * @param lastName:                           last name of the other party in a private chat
-     * @param username:                           username, for private chats, supergroups and channels if available
-     * @param type:                               type of chat
-     * @param title:                              title, for supergroups, channels and group chats
-     * @param isForum:                            if the supergroup chat is a forum (has topics enabled)
-     * @param photo:                              chat photo
-     * @param activeUsernames:                    if non-empty, the list of all active chat usernames; for private chats, supergroups and
-     *                                            channels
-     * @param emojiStatusCustomEmojiId:           custom emoji identifier of emoji status of the other party in a private chat
-     * @param bio:                                bio of the other party in a private chat
-     * @param hasPrivateForwards:                 if privacy settings of the other party in the private chat allows to use
-     *                                            {@code "tg://user?id=<user_id>"} links only in chats with the user
-     * @param hasRestrictedVoiceAndVideoMessages: if the privacy settings of the other party restrict sending voice and
-     *                                            video note messages in the private chat
-     * @param joinToSendMessages:                 if users need to join the supergroup before they can send messages
-     * @param joinByRequest:                      if all users directly joining the supergroup need to be approved by supergroup administrators
-     * @param description:                        description, for groups, supergroups and channel chats
-     * @param inviteLink:                         primary invite link, for groups, supergroups and channel chats
-     * @param pinnedMessage:                      the most recent pinned message (by sending date)
-     * @param permissions:                        default chat member permissions, for groups and supergroups
-     * @param slowModeDelay:                      for supergroups, the minimum allowed delay between consecutive messages sent by each
-     *                                            unprivileged user; in seconds
-     * @param messageAutoDeleteTime:              the time after which all messages sent to the chat will be automatically deleted;
-     *                                            in seconds
-     * @param hasAggressiveAntiSpamEnabled:       if aggressive anti-spam checks are enabled in the supergroup. The field
-     *                                            is only available to chat administrators
-     * @param hasHiddenMembers:                   if non-administrators can only get the list of bots and administrators in the chat
-     * @param hasProtectedContent:                if messages from the chat can't be forwarded to other chats
-     * @param stickerSetName:                     for supergroups, name of group sticker set
-     * @param canSetStickerSet:                   if the bot can change the group sticker set
-     * @param linkedChatId:                       unique identifier for the linked chat
-     * @param location:                           for supergroups, the location to which the supergroup is connected
+     * @param id                                 :                                 unique identifier for this chat
+     * @param firstName                          :                          first name of the other party in a private chat
+     * @param lastName                           :                           last name of the other party in a private chat
+     * @param username                           :                           username, for private chats, supergroups and channels if available
+     * @param type                               :                               type of chat
+     * @param title                              :                              title, for supergroups, channels and group chats
+     * @param isForum                            :                            if the supergroup chat is a forum (has topics enabled)
+     * @param photo                              :                              chat photo
+     * @param activeUsernames                    :                    if non-empty, the list of all active chat usernames; for private chats, supergroups and
+     *                                           channels
+     * @param emojiStatusCustomEmojiId           :           custom emoji identifier of emoji status of the other party in a private chat
+     * @param emojiStatusExpirationDate:         expiration date of the emoji status of the other party in a private chat in Unix      time, if any
+     * @param bio                                :                                bio of the other party in a private chat
+     * @param hasPrivateForwards                 :                 if privacy settings of the other party in the private chat allows to use
+     *                                           {@code "tg://user?id=<user_id>"} links only in chats with the user
+     * @param hasRestrictedVoiceAndVideoMessages : if the privacy settings of the other party restrict sending voice and      video note messages in the private chat
+     *                                           video note messages in the private chat
+     * @param joinToSendMessages                 :                 if users need to join the supergroup before they can send messages
+     * @param joinByRequest                      :                      if all users directly joining the supergroup need to be approved by supergroup administrators
+     * @param description                        :                        description, for groups, supergroups and channel chats
+     * @param inviteLink                         :                         primary invite link, for groups, supergroups and channel chats
+     * @param pinnedMessage                      :                      the most recent pinned message (by sending date)
+     * @param permissions                        :                        default chat member permissions, for groups and supergroups
+     * @param slowModeDelay                      :                      for supergroups, the minimum allowed delay between consecutive messages sent by each
+     *                                           unprivileged user; in seconds
+     * @param messageAutoDeleteTime              :              the time after which all messages sent to the chat will be automatically deleted;
+     *                                           in seconds
+     * @param hasAggressiveAntiSpamEnabled       :       if aggressive anti-spam checks are enabled in the supergroup. The field
+     *                                           is only available to chat administrators
+     * @param hasHiddenMembers                   :                   if non-administrators can only get the list of bots and administrators in the chat
+     * @param hasProtectedContent                :                if messages from the chat can't be forwarded to other chats
+     * @param stickerSetName                     :                     for supergroups, name of group sticker set
+     * @param canSetStickerSet                   :                   if the bot can change the group sticker set
+     * @param linkedChatId                       :                       unique identifier for the linked chat
+     * @param location                           :                           for supergroups, the location to which the supergroup is connected
      */
     public Chat(long id, String firstName, String lastName, String username, ChatType type, String title, boolean isForum,
-                ChatPhoto photo, ArrayList<String> activeUsernames, String emojiStatusCustomEmojiId, String bio,
+                ChatPhoto photo, ArrayList<String> activeUsernames, String emojiStatusCustomEmojiId, long emojiStatusExpirationDate, String bio,
                 boolean hasPrivateForwards, boolean hasRestrictedVoiceAndVideoMessages, boolean joinToSendMessages,
                 boolean joinByRequest, String description, String inviteLink, Message pinnedMessage,
                 ChatPermissions permissions, long slowModeDelay, long messageAutoDeleteTime,
@@ -322,6 +330,7 @@ public class Chat extends ProfileStructure {
         this.photo = photo;
         this.activeUsernames = activeUsernames;
         this.emojiStatusCustomEmojiId = emojiStatusCustomEmojiId;
+        this.emojiStatusExpirationDate = emojiStatusExpirationDate;
         this.bio = bio;
         this.hasPrivateForwards = hasPrivateForwards;
         this.hasRestrictedVoiceAndVideoMessages = hasRestrictedVoiceAndVideoMessages;
@@ -354,6 +363,7 @@ public class Chat extends ProfileStructure {
         photo = ChatPhoto.getInstance(hTelegram.getJSONObject("photo"));
         activeUsernames = fetchStringsList(hTelegram.getJSONArray("active_usernames"));
         emojiStatusCustomEmojiId = hTelegram.getString("emoji_status_custom_emoji_id");
+        emojiStatusExpirationDate = hTelegram.getLong("emoji_status_expiration_date", -1);
         bio = hTelegram.getString("bio");
         hasPrivateForwards = hTelegram.getBoolean("has_private_forwards");
         hasRestrictedVoiceAndVideoMessages = hTelegram.getBoolean("has_restricted_voice_and_video_messages");
@@ -431,6 +441,26 @@ public class Chat extends ProfileStructure {
      */
     public String getEmojiStatusCustomEmojiId() {
         return emojiStatusCustomEmojiId;
+    }
+
+    /**
+     * Method to get {@link #emojiStatusExpirationDate} instance <br>
+     * No-any params required
+     *
+     * @return {@link #emojiStatusExpirationDate} instance as long
+     */
+    public long getEmojiStatusExpiration() {
+        return emojiStatusExpirationDate;
+    }
+
+    /**
+     * Method to get {@link #emojiStatusExpirationDate} instance <br>
+     * No-any params required
+     *
+     * @return {@link #emojiStatusExpirationDate} instance as {@link Date}
+     */
+    public Date getgetEmojiStatusExpirationDate() {
+        return getDateValue(emojiStatusExpirationDate);
     }
 
     /**

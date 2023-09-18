@@ -91,6 +91,11 @@ public class ForumTopicManager extends TelegramIdentifierManager {
     public static final String UNHIDE_GENERAL_FORUM_TOPIC_ENDPOINT = "unhideGeneralForumTopic";
 
     /**
+     * {@code UNPIN_ALL_GENERAL_FORUM_TOPIC_MESSAGES_ENDPOINT} is constant for UNPIN_ALL_GENERAL_FORUM_TOPIC_MESSAGES_ENDPOINT's endpoint
+     */
+    public static final String UNPIN_ALL_GENERAL_FORUM_TOPIC_MESSAGES_ENDPOINT = "unpinAllGeneralForumTopicMessages";
+
+    /**
      * Constructor to init {@link ForumTopicManager}
      *
      * @param token               :               the bot unique authentication token
@@ -1095,6 +1100,20 @@ public class ForumTopicManager extends TelegramIdentifierManager {
     }
 
     /**
+     * Method to create a forum topic payload
+     *
+     * @param chatId:          unique identifier for the target chat or username of the target channel
+     * @param messageThreadId: unique identifier for the target message thread of the forum topic
+     * @param parameters:      other request parameters
+     * @return payload as {@link Params}
+     */
+    private <T> Params createForumTopicPayload(T chatId, long messageThreadId, Params parameters) {
+        parameters = createChatIdPayload(chatId, parameters);
+        parameters.addParam("message_thread_id", messageThreadId);
+        return parameters;
+    }
+
+    /**
      * Method to edit the name of the 'General' topic in a forum supergroup chat. The bot must be an administrator in
      * the chat for this to work and must have can_manage_topics administrator rights, unless it is the creator of the
      * topic
@@ -1369,21 +1388,62 @@ public class ForumTopicManager extends TelegramIdentifierManager {
      */
     @RequestPath(method = POST, path = "unhideGeneralForumTopic")
     public <T> boolean unhideGeneralForumTopic(T chatId) throws IOException {
-        return getBooleanResponse(sendPostRequest(UNHIDE_GENERAL_FORUM_TOPIC_ENDPOINT, createChatIdPayload(chatId, null)));
+        return getBooleanResponse(sendPostRequest(UNHIDE_GENERAL_FORUM_TOPIC_ENDPOINT,
+                createChatIdPayload(chatId, null)));
     }
 
     /**
-     * Method to create a forum topic payload
+     * Method to clear the list of pinned messages in a General forum topic. The bot must be an administrator in the chat
+     * for this to work and must have the can_pin_messages administrator right in the supergroup <br>
+     * No-any params required
      *
-     * @param chatId:          unique identifier for the target chat or username of the target channel
-     * @param messageThreadId: unique identifier for the target message thread of the forum topic
-     * @param parameters:      other request parameters
-     * @return payload as {@link Params}
+     * @return result of the operation -> {@code "true"} is successful, {@code "false"} if not successful
+     * @throws IOException when request has been go wrong -> you can use these methods to get more details about error:
+     *                     <ul>
+     *                         <li>
+     *                             {@link #getErrorResponse()}
+     *                         </li>
+     *                         <li>
+     *                             {@link #getJSONErrorResponse()}
+     *                         </li>
+     *                         <li>
+     *                             {@link #printErrorResponse()}
+     *                         </li>
+     *                     </ul> using a {@code "try and catch statement"} during runtime, see how to do in {@code "README"} file
+     * @apiNote see the official documentation at: <a href="https://core.telegram.org/bots/api#unpinallgeneralforumtopicmessages">
+     * unpinAllGeneralForumTopicMessages</a>
      */
-    private <T> Params createForumTopicPayload(T chatId, long messageThreadId, Params parameters) {
-        parameters = createChatIdPayload(chatId, parameters);
-        parameters.addParam("message_thread_id", messageThreadId);
-        return parameters;
+    @Wrapper
+    @RequestPath(method = POST, path = "unpinAllGeneralForumTopicMessages")
+    public <T> boolean unpinAllGeneralForumTopicMessages() throws IOException {
+        return unpinAllGeneralForumTopicMessages(mChatId);
+    }
+
+    /**
+     * Method to clear the list of pinned messages in a General forum topic. The bot must be an administrator in the chat
+     * for this to work and must have the can_pin_messages administrator right in the supergroup
+     *
+     * @param chatId: unique identifier for the target chat or username of the target channel
+     * @return result of the operation -> {@code "true"} is successful, {@code "false"} if not successful
+     * @throws IOException when request has been go wrong -> you can use these methods to get more details about error:
+     *                     <ul>
+     *                         <li>
+     *                             {@link #getErrorResponse()}
+     *                         </li>
+     *                         <li>
+     *                             {@link #getJSONErrorResponse()}
+     *                         </li>
+     *                         <li>
+     *                             {@link #printErrorResponse()}
+     *                         </li>
+     *                     </ul> using a {@code "try and catch statement"} during runtime, see how to do in {@code "README"} file
+     * @apiNote see the official documentation at: <a href="https://core.telegram.org/bots/api#unpinallgeneralforumtopicmessages">
+     * unpinAllGeneralForumTopicMessages</a>
+     */
+    @RequestPath(method = POST, path = "unpinAllGeneralForumTopicMessages")
+    public <T> boolean unpinAllGeneralForumTopicMessages(T chatId) throws IOException {
+        return getBooleanResponse(sendPostRequest(UNPIN_ALL_GENERAL_FORUM_TOPIC_MESSAGES_ENDPOINT,
+                createChatIdPayload(chatId, null)));
     }
 
 }

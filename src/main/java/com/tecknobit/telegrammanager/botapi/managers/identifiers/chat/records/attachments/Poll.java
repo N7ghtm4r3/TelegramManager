@@ -1,6 +1,7 @@
 package com.tecknobit.telegrammanager.botapi.managers.identifiers.chat.records.attachments;
 
 import com.tecknobit.apimanager.annotations.Returner;
+import com.tecknobit.telegrammanager.botapi.managers.identifiers.chat.records.Chat;
 import com.tecknobit.telegrammanager.botapi.managers.profile.records.User;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.message.MessageEntity;
 import com.tecknobit.telegrammanager.botapi.records.structures.TelegramType;
@@ -427,6 +428,11 @@ public class Poll extends TelegramType {
         private final long pollId;
 
         /**
+         * {@code voterChat} the chat that changed the answer to the poll, if the voter is anonymous
+         */
+        private final Chat voterChat;
+
+        /**
          * {@code user} the user, who changed the answer to the poll
          */
         private final User user;
@@ -440,14 +446,16 @@ public class Poll extends TelegramType {
         /**
          * Constructor to init a {@link PollAnswer} object
          *
-         * @param pollId:    unique poll identifier
-         * @param user:      the user, who changed the answer to the poll
-         * @param optionIds: 0-based identifiers of answer options, chosen by the user. May be empty if the user retracted
+         * @param pollId     :    unique poll identifier
+         * @param voterChat: the chat that changed the answer to the poll, if the voter is anonymous
+         * @param user       :      the user, who changed the answer to the poll
+         * @param optionIds  : 0-based identifiers of answer options, chosen by the user. May be empty if the user retracted
          *                   their vote
          */
-        public PollAnswer(long pollId, User user, ArrayList<Integer> optionIds) {
+        public PollAnswer(long pollId, Chat voterChat, User user, ArrayList<Integer> optionIds) {
             super(null);
             this.pollId = pollId;
+            this.voterChat = voterChat;
             this.user = user;
             this.optionIds = optionIds;
         }
@@ -460,6 +468,7 @@ public class Poll extends TelegramType {
         public PollAnswer(JSONObject jPollAnswer) {
             super(jPollAnswer);
             pollId = hTelegram.getLong("poll_id");
+            voterChat = Chat.getInstance(hTelegram.getJSONObject("voter_chat"));
             user = User.getInstance(hTelegram.getJSONObject("user"));
             optionIds = hTelegram.fetchVList("option_ids");
         }
@@ -472,6 +481,16 @@ public class Poll extends TelegramType {
          */
         public long getPollId() {
             return pollId;
+        }
+
+        /**
+         * Method to get {@link #voterChat} instance <br>
+         * No-any params required
+         *
+         * @return {@link #voterChat} instance as {@link Chat}
+         */
+        public Chat getVoterChat() {
+            return voterChat;
         }
 
         /**

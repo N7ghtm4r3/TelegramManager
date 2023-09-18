@@ -1,7 +1,6 @@
 package com.tecknobit.telegrammanager.botapi.records.basetypes.keyboard.inline;
 
 import com.tecknobit.apimanager.annotations.Returner;
-import com.tecknobit.apimanager.annotations.Wrapper;
 import com.tecknobit.telegrammanager.botapi.managers.games.records.CallbackGame;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.LoginUrl;
 import com.tecknobit.telegrammanager.botapi.records.basetypes.keyboard.KeyboardButton;
@@ -12,7 +11,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.concurrent.Executors;
 
 /**
  * The {@code InlineKeyboardButton} class is useful to format a {@code Telegram}'s inline keyboard button
@@ -162,29 +160,6 @@ public class InlineKeyboardButton extends TelegramType {
      */
     public String getCallbackData() {
         return callbackData;
-    }
-
-    /**
-     * Method to set {@link #callbackData} instance
-     *
-     * @param callbackData: data to be sent in a callback query to the bot when button is pressed, 1-64 bytes
-     */
-    @Wrapper
-    public void setCallbackData(String callbackData) {
-        setCallbackData(callbackData, null);
-    }
-
-    /**
-     * Method to set {@link #callbackData} instance
-     *
-     * @param callbackData:   data to be sent in a callback query to the bot when button is pressed, 1-64 bytes
-     * @param callbackAction: runnable action to execute when the callback data has been requested, you must manage the
-     *                        routine to wait to execute this action
-     */
-    public void setCallbackData(String callbackData, Runnable callbackAction) {
-        this.callbackData = callbackData;
-        if (callbackAction != null)
-            Executors.newSingleThreadExecutor().execute(callbackAction);
     }
 
     /**

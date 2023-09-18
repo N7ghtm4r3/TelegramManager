@@ -195,6 +195,11 @@ public class Message extends TelegramType {
     private final Sticker sticker;
 
     /**
+     * {@code story} message is a forwarded story
+     */
+    private final Story story;
+
+    /**
      * {@code video} message is a video, information about the video
      */
     private final Video video;
@@ -433,112 +438,113 @@ public class Message extends TelegramType {
     /**
      * Constructor to init a {@link Message} object
      *
-     * @param messageId:                     unique message identifier inside this chat
-     * @param messageThreadId:               unique identifier of a message thread to which the message belongs; for supergroups only
-     * @param from:                          sender of the message; empty for messages sent to channels. For backward compatibility, the field
-     *                                       contains a fake sender user in non-channel chats, if the message was sent on behalf of a chat
-     * @param senderChat:                    sender of the message, sent on behalf of a chat. For example, the channel itself for channel
-     *                                       posts, the supergroup itself for messages from anonymous group administrators, the linked channel
-     *                                       for messages automatically forwarded to the discussion group. For backward compatibility, the
-     *                                       field from contains a fake sender user in non-channel chats, if the message was sent on behalf of a cha
-     * @param date:                          date the message was sent in Unix time
-     * @param chat:                          conversation the message belongs to
-     * @param forwardFrom:                   for forwarded messages, sender of the original message
-     * @param forwardFromChat:               for messages forwarded from channels or from anonymous administrators, information about
-     *                                       the original sender chat
-     * @param forwardFromMessageId:          for messages forwarded from channels, identifier of the original message in the channel
-     * @param forwardSignature:              for forwarded messages that were originally sent in channels or by an anonymous chat
-     *                                       administrator, signature of the message sender if present
-     * @param forwardSenderName:             sender's name for messages forwarded from users who disallow adding a link to their
-     *                                       account in forwarded messages
-     * @param forwardDate:                   for forwarded messages, date the original message was sent in Unix time
-     * @param isTopicMessage:                if the message is sent to a forum topic
-     * @param isAutomaticForward:            if the message is a channel post that was automatically forwarded to the connected
-     *                                       discussion group
-     * @param replyToMessage:                for replies, the original message. Note that the Message object in this field will not
-     *                                       contain further reply_to_message fields even if it itself is a reply
-     * @param viaBot:bot                     through which the message was sent
-     * @param editDate:date                  the message was last edited in Unix time
-     * @param hasProtectedContent:           if the message can't be forwarded
-     * @param mediaGroupId:                  the unique identifier of a media message group this message belongs to
-     * @param authorSignature:               signature of the post author for messages in channels, or the custom title of an anonymous
-     *                                       group administrator
-     * @param text:                          for text messages, the actual UTF-8 text of the message
-     * @param entities:                      for text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text
-     * @param animation:                     message is an animation, information about the animation. For backward compatibility, when this
-     *                                       field is set, the document field will also be set
-     * @param audio:                         message is an audio file, information about the file
-     * @param document:message               is a general file, information about the file
-     * @param photo:                         message is a photo, available sizes of the photo
-     * @param sticker:                       message is a sticker, information about the sticker
-     * @param video:                         message is a video, information about the video
-     * @param videoNote:                     message is a video note, information about the video message
-     * @param voice:                         message is a voice message, information about the file
-     * @param caption:                       caption for the animation, audio, document, photo, video or voice
-     * @param captionEntities:               for messages with a caption, special entities like usernames, URLs, bot commands, etc.
-     *                                       that appear in the caption
-     * @param hasMediaSpoiler:               if the message media is covered by a spoiler animation
-     * @param contact:                       message is a shared contact, information about the contact
-     * @param dice:                          message is a dice with random value
-     * @param game:                          message is a game, information about the game
-     * @param poll:                          message is a native poll, information about the poll
-     * @param venue:                         message is a venue, information about the venue. For backward compatibility, when this field is set,
-     *                                       the location field will also be set
-     * @param location:                      message is a shared location, information about the location
-     * @param newChatMembers:                new members that were added to the group or supergroup and information about them (the bot
-     *                                       itself may be one of these members)
-     * @param leftChatMember:                member was removed from the group, information about them (this member may be the bot itself)
-     * @param newChatTitle:                  chat title was changed to this value
-     * @param newChatPhoto:                  chat photo was change to this value
-     * @param deleteChatPhoto:               service message: the chat photo was deleted
-     * @param groupChatCreated:              service message: the group has been created
-     * @param supergroupChatCreated:         service message: the supergroup has been created. This field can't be received in a
-     *                                       message coming through updates, because bot can't be a member of a supergroup when it
-     *                                       is created. It can only be found in reply_to_message if someone replies to a very first
-     *                                       message in a directly created supergroup
-     * @param channelChatCreated:            service message: the channel has been created. This field can't be received in a
-     *                                       message coming through updates, because bot can't be a member of a channel when it is
-     *                                       created. It can only be found in reply_to_message if someone replies to a very first
-     *                                       message in a channel
-     * @param messageAutoDeleteTimerChanged: service message: auto-delete timer settings changed in the chat
-     * @param migrateToChatId:               the group has been migrated to a supergroup with the specified identifier. This number
-     *                                       may have more than 32 significant bits and some programming languages may have
-     *                                       difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a
-     *                                       signed 64-bit integer or double-precision float type are safe for storing this identifier
-     * @param migrateFromChatId:             the supergroup has been migrated from a group with the specified identifier. This number
-     *                                       may have more than 32 significant bits and some programming languages may have
-     *                                       difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so
-     *                                       a signed 64-bit integer or double-precision float type are safe for storing this identifier
-     * @param pinnedMessage:                 specified message was pinned. Note that the Message object in this field will not contain
-     *                                       further reply_to_message fields even if it is itself a reply
-     * @param invoice:                       message is an invoice for a payment, information about the invoice
-     * @param successfulPayment:             message is a service message about a successful payment, information about the payment
-     * @param userShared:                    service message: a user was shared with the bot
-     * @param chatShared:                    service message: a chat was shared with the bot
-     * @param connectedWebsite:              the domain name of the website on which the user has logged in
-     * @param writeAccessAllowed:            service message: the user allowed the bot added to the attachment menu to write messages
-     * @param passportData:                  Telegram Passport data
-     * @param proximityAlertTriggered:       service message. A user in the chat triggered another user's proximity alert
-     *                                       while sharing Live Location
-     * @param forumTopicCreated:             service message: forum topic created
-     * @param forumTopicEdited:              service message: forum topic edited
-     * @param forumTopicClosed:              service message: forum topic closed
-     * @param forumTopicReopened:            service message: forum topic reopened
-     * @param generalForumTopicHidden:       service message: the 'General' forum topic hidden
-     * @param generalForumTopicUnhidden:     service message: the 'General' forum topic unhidden
-     * @param videoChatScheduled:            service message: video chat scheduled
-     * @param videoChatStarted:              service message: video chat started
-     * @param videoChatEnded:                service message: video chat ended
-     * @param videoChatParticipantsInvited:  service message: new participants invited to a video chat
-     * @param webAppData:                    service message: data sent by a Web App
-     * @param replyMarkup:                   inline keyboard attached to the message. login_url buttons are represented as ordinary url buttons
+     * @param messageId                     :                     unique message identifier inside this chat
+     * @param messageThreadId               :               unique identifier of a message thread to which the message belongs; for supergroups only
+     * @param from                          :                          sender of the message; empty for messages sent to channels. For backward compatibility, the field
+     *                                      contains a fake sender user in non-channel chats, if the message was sent on behalf of a chat
+     * @param senderChat                    :                    sender of the message, sent on behalf of a chat. For example, the channel itself for channel
+     *                                      posts, the supergroup itself for messages from anonymous group administrators, the linked channel
+     *                                      for messages automatically forwarded to the discussion group. For backward compatibility, the
+     *                                      field from contains a fake sender user in non-channel chats, if the message was sent on behalf of a cha
+     * @param date                          :                          date the message was sent in Unix time
+     * @param chat                          :                          conversation the message belongs to
+     * @param forwardFrom                   :                   for forwarded messages, sender of the original message
+     * @param forwardFromChat               :               for messages forwarded from channels or from anonymous administrators, information about
+     *                                      the original sender chat
+     * @param forwardFromMessageId          :          for messages forwarded from channels, identifier of the original message in the channel
+     * @param forwardSignature              :              for forwarded messages that were originally sent in channels or by an anonymous chat
+     *                                      administrator, signature of the message sender if present
+     * @param forwardSenderName             :             sender's name for messages forwarded from users who disallow adding a link to their
+     *                                      account in forwarded messages
+     * @param forwardDate                   :                   for forwarded messages, date the original message was sent in Unix time
+     * @param isTopicMessage                :                if the message is sent to a forum topic
+     * @param isAutomaticForward            :            if the message is a channel post that was automatically forwarded to the connected
+     *                                      discussion group
+     * @param replyToMessage                :                for replies, the original message. Note that the Message object in this field will not
+     *                                      contain further reply_to_message fields even if it itself is a reply
+     * @param viaBot                        :bot                     through which the message was sent
+     * @param editDate                      :date                  the message was last edited in Unix time
+     * @param hasProtectedContent           :           if the message can't be forwarded
+     * @param mediaGroupId                  :                  the unique identifier of a media message group this message belongs to
+     * @param authorSignature               :               signature of the post author for messages in channels, or the custom title of an anonymous
+     *                                      group administrator
+     * @param text                          :                          for text messages, the actual UTF-8 text of the message
+     * @param entities                      :                      for text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text
+     * @param animation                     :                     message is an animation, information about the animation. For backward compatibility, when this
+     *                                      field is set, the document field will also be set
+     * @param audio                         :                         message is an audio file, information about the file
+     * @param document                      :message               is a general file, information about the file
+     * @param photo                         :                         message is a photo, available sizes of the photo
+     * @param sticker                       :                       message is a sticker, information about the sticker
+     * @param story:                        message is a forwarded story
+     * @param video                         :                         message is a video, information about the video
+     * @param videoNote                     :                     message is a video note, information about the video message
+     * @param voice                         :                         message is a voice message, information about the file
+     * @param caption                       :                       caption for the animation, audio, document, photo, video or voice
+     * @param captionEntities               :               for messages with a caption, special entities like usernames, URLs, bot commands, etc.
+     *                                      that appear in the caption
+     * @param hasMediaSpoiler               :               if the message media is covered by a spoiler animation
+     * @param contact                       :                       message is a shared contact, information about the contact
+     * @param dice                          :                          message is a dice with random value
+     * @param game                          :                          message is a game, information about the game
+     * @param poll                          :                          message is a native poll, information about the poll
+     * @param venue                         :                         message is a venue, information about the venue. For backward compatibility, when this field is set,
+     *                                      the location field will also be set
+     * @param location                      :                      message is a shared location, information about the location
+     * @param newChatMembers                :                new members that were added to the group or supergroup and information about them (the bot
+     *                                      itself may be one of these members)
+     * @param leftChatMember                :                member was removed from the group, information about them (this member may be the bot itself)
+     * @param newChatTitle                  :                  chat title was changed to this value
+     * @param newChatPhoto                  :                  chat photo was change to this value
+     * @param deleteChatPhoto               :               service message: the chat photo was deleted
+     * @param groupChatCreated              :              service message: the group has been created
+     * @param supergroupChatCreated         :         service message: the supergroup has been created. This field can't be received in a
+     *                                      message coming through updates, because bot can't be a member of a supergroup when it
+     *                                      is created. It can only be found in reply_to_message if someone replies to a very first
+     *                                      message in a directly created supergroup
+     * @param channelChatCreated            :            service message: the channel has been created. This field can't be received in a
+     *                                      message coming through updates, because bot can't be a member of a channel when it is
+     *                                      created. It can only be found in reply_to_message if someone replies to a very first
+     *                                      message in a channel
+     * @param messageAutoDeleteTimerChanged : service message: auto-delete timer settings changed in the chat
+     * @param migrateToChatId               :               the group has been migrated to a supergroup with the specified identifier. This number
+     *                                      may have more than 32 significant bits and some programming languages may have
+     *                                      difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a
+     *                                      signed 64-bit integer or double-precision float type are safe for storing this identifier
+     * @param migrateFromChatId             :             the supergroup has been migrated from a group with the specified identifier. This number
+     *                                      may have more than 32 significant bits and some programming languages may have
+     *                                      difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so
+     *                                      a signed 64-bit integer or double-precision float type are safe for storing this identifier
+     * @param pinnedMessage                 :                 specified message was pinned. Note that the Message object in this field will not contain
+     *                                      further reply_to_message fields even if it is itself a reply
+     * @param invoice                       :                       message is an invoice for a payment, information about the invoice
+     * @param successfulPayment             :             message is a service message about a successful payment, information about the payment
+     * @param userShared                    :                    service message: a user was shared with the bot
+     * @param chatShared                    :                    service message: a chat was shared with the bot
+     * @param connectedWebsite              :              the domain name of the website on which the user has logged in
+     * @param writeAccessAllowed            :            service message: the user allowed the bot added to the attachment menu to write messages
+     * @param passportData                  :                  Telegram Passport data
+     * @param proximityAlertTriggered       :       service message. A user in the chat triggered another user's proximity alert
+     *                                      while sharing Live Location
+     * @param forumTopicCreated             :             service message: forum topic created
+     * @param forumTopicEdited              :              service message: forum topic edited
+     * @param forumTopicClosed              :              service message: forum topic closed
+     * @param forumTopicReopened            :            service message: forum topic reopened
+     * @param generalForumTopicHidden       :       service message: the 'General' forum topic hidden
+     * @param generalForumTopicUnhidden     :     service message: the 'General' forum topic unhidden
+     * @param videoChatScheduled            :            service message: video chat scheduled
+     * @param videoChatStarted              :              service message: video chat started
+     * @param videoChatEnded                :                service message: video chat ended
+     * @param videoChatParticipantsInvited  :  service message: new participants invited to a video chat
+     * @param webAppData                    :                    service message: data sent by a Web App
+     * @param replyMarkup                   :                   inline keyboard attached to the message. login_url buttons are represented as ordinary url buttons
      */
     public Message(long messageId, long messageThreadId, User from, Chat senderChat, long date, Chat chat,
                    User forwardFrom, Chat forwardFromChat, long forwardFromMessageId, String forwardSignature,
                    String forwardSenderName, long forwardDate, boolean isTopicMessage, boolean isAutomaticForward,
                    Message replyToMessage, User viaBot, long editDate, boolean hasProtectedContent, String mediaGroupId,
                    String authorSignature, String text, ArrayList<MessageEntity> entities, Video animation,
-                   Audio audio, TelegramDocument document, ArrayList<PhotoSize> photo, Sticker sticker, Video video,
+                   Audio audio, TelegramDocument document, ArrayList<PhotoSize> photo, Sticker sticker, Story story, Video video,
                    VideoNote videoNote, Voice voice, String caption, ArrayList<MessageEntity> captionEntities,
                    boolean hasMediaSpoiler, Contact contact, Dice dice, Game game, Poll poll, Venue venue,
                    Location location, ArrayList<User> newChatMembers, User leftChatMember, String newChatTitle,
@@ -582,6 +588,7 @@ public class Message extends TelegramType {
         this.document = document;
         this.photo = photo;
         this.sticker = sticker;
+        this.story = story;
         this.video = video;
         this.videoNote = videoNote;
         this.voice = voice;
@@ -662,6 +669,7 @@ public class Message extends TelegramType {
         document = TelegramDocument.getInstance(hTelegram.getJSONObject("document"));
         photo = PhotoSize.returnPhotoSizes(hTelegram.getJSONArray("photo"));
         sticker = Sticker.getInstance(hTelegram.getJSONObject("sticker"));
+        story = Story.getInstance(hTelegram.getJSONObject("story"));
         video = Video.getInstance(hTelegram.getJSONObject("video"));
         videoNote = VideoNote.getInstance(hTelegram.getJSONObject("video_note"));
         voice = Voice.getInstance(hTelegram.getJSONObject("voice"));
@@ -1011,6 +1019,16 @@ public class Message extends TelegramType {
      */
     public Sticker getSticker() {
         return sticker;
+    }
+
+    /**
+     * Method to get {@link #story} instance <br>
+     * No-any params required
+     *
+     * @return {@link #story} instance as {@link Story}
+     */
+    public Story getStory() {
+        return story;
     }
 
     /**
